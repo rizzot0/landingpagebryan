@@ -1,9 +1,14 @@
 import { motion } from 'framer-motion'
 import { TrendingUp } from 'lucide-react'
+import { GridPattern } from '../components/MagicUI'
 
 export default function BeforeAfter() {
   return (
     <section className="relative py-20 bg-white overflow-hidden">
+      {/* Background Grid Pattern */}
+      <div className="absolute inset-0 pointer-events-none">
+        <GridPattern className="opacity-15" />
+      </div>
       <div className="relative mx-auto max-w-7xl px-4 z-20">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

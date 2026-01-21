@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 import { Eye, TrendingUp, Users, Award } from 'lucide-react'
 import CountUp from 'react-countup'
 import { useEffect, useRef, useState } from 'react'
+import { GridPattern } from '../components/MagicUI'
 
 export default function AuthoritySection() {
   const [isVisible, setIsVisible] = useState(false)
@@ -64,8 +65,12 @@ export default function AuthoritySection() {
   ]
 
   return (
-    <section ref={sectionRef} id="authority" className="py-20 bg-white overflow-hidden">
-      <div className="mx-auto max-w-7xl px-4">
+    <section ref={sectionRef} id="authority" className="py-20 bg-white overflow-hidden relative">
+      {/* Background Grid Pattern */}
+      <div className="absolute inset-0 pointer-events-none">
+        <GridPattern strokeDasharray={4} className="opacity-20" />
+      </div>
+      <div className="mx-auto max-w-7xl px-4 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}

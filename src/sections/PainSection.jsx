@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { AlertCircle, XCircle } from 'lucide-react'
+import { GridPattern } from '../components/MagicUI'
 
 export default function PainSection() {
   const bullets = [
@@ -11,6 +12,10 @@ export default function PainSection() {
 
   return (
     <section className="relative py-20 bg-slate-50 overflow-hidden">
+      {/* Background Grid Pattern */}
+      <div className="absolute inset-0 pointer-events-none">
+        <GridPattern className="opacity-20" />
+      </div>
       <div className="absolute inset-0 bg-gradient-to-b from-white to-blue-50/30 pointer-events-none" />
       
       <div className="relative mx-auto max-w-2xl px-4 z-20">

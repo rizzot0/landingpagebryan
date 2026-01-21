@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { Video, MessageCircle, Users, Clock } from 'lucide-react'
+import { GridPattern } from '../components/MagicUI'
 
 export default function ProcessSection() {
   const steps = [
@@ -30,8 +31,12 @@ export default function ProcessSection() {
   ]
 
   return (
-    <section className="py-20 bg-white overflow-hidden">
-      <div className="mx-auto max-w-5xl px-4">
+    <section className="py-20 bg-white overflow-hidden relative">
+      {/* Background Grid Pattern */}
+      <div className="absolute inset-0 pointer-events-none">
+        <GridPattern strokeDasharray={4} className="opacity-15" />
+      </div>
+      <div className="mx-auto max-w-5xl px-4 relative z-10">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}

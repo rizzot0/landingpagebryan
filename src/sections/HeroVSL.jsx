@@ -1,12 +1,18 @@
 import { motion } from 'framer-motion'
 import { Link } from 'react-scroll'
 import { Play, Sparkles } from 'lucide-react'
+import { Meteors, GridPattern } from '../components/MagicUI'
 
 export default function HeroVSL() {
   const POSTER_URL = 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1600&q=80'
 
   return (
     <section id="hero" className="relative pt-32 pb-20 overflow-hidden bg-white">
+      {/* Background Effects */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <GridPattern className="opacity-30" />
+        <Meteors number={30} />
+      </div>
       <div className="relative mx-auto max-w-7xl px-4 z-20">
         <div className="text-center">
           {/* Main Heading */}
