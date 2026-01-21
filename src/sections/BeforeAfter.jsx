@@ -26,7 +26,12 @@ export default function BeforeAfter() {
         </motion.div>
 
         {/* Before/After Grid */}
-        <div className="grid md:grid-cols-2 gap-8 items-center">
+        <div className="relative grid md:grid-cols-2 gap-8 items-center">
+          {/* VS Badge in the middle */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 hidden md:flex items-center justify-center w-20 h-20 bg-white border-4 border-blue-600 rounded-full shadow-2xl">
+            <span className="text-2xl font-black text-blue-600">VS</span>
+          </div>
+
           {/* ANTES */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}

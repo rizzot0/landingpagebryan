@@ -151,7 +151,52 @@ export default function Contact() {
           transition={{ duration: 0.6 }}
           className="space-y-4"
         >
-          <BentoCard>
+          {/* About Bryan Card */}
+          <BentoCard className="bg-white border border-slate-200">
+            <div className="text-center">
+              {/* Profile Photo */}
+              <div className="mb-4 flex justify-center">
+                <div className="relative">
+                  <div className="w-32 h-32 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-5xl">
+                    🎥
+                  </div>
+                  <div className="absolute -bottom-2 -right-2 bg-blue-600 rounded-full p-2">
+                    <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+
+              {/* Name & Title */}
+              <h3 className="text-2xl font-semibold text-slate-900 tracking-tight mb-2">Bryan</h3>
+              <p className="text-blue-600 font-medium mb-4">Editor de Video Profesional</p>
+
+              {/* Bio */}
+              <p className="text-slate-600 text-sm leading-relaxed mb-6">
+                Ayudo a marcas y creadores de contenido a escalar sus negocios con videos que retienen y convierten. Especializado en contenido para redes sociales con enfoque en resultados reales.
+              </p>
+
+              {/* Stats Mini */}
+              <div className="grid grid-cols-3 gap-3 mb-6 p-4 bg-slate-50 rounded-xl">
+                <div>
+                  <p className="text-xl font-bold text-slate-900">5+</p>
+                  <p className="text-xs text-slate-600">Años</p>
+                </div>
+                <div>
+                  <p className="text-xl font-bold text-slate-900">100+</p>
+                  <p className="text-xs text-slate-600">Proyectos</p>
+                </div>
+                <div>
+                  <p className="text-xl font-bold text-slate-900">50+</p>
+                  <p className="text-xs text-slate-600">Clientes</p>
+                </div>
+              </div>
+            </div>
+          </BentoCard>
+
+          {/* Contact Info Cards */}
+          <BentoCard className="bg-white border border-slate-200">
             <div className="flex items-start gap-4">
               <div className="rounded-lg bg-blue-50 border border-blue-100 p-3">
                 <Mail className="size-6 text-blue-600" />
@@ -163,7 +208,7 @@ export default function Contact() {
             </div>
           </BentoCard>
 
-          <BentoCard>
+          <BentoCard className="bg-white border border-slate-200">
             <h4 className="font-medium text-slate-900 tracking-tight mb-4">Redes Sociales</h4>
             <div className="flex gap-3">
               <a 

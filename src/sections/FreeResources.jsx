@@ -52,13 +52,13 @@ export default function FreeResources() {
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-100 border border-blue-300 mb-6">
-            <Gift className="size-4 text-blue-600" />
-            <span className="text-sm text-blue-700 font-medium">Recursos Gratis</span>
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-yellow-100 to-amber-100 border border-yellow-300 mb-6">
+            <Gift className="size-4 text-yellow-700" />
+            <span className="text-sm text-yellow-700 font-bold">RECURSOS GRATIS</span>
           </div>
 
           <h2 className="text-4xl sm:text-5xl font-bold text-slate-900 tracking-tight mb-4">
-            ¿Aún no estás listo para contratar?
+            <span className="bg-gradient-to-r from-yellow-600 via-amber-500 to-yellow-600 bg-clip-text text-transparent drop-shadow-md">¿Aún no estás listo para contratar?</span>
           </h2>
           <p className="text-slate-600 text-lg">
             Descarga nuestros recursos gratis y empieza a mejorar tus videos desde hoy

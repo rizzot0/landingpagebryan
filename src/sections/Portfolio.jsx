@@ -11,7 +11,11 @@ const DEMO_VIDEOS = [
     url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
     featured: true,
     category: "Comercial",
-    badge: "🔥 Viral"
+    badge: "🔥 Viral",
+    cliente: "Carlos Martínez",
+    empresa: "FitLife Studio",
+    description: "Edición de video profesional para campaña de marketing digital con efectos visuales de alto impacto.",
+    date: "January 20, 2026"
   },
   {
     id: 2,
@@ -19,7 +23,11 @@ const DEMO_VIDEOS = [
     url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
     featured: false,
     category: "Empresarial",
-    badge: "👁️ +50k Vistas"
+    badge: "👁️ +50k Vistas",
+    cliente: "Ana García",
+    empresa: "TechStart Inc",
+    description: "Video corporativo de presentación de empresa con transiciones dinámicas y motion graphics.",
+    date: "January 19, 2026"
   },
   {
     id: 3,
@@ -27,7 +35,11 @@ const DEMO_VIDEOS = [
     url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
     featured: false,
     category: "Social Media",
-    badge: "🚀 +200% Retención"
+    badge: "🚀 +200% Retención",
+    cliente: "Pedro López",
+    empresa: "Social Media Pro",
+    description: "Contenido viral para redes sociales con edición rápida y efectos atractivos.",
+    date: "January 18, 2026"
   },
   {
     id: 4,
@@ -35,7 +47,11 @@ const DEMO_VIDEOS = [
     url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
     featured: false,
     category: "Narrativa",
-    badge: "🏆 Caso de Éxito"
+    badge: "🏆 Caso de Éxito",
+    cliente: "María Rodríguez",
+    empresa: "Creative Studio",
+    description: "Documental corto con narrativa envolvente y cinematografía de calidad profesional.",
+    date: "January 17, 2026"
   },
   {
     id: 5,
@@ -43,7 +59,11 @@ const DEMO_VIDEOS = [
     url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
     featured: false,
     category: "Animación",
-    badge: "🎯 Conversiones"
+    badge: "🎯 Conversiones",
+    cliente: "Juan Pérez",
+    empresa: "Digital Agency",
+    description: "Animaciones personalizadas y motion graphics para explicar conceptos complejos.",
+    date: "January 16, 2026"
   }
 ]
 
@@ -76,47 +96,87 @@ function VideoCard({ video, className = "" }) {
 
   return (
     <BentoCard className={className}>
-      {!isLoaded && (
-        <div 
-          className="relative aspect-[9/16] cursor-pointer group/video"
-          onClick={() => setIsLoaded(true)}
-        >
-          <img 
-            src={getThumbnail(video.url)}
-            alt={video.title}
-            className="w-full h-full object-cover rounded-lg"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent rounded-lg" />
-          {video.badge && (
-            <div className="absolute top-3 left-3 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/15 border border-white/20 backdrop-blur text-white text-xs font-semibold">
-              {video.badge}
+      <div className="flex flex-col h-full bg-white overflow-hidden">
+        {/* Video Section */}
+        <div className="relative flex-1 min-h-[280px]">
+          {!isLoaded && (
+            <div 
+              className="relative w-full h-full cursor-pointer group/video"
+              onClick={() => setIsLoaded(true)}
+            >
+              <img 
+                src={getThumbnail(video.url)}
+                alt={video.title}
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+              
+              {/* Time Badge */}
+              <div className="absolute top-3 left-3 px-2.5 py-1 rounded-md bg-white/90 text-xs font-bold text-slate-700">
+                1.00
+              </div>
+              
+              {/* Badge Badge */}
+              {video.badge && (
+                <div className="absolute top-3 right-3 inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-white/90 text-xs font-semibold text-slate-700">
+                  {video.badge}
+                </div>
+              )}
+              
+              {/* Play Button */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="rounded-full bg-blue-600 p-4 group-hover/video:bg-blue-700 group-hover/video:scale-110 transition-all">
+                  <Play className="size-6 text-white" fill="white" />
+                </div>
+              </div>
             </div>
           )}
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="rounded-full bg-blue-600 p-5 group-hover/video:bg-blue-700 group-hover/video:scale-110 transition-all">
-              <Play className="size-8 text-white" fill="white" />
+          
+          {isLoaded && (
+            <div className="w-full h-full overflow-hidden">
+              <iframe
+                src={getEmbedUrl(video.url)}
+                title={video.title}
+                className="w-full h-full"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
             </div>
-          </div>
-          <div className="absolute bottom-4 left-4 right-4">
-            <span className="inline-block px-3 py-1 rounded-full text-xs bg-blue-600 text-white mb-2 font-medium">
-              {video.category}
-            </span>
-            <h3 className="font-semibold text-white tracking-tight">{video.title}</h3>
-          </div>
+          )}
         </div>
-      )}
-      
-      {isLoaded && (
-        <div className="aspect-[9/16] rounded-lg overflow-hidden">
-          <iframe
-            src={getEmbedUrl(video.url)}
-            title={video.title}
-            className="w-full h-full"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          />
+
+        {/* Info Section */}
+        <div className="p-4 sm:p-5 flex flex-col gap-3 bg-white border-t border-slate-100">
+          {/* Cliente y Empresa */}
+          <div>
+            {video.cliente && (
+              <p className="text-xs text-slate-600 font-medium">{video.cliente}</p>
+            )}
+            {video.empresa && (
+              <p className="text-xs text-slate-500 font-medium">{video.empresa}</p>
+            )}
+          </div>
+
+          {/* Descripción */}
+          {video.description && (
+            <p className="text-sm text-slate-700 line-clamp-2 leading-snug">
+              {video.description}
+            </p>
+          )}
+
+          {/* Fecha */}
+          {video.date && (
+            <p className="text-xs text-slate-500 font-medium">
+              {video.date}
+            </p>
+          )}
+
+          {/* CTA Button */}
+          <button className="mt-auto w-full py-2 px-4 bg-gradient-to-r from-amber-400 to-yellow-400 text-slate-800 font-bold text-sm rounded-lg hover:shadow-lg transition-all hover:scale-[1.02]">
+            Ver Video
+          </button>
         </div>
-      )}
+      </div>
     </BentoCard>
   )
 }
@@ -139,30 +199,19 @@ export default function Portfolio() {
           Portafolio
         </h2>
         <p className="mt-4 text-slate-600 max-w-2xl mx-auto font-normal">
-          Explora proyectos que combinan creatividad, técnica y narrativa visual impactante
+          Creación de contenido y edición estratégica para redes sociales
         </p>
       </motion.div>
 
-      {/* Bento Grid Layout */}
+      {/* Grid Layout - Videos con Info a la Izquierda */}
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 0.8, staggerChildren: 0.1 }}
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"
+        className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6"
       >
-        {/* Featured Large Video */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          className="lg:col-span-2 lg:row-span-2"
-        >
-          <VideoCard video={DEMO_VIDEOS[0]} className="h-full" />
-        </motion.div>
-
-        {/* Grid Items */}
-        {DEMO_VIDEOS.slice(1).map((video, idx) => (
+        {DEMO_VIDEOS.map((video, idx) => (
           <motion.div
             key={video.id}
             initial={{ opacity: 0, scale: 0.95 }}
@@ -173,6 +222,19 @@ export default function Portfolio() {
             <VideoCard video={video} />
           </motion.div>
         ))}
+      </motion.div>
+
+      {/* Ver Más Button */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        className="text-center mt-12"
+      >
+        <button className="inline-flex items-center gap-2 px-8 py-4 border-2 border-blue-600 text-blue-600 font-semibold rounded-xl hover:bg-blue-50 transition-all">
+          Ver más proyectos
+          <Award className="size-5" />
+        </button>
       </motion.div>
 
       {/* Services Grid */}

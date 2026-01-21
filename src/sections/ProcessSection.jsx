@@ -31,7 +31,8 @@ export default function ProcessSection() {
 
   return (
     <section className="py-20 bg-white overflow-hidden">
-      <div className="mx-auto max-w-7xl px-4">
+      <div className="mx-auto max-w-5xl px-4">
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -47,42 +48,67 @@ export default function ProcessSection() {
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {steps.map((step, index) => {
-            const Icon = step.icon
-            return (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="group relative"
-              >
-                <div className={`absolute inset-0 bg-gradient-to-br ${step.color} rounded-xl blur opacity-0 group-hover:opacity-20 transition-opacity`} />
-                
-                <div className="relative p-6 bg-white border border-blue-100 rounded-xl hover:border-blue-400 transition-all shadow-sm hover:shadow-md">
-                  <div className={`w-12 h-12 rounded-lg bg-gradient-to-br ${step.color} flex items-center justify-center text-white mb-4`}>
-                    <Icon className="size-6" />
-                  </div>
-                  
-                  <h3 className="text-lg font-bold text-slate-900 mb-2">
-                    {step.title}
-                  </h3>
-                  <p className="text-slate-600 text-sm">
-                    {step.description}
-                  </p>
-                </div>
+        {/* Single Large Card */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="bg-gradient-to-br from-slate-50 to-blue-50 border-2 border-slate-200 rounded-3xl p-8 sm:p-12 shadow-lg hover:shadow-xl transition-shadow"
+        >
+          {/* Intro Text */}
+          <p className="text-center text-slate-700 text-lg mb-12 font-medium max-w-3xl mx-auto leading-relaxed">
+            Nuestro enfoque combina <span className="text-blue-600 font-semibold">estrategia semanal, soporte directo 24/7, 
+            comunidad exclusiva y entrega rápida</span> para garantizar que tu contenido no solo sea hermoso, sino que también venda.
+          </p>
 
-                {/* Connector Line (visible on md and above) */}
-                {index < steps.length - 1 && (
-                  <div className="hidden lg:block absolute top-1/2 -right-3 w-6 h-0.5 bg-gradient-to-r from-blue-400 to-transparent" />
-                )}
-              </motion.div>
-            )
-          })}
-        </div>
+          {/* 4 Highlights Grid */}
+          <div className="grid md:grid-cols-2 gap-8">
+            {steps.map((step, index) => {
+              const Icon = step.icon
+              return (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="flex gap-4"
+                >
+                  {/* Icon */}
+                  <div className={`flex-shrink-0 w-14 h-14 rounded-xl bg-gradient-to-br ${step.color} flex items-center justify-center text-white shadow-md`}>
+                    <Icon className="size-7" />
+                  </div>
+
+                  {/* Content */}
+                  <div className="flex-1">
+                    <h3 className="text-lg font-bold text-slate-900 mb-2">
+                      {step.title}
+                    </h3>
+                    <p className="text-slate-600 text-sm leading-relaxed">
+                      {step.description}
+                    </p>
+                  </div>
+                </motion.div>
+              )
+            })}
+          </div>
+
+          {/* Bottom CTA */}
+          <div className="mt-12 pt-8 border-t border-slate-200 text-center">
+            <p className="text-slate-700 font-medium mb-4">
+              ¿Listo para transformar tu contenido?
+            </p>
+            <a
+              href="#contact"
+              className="inline-flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-semibold rounded-xl hover:from-blue-700 hover:to-blue-800 transition-all shadow-lg"
+            >
+              Comenzar Hoy
+            </a>
+          </div>
+        </motion.div>
       </div>
     </section>
   )
 }
+

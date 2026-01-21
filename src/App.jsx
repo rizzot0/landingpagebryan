@@ -16,24 +16,15 @@ function App() {
     <div className="min-h-dvh bg-white">
       <Navbar />
       <main className="overflow-hidden">
-        {/* VSL Funnel Structure */}
         <HeroVSL />
         <PainSection />
+        <Testimonials />
         <BeforeAfter />
         <AuthoritySection />
         <ProcessSection />
-        
-        {/* Portfolio (Secondary Validation) */}
         <Portfolio />
-        
-        {/* Social Proof */}
-        <Testimonials />
-        
-        {/* Lead Magnet */}
-        <FreeResources />
-        
-        {/* Booking & CTA */}
         <Booking />
+        <FreeResources />
         <Contact />
       </main>
       <Footer />

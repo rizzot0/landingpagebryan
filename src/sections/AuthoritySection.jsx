@@ -64,7 +64,7 @@ export default function AuthoritySection() {
   ]
 
   return (
-    <section ref={sectionRef} id="authority" className="py-20 bg-black overflow-hidden">
+    <section ref={sectionRef} id="authority" className="py-20 bg-white overflow-hidden">
       <div className="mx-auto max-w-7xl px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -73,29 +73,32 @@ export default function AuthoritySection() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
+          <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight">
             Números que hablan por sí solos
           </h2>
-          <p className="text-slate-300 mt-4 text-lg">
+          <p className="text-slate-600 mt-4 text-lg">
             Resultados comprobados en miles de videos
           </p>
         </motion.div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {metrics.map((metric, index) => {
-            const Icon = metric.icon
-            return (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="relative group"
-              >
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-xl blur opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                
-                <div className="relative p-6 bg-slate-900 border border-slate-800 rounded-xl hover:border-blue-400/60 transition-colors shadow-lg shadow-blue-900/30">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, staggerChildren: 0.1 }}
+          className="bg-gradient-to-br from-slate-900 to-slate-800 rounded-2xl overflow-hidden border border-slate-700 shadow-xl"
+        >
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 divide-x divide-slate-700">
+            {metrics.map((metric, index) => {
+              const Icon = metric.icon
+              return (
+                <div
+                  key={index}
+                  className="relative p-6 group hover:bg-slate-800/50 transition-colors"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-br from-blue-500/0 to-purple-500/0 group-hover:from-blue-500/10 group-hover:to-purple-500/10 transition-all duration-300" />
+                  
+                  <div className="relative">
                   <div className={`w-12 h-12 rounded-lg bg-gradient-to-br ${metric.gradient} flex items-center justify-center mb-4 text-white`}>
                     <Icon className="size-6" />
                   </div>
@@ -115,14 +118,15 @@ export default function AuthoritySection() {
                   <p className="text-white font-semibold text-sm mb-1">
                     {metric.label}
                   </p>
-                  <p className="text-slate-400 text-xs">
-                    {metric.description}
-                  </p>
+                    <p className="text-slate-400 text-xs">
+                      {metric.description}
+                    </p>
+                  </div>
                 </div>
-              </motion.div>
-            )
-          })}
-        </div>
+              )
+            })}
+          </div>
+        </motion.div>
       </div>
     </section>
   )
