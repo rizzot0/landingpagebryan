@@ -102,10 +102,9 @@ const Testimonials = () => {
 
           {/* Upwork */}
           <div className="inline-flex items-center gap-3 px-6 py-3 bg-white border border-slate-200 rounded-full shadow-sm hover:shadow-md transition-shadow">
-            <svg className="w-20 h-6" viewBox="0 0 102 28" fill="#14a800">
-              <path d="M65.4 7.9c-2.1 0-3.8 1-5 2.6V8.2h-4.6v15.3h4.8v-8.5c0-2.3 1.2-3.5 3-3.5s2.8 1.2 2.8 3.4v8.6h4.8v-9.4c0-4-2.4-6.2-5.8-6.2zM84 7.9c-4.5 0-7.8 3.3-7.8 7.8s3.3 7.8 7.8 7.8c2.7 0 5-1.2 6.5-3.3l-3.4-2c-.7.9-1.8 1.5-3.1 1.5-1.8 0-3.2-1.1-3.6-2.9h10.7v-1.1c0-4.5-3.1-7.8-7.1-7.8zm-3.2 6.4c.5-1.6 1.7-2.6 3.2-2.6s2.7 1 3.1 2.6h-6.3zM48.1 7.9c-1.7 0-3.2.7-4.2 2V0h-4.8v23.5h4.6v-2.2c1 1.3 2.5 2.1 4.4 2.1 3.8 0 6.8-3.3 6.8-7.8s-3-7.7-6.8-7.7zm-1.1 11.5c-2.1 0-3.7-1.7-3.7-3.9s1.6-3.9 3.7-3.9 3.7 1.7 3.7 3.9-1.6 3.9-3.7 3.9zM101.4 8.2L98.6 17l-2.4-8.8h-3.1l-2.4 8.8-2.8-8.8h-5l5.5 15.3h3.5l2.4-8.1 2.4 8.1h3.5l5.5-15.3h-5.3z"/>
-              <circle cx="11.5" cy="11.5" r="3.5" fill="#14a800"/>
-              <path d="M26.9 8.2c-1-.9-2.3-1.4-3.8-1.4-3.1 0-5.6 2.5-5.6 5.6v11.1h4.8v-7.3c1.6-2.1 3.2-4.1 4.7-6.1l-.1-1.9z"/>
+            <svg className="w-6 h-6" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="20" cy="20" r="20" fill="#14a800"/>
+              <text x="20" y="28" font-size="20" font-weight="bold" fill="white" text-anchor="middle">up</text>
             </svg>
             <div className="flex gap-0.5">
               {[...Array(5)].map((_, i) => (
