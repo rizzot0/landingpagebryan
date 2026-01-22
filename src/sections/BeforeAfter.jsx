@@ -64,14 +64,7 @@ export default function BeforeAfter() {
 
                 {/* Contenido - ícono de video crudo */}
                 <div className="relative z-10 text-center px-8">
-                  <div className="mb-6 text-6xl">📹</div>
-                  <p className="text-slate-700 text-lg font-bold mb-3">VIDEO SIN EDITAR</p>
-                  <div className="space-y-2 text-sm text-slate-600 font-medium">
-                    <p>• Grabación cruda y pobre</p>
-                    <p>• Sin color grading</p>
-                    <p>• Audio de mala calidad</p>
-                    <p>• Baja retención de audiencia</p>
-                  </div>
+                  <p className="text-slate-700 text-lg font-bold mb-3">Video sin editar</p>
                 </div>
 
                 {/* Esquinas oscuras para efecto de baja calidad */}
@@ -120,14 +113,7 @@ export default function BeforeAfter() {
 
                 {/* Contenido - ícono de video profesional */}
                 <div className="relative z-10 text-center px-8">
-                  <div className="mb-6 text-6xl">✨</div>
-                  <p className="text-green-300 text-lg font-bold mb-3">VIDEO PROFESIONAL</p>
-                  <div className="space-y-2 text-sm text-green-200 font-medium">
-                    <p>• Cinematografía premium</p>
-                    <p>• Color grading avanzado</p>
-                    <p>• Audio de studio</p>
-                    <p>• Máxima retención</p>
-                  </div>
+                  <p className="text-green-300 text-lg font-bold mb-3">Video editado</p>
                 </div>
 
                 {/* Brillo/glow effect */}

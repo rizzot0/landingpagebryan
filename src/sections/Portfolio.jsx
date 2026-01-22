@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 import { BentoCard } from '../components/MagicUI'
-import { Play, Award, Zap } from 'lucide-react'
+import { Play, Award, Zap, X } from 'lucide-react'
 import { useState } from 'react'
 
 // TODO: Reemplazar con los videos reales del cliente
@@ -64,6 +64,76 @@ const DEMO_VIDEOS = [
     empresa: "Digital Agency",
     description: "Animaciones personalizadas y motion graphics para explicar conceptos complejos.",
     date: "January 16, 2026"
+  }
+]
+
+// Proyectos adicionales para el modal
+const ADDITIONAL_VIDEOS = [
+  {
+    id: 6,
+    title: "Tutorial Educativo",
+    url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    category: "Educación",
+    badge: "📚 Top Educativo",
+    cliente: "Laura Sánchez",
+    empresa: "EduOnline",
+    description: "Video tutorial con animaciones explicativas y gráficos interactivos.",
+    date: "January 15, 2026"
+  },
+  {
+    id: 7,
+    title: "Evento Corporativo",
+    url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    category: "Eventos",
+    badge: "🎉 Destacado",
+    cliente: "Roberto Gómez",
+    empresa: "Events Corp",
+    description: "Cobertura profesional de evento con múltiples cámaras y edición dinámica.",
+    date: "January 14, 2026"
+  },
+  {
+    id: 8,
+    title: "Campaña Publicitaria",
+    url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    category: "Publicidad",
+    badge: "💎 Premium",
+    cliente: "Sofia Martín",
+    empresa: "Brand Studio",
+    description: "Spot publicitario con color grading profesional y efectos visuales.",
+    date: "January 13, 2026"
+  },
+  {
+    id: 9,
+    title: "Testimonial Cliente",
+    url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    category: "Testimonios",
+    badge: "⭐ Impacto",
+    cliente: "Miguel Torres",
+    empresa: "Success Stories",
+    description: "Video testimonial con iluminación profesional y audio optimizado.",
+    date: "January 12, 2026"
+  },
+  {
+    id: 10,
+    title: "Producto Launch",
+    url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    category: "Producto",
+    badge: "🚀 Lanzamiento",
+    cliente: "Carmen Díaz",
+    empresa: "Tech Launch",
+    description: "Video de lanzamiento de producto con animaciones 3D y renders.",
+    date: "January 11, 2026"
+  },
+  {
+    id: 11,
+    title: "Behind The Scenes",
+    url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    category: "BTS",
+    badge: "🎬 Exclusivo",
+    cliente: "Daniel Ruiz",
+    empresa: "Film Production",
+    description: "Detrás de cámaras con edición documental y narrativa envolvente.",
+    date: "January 10, 2026"
   }
 ]
 
@@ -182,7 +252,10 @@ function VideoCard({ video, className = "" }) {
 }
 
 export default function Portfolio() {
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
   return (
+    <>
     <section id="portfolio" className="mx-auto max-w-7xl px-4 py-20 bg-white">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -231,7 +304,10 @@ export default function Portfolio() {
         viewport={{ once: true }}
         className="text-center mt-12"
       >
-        <button className="inline-flex items-center gap-2 px-8 py-4 border-2 border-blue-600 text-blue-600 font-semibold rounded-xl hover:bg-blue-50 transition-all">
+        <button 
+          onClick={() => setIsModalOpen(true)}
+          className="inline-flex items-center gap-2 px-8 py-4 border-2 border-blue-600 text-blue-600 font-semibold rounded-xl hover:bg-blue-50 transition-all"
+        >
           Ver más proyectos
           <Award className="size-5" />
         </button>
@@ -271,5 +347,48 @@ export default function Portfolio() {
         ))}
       </motion.div>
     </section>
+
+    {/* Modal de Proyectos Adicionales */}
+    {isModalOpen && (
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.95 }}
+          className="relative bg-white rounded-2xl shadow-2xl max-w-7xl w-full max-h-[90vh] overflow-hidden"
+        >
+          {/* Header del Modal */}
+          <div className="sticky top-0 bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between z-10">
+            <div>
+              <h3 className="text-2xl font-semibold text-slate-900">Más Proyectos</h3>
+              <p className="text-sm text-slate-600 mt-1">Explora nuestra colección completa de trabajos</p>
+            </div>
+            <button
+              onClick={() => setIsModalOpen(false)}
+              className="p-2 rounded-lg hover:bg-slate-100 transition-colors"
+            >
+              <X className="size-6 text-slate-600" />
+            </button>
+          </div>
+
+          {/* Contenido del Modal */}
+          <div className="overflow-y-auto max-h-[calc(90vh-80px)] p-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+              {ADDITIONAL_VIDEOS.map((video, idx) => (
+                <motion.div
+                  key={video.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: idx * 0.05 }}
+                >
+                  <VideoCard video={video} />
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    )}
+    </>
   )
 }
