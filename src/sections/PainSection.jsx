@@ -1,6 +1,8 @@
-import { motion } from 'framer-motion'
+import { motion as Motion } from 'framer-motion'
 import { AlertCircle, XCircle } from 'lucide-react'
 import { GridPattern } from '../components/MagicUI'
+import antesImage from '../assets/antes (1).png'
+import despuesImage from '../assets/antes (2).png'
 
 export default function PainSection() {
   const bullets = [
@@ -19,7 +21,7 @@ export default function PainSection() {
       <div className="absolute inset-0 bg-gradient-to-b from-white to-blue-50/30 pointer-events-none" />
       
       <div className="relative mx-auto max-w-7xl px-4 z-20">
-        <motion.div
+        <Motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -36,35 +38,41 @@ export default function PainSection() {
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-slate-900 mb-8 leading-tight">
             Esto es lo que está frenando tus ventas
           </h2>
-        </motion.div>
+        </Motion.div>
 
         {/* 3 Column Layout: Image Before | Content | Image After */}
-        <div className="grid md:grid-cols-3 gap-8 items-start">
+        <div className="grid md:grid-cols-3 xl:grid-cols-[1.3fr_0.9fr_1.3fr] gap-6 lg:gap-8 items-start md:items-stretch">
           {/* Left: Gráfico/Stats ANTES */}
-          <motion.div
+          <Motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="hidden md:block"
+            className="order-1 h-full min-h-[420px] md:min-h-[620px] xl:min-h-[700px]"
           >
-            <div className="aspect-square rounded-2xl bg-slate-100 flex items-center justify-center border-2 border-slate-300 shadow-lg">
-              <p className="text-slate-400 text-sm font-medium">[Foto izquierda]</p>
+            <div className="relative h-full overflow-hidden rounded-[28px] bg-gradient-to-b from-slate-50 to-white flex items-center justify-center">
+              <img
+                src={antesImage}
+                alt="Resultado antes de aplicar estrategia de contenido"
+                className="w-full h-full object-contain object-center"
+                loading="lazy"
+              />
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-slate-50/25" />
             </div>
-          </motion.div>
+          </Motion.div>
 
           {/* Center: Pain Points */}
-          <motion.div
+          <Motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="md:col-span-1"
+            className="order-2 md:col-span-1"
           >
             {/* Pain Bullets */}
             <div className="space-y-4">
               {bullets.map((item, idx) => (
-                <motion.div
+                <Motion.div
                   key={idx}
                   initial={{ opacity: 0, x: -10 }}
                   whileInView={{ opacity: 1, x: 0 }}
@@ -78,12 +86,12 @@ export default function PainSection() {
                   <p className="text-base sm:text-lg text-slate-800 font-semibold leading-relaxed">
                     {item}
                   </p>
-                </motion.div>
+                </Motion.div>
               ))}
             </div>
 
             {/* Solution Text */}
-            <motion.div
+            <Motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -93,21 +101,27 @@ export default function PainSection() {
               <p className="text-slate-700 font-semibold leading-relaxed">
                 <span className="text-blue-600 font-bold">El problema no es publicar.</span> Es publicar <span className="font-bold">sin estrategia.</span> Corregimos eso con videos que retienen y convierten.
               </p>
-            </motion.div>
-          </motion.div>
+            </Motion.div>
+          </Motion.div>
 
           {/* Right: Foto derecha */}
-          <motion.div
+          <Motion.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="hidden md:block"
+            className="order-3 h-full min-h-[420px] md:min-h-[620px] xl:min-h-[700px]"
           >
-            <div className="aspect-square rounded-2xl bg-slate-100 flex items-center justify-center border-2 border-slate-300 shadow-lg">
-              <p className="text-slate-400 text-sm font-medium">[Foto derecha]</p>
+            <div className="relative h-full overflow-hidden rounded-[28px] bg-gradient-to-b from-slate-50 to-white flex items-center justify-center">
+              <img
+                src={despuesImage}
+                alt="Resultado después de aplicar estrategia de contenido"
+                className="w-full h-full object-contain object-center"
+                loading="lazy"
+              />
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-slate-50/25" />
             </div>
-          </motion.div>
+          </Motion.div>
         </div>
       </div>
     </section>

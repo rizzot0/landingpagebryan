@@ -1,6 +1,80 @@
 import { motion } from 'framer-motion'
-import { TrendingUp } from 'lucide-react'
+import { TrendingUp, Play } from 'lucide-react'
+import { useState } from 'react'
 import { GridPattern } from '../components/MagicUI'
+
+const BEFORE_AFTER_VIDEOS = {
+  before: {
+    title: 'Video sin editar',
+    sources: {
+      hq: '/videos/before-qf561ul5sew-hq.mp4',
+      lq: '/videos/before-qf561ul5sew-lq.mp4'
+    },
+    poster: '/videos/before-qf561ul5sew-poster.jpg'
+  },
+  after: {
+    title: 'Video editado',
+    sources: {
+      hq: '/videos/after-4rntsyww8do-hq.mp4',
+      lq: '/videos/after-4rntsyww8do-lq.mp4'
+    },
+    poster: '/videos/after-4rntsyww8do-poster.jpg'
+  }
+}
+
+const getPreferredVideoSource = (videoConfig) => {
+  if (typeof navigator === 'undefined') {
+    return videoConfig.sources.hq || videoConfig.sources.lq
+  }
+
+  const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection
+  const effectiveType = connection?.effectiveType || ''
+  const isSlowNetwork = connection?.saveData || ['slow-2g', '2g', '3g'].includes(effectiveType)
+
+  return isSlowNetwork ? videoConfig.sources.lq || videoConfig.sources.hq : videoConfig.sources.hq || videoConfig.sources.lq
+}
+
+function ComparisonVideoCard({ videoConfig, labelClassName, borderClassName, titleClassName }) {
+  const [isLoaded, setIsLoaded] = useState(false)
+
+  return (
+    <div className={`aspect-video rounded-xl overflow-hidden border-4 relative shadow-xl ${borderClassName}`}>
+      {!isLoaded ? (
+        <button
+          type="button"
+          className="relative w-full h-full group"
+          onClick={() => setIsLoaded(true)}
+          aria-label={`Reproducir ${videoConfig.title}`}
+        >
+          <img
+            src={videoConfig.poster}
+            alt={videoConfig.title}
+            className="w-full h-full object-cover"
+            loading="lazy"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-black/10" />
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className={`rounded-full p-4 transition-transform group-hover:scale-110 ${labelClassName}`}>
+              <Play className="size-7 text-white" fill="white" />
+            </div>
+          </div>
+          <p className={`absolute bottom-4 left-4 text-lg font-bold ${titleClassName}`}>{videoConfig.title}</p>
+        </button>
+      ) : (
+        <video
+          src={getPreferredVideoSource(videoConfig)}
+          className="w-full h-full object-cover"
+          controls
+          autoPlay
+          muted
+          playsInline
+          preload="none"
+          poster={videoConfig.poster}
+        />
+      )}
+    </div>
+  )
+}
 
 export default function BeforeAfter() {
   return (
@@ -49,28 +123,13 @@ export default function BeforeAfter() {
               <div className="absolute -top-4 left-4 inline-block px-3 py-1 bg-red-600 rounded-full">
                 <span className="text-white text-sm font-bold">ANTES</span>
               </div>
-              
-              <div className="aspect-video rounded-xl overflow-hidden bg-gradient-to-br from-slate-200 to-slate-300 flex items-center justify-center border-4 border-red-500 relative shadow-xl">
-                {/* Simulación de video sin editar - aspecto amateur */}
-                <div className="absolute inset-0 bg-gradient-to-br from-yellow-100 via-white to-gray-100 opacity-60" />
-                
-                {/* Líneas de distorsión / ruido */}
-                <div className="absolute inset-0 opacity-20">
-                  <div className="absolute top-0 w-full h-1 bg-gradient-to-r from-transparent via-red-400 to-transparent" />
-                  <div className="absolute top-1/3 w-full h-px bg-red-300/30" />
-                  <div className="absolute top-2/3 w-full h-px bg-red-300/30" />
-                  <div className="absolute bottom-0 w-full h-1 bg-gradient-to-r from-transparent via-red-400 to-transparent" />
-                </div>
 
-                {/* Contenido - ícono de video crudo */}
-                <div className="relative z-10 text-center px-8">
-                  <p className="text-slate-700 text-lg font-bold mb-3">Video sin editar</p>
-                </div>
-
-                {/* Esquinas oscuras para efecto de baja calidad */}
-                <div className="absolute top-0 left-0 w-12 h-12 bg-black/20 rounded-br-full" />
-                <div className="absolute bottom-0 right-0 w-12 h-12 bg-black/20 rounded-tl-full" />
-              </div>
+              <ComparisonVideoCard
+                videoConfig={BEFORE_AFTER_VIDEOS.before}
+                labelClassName="bg-red-600"
+                borderClassName="border-red-500"
+                titleClassName="text-white"
+              />
             </div>
             
             <div className="mt-8 p-6 bg-red-50 border-2 border-red-300 rounded-lg shadow-md">
@@ -93,32 +152,13 @@ export default function BeforeAfter() {
               <div className="absolute -top-4 left-4 inline-block px-3 py-1 bg-green-600 rounded-full">
                 <span className="text-white text-sm font-bold">DESPUÉS</span>
               </div>
-              
-              <div className="aspect-video rounded-xl overflow-hidden bg-gradient-to-br from-slate-700 via-slate-800 to-slate-900 flex items-center justify-center border-4 border-green-500 relative shadow-2xl shadow-green-500/30">
-                {/* Simulación de video profesional - cinematográfico */}
-                <div className="absolute inset-0 bg-gradient-to-br from-indigo-900 via-slate-900 to-black opacity-80" />
-                
-                {/* Efecto de luz cinematográfica */}
-                <div className="absolute inset-0">
-                  <div className="absolute top-0 left-1/4 w-96 h-96 bg-green-500/20 rounded-full blur-3xl" />
-                  <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl" />
-                </div>
 
-                {/* Líneas de corte (editing lines) */}
-                <div className="absolute inset-0 opacity-40">
-                  <div className="absolute top-1/4 w-full h-px bg-gradient-to-r from-transparent via-green-400 to-transparent" />
-                  <div className="absolute top-1/2 w-full h-px bg-gradient-to-r from-transparent via-cyan-400 to-transparent" />
-                  <div className="absolute top-3/4 w-full h-px bg-gradient-to-r from-transparent via-green-400 to-transparent" />
-                </div>
-
-                {/* Contenido - ícono de video profesional */}
-                <div className="relative z-10 text-center px-8">
-                  <p className="text-green-300 text-lg font-bold mb-3">Video editado</p>
-                </div>
-
-                {/* Brillo/glow effect */}
-                <div className="absolute inset-0 rounded-xl pointer-events-none border-4 border-transparent bg-gradient-to-r from-green-400/0 via-green-400/10 to-cyan-400/0 rounded-xl" />
-              </div>
+              <ComparisonVideoCard
+                videoConfig={BEFORE_AFTER_VIDEOS.after}
+                labelClassName="bg-green-600"
+                borderClassName="border-green-500"
+                titleClassName="text-white"
+              />
             </div>
             
             <div className="mt-8 p-6 bg-green-50 border-2 border-green-300 rounded-lg shadow-md">

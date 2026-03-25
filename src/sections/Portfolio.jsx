@@ -3,162 +3,188 @@ import { BentoCard } from '../components/MagicUI'
 import { Play, Award, Zap, X } from 'lucide-react'
 import { useState } from 'react'
 
-// TODO: Reemplazar con los videos reales del cliente
+const getPreferredVideoSource = (video) => {
+  if (!video?.sources) return video?.url
+
+  if (typeof navigator === 'undefined') {
+    return video.sources.hq || video.sources.lq || video.url
+  }
+
+  const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection
+  const effectiveType = connection?.effectiveType || ''
+  const isSlowNetwork = connection?.saveData || ['slow-2g', '2g', '3g'].includes(effectiveType)
+
+  return isSlowNetwork
+    ? (video.sources.lq || video.sources.hq || video.url)
+    : (video.sources.hq || video.sources.lq || video.url)
+}
+
 const DEMO_VIDEOS = [
   {
     id: 1,
-    title: "Video Promocional Premium",
-    url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    title: "Video ELQUI SUP",
+    url: "/videos/elqui-sup-hq.mp4",
+    sources: {
+      hq: "/videos/elqui-sup-hq.mp4",
+      lq: "/videos/elqui-sup-lq.mp4"
+    },
+    type: "mp4",
+    thumbnail: "/videos/elqui-sup-poster.jpg",
     featured: true,
     category: "Comercial",
-    badge: "🔥 Viral",
-    cliente: "Carlos Martínez",
-    empresa: "FitLife Studio",
-    description: "Edición de video profesional para campaña de marketing digital con efectos visuales de alto impacto.",
-    date: "January 20, 2026"
+    badge: "Cliente Real",
+    cliente: "Felipe Zarate",
+    empresa: "ELQUI SUP",
+    description: "Contenido para marca deportiva con enfoque en presencia y posicionamiento.",
+    date: "March 2026"
   },
   {
     id: 2,
-    title: "Contenido Corporativo",
-    url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    title: "Video ARCA DE LUCY",
+    url: "/videos/arca-de-lucy-hq.mp4",
+    sources: {
+      hq: "/videos/arca-de-lucy-hq.mp4",
+      lq: "/videos/arca-de-lucy-lq.mp4"
+    },
+    type: "mp4",
+    thumbnail: "/videos/arca-de-lucy-poster.jpg",
     featured: false,
-    category: "Empresarial",
-    badge: "👁️ +50k Vistas",
-    cliente: "Ana García",
-    empresa: "TechStart Inc",
-    description: "Video corporativo de presentación de empresa con transiciones dinámicas y motion graphics.",
-    date: "January 19, 2026"
+    category: "Marca",
+    badge: "Cliente Real",
+    cliente: "Arca de Lucy",
+    empresa: "Productos Vegetarianos",
+    description: "Pieza de contenido para negocio gastronómico con edición dinámica.",
+    date: "March 2026"
   },
   {
     id: 3,
-    title: "Reel Creativo",
-    url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    title: "Video Marca Personal",
+    url: "/videos/marca-personal-1-hq.mp4",
+    sources: {
+      hq: "/videos/marca-personal-1-hq.mp4",
+      lq: "/videos/marca-personal-1-lq.mp4"
+    },
+    type: "mp4",
+    thumbnail: "/videos/marca-personal-1-poster.jpg",
     featured: false,
     category: "Social Media",
-    badge: "🚀 +200% Retención",
-    cliente: "Pedro López",
-    empresa: "Social Media Pro",
-    description: "Contenido viral para redes sociales con edición rápida y efectos atractivos.",
-    date: "January 18, 2026"
+    badge: "Marca Personal",
+    cliente: "Bryan",
+    empresa: "Marca Personal",
+    description: "Short para posicionamiento personal y alcance orgánico en redes.",
+    date: "March 2026"
   },
   {
     id: 4,
-    title: "Documental Corto",
-    url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    title: "Video Briza Tours",
+    url: "/videos/briza-tours-hq.mp4",
+    sources: {
+      hq: "/videos/briza-tours-hq.mp4",
+      lq: "/videos/briza-tours-lq.mp4"
+    },
+    type: "mp4",
+    thumbnail: "/videos/briza-tours-poster.jpg",
     featured: false,
-    category: "Narrativa",
-    badge: "🏆 Caso de Éxito",
-    cliente: "María Rodríguez",
-    empresa: "Creative Studio",
-    description: "Documental corto con narrativa envolvente y cinematografía de calidad profesional.",
-    date: "January 17, 2026"
+    category: "Turismo",
+    badge: "Cliente Real",
+    cliente: "Briza Tours",
+    empresa: "Tours & Experiences",
+    description: "Video promocional para servicios turísticos con ritmo y estética comercial.",
+    date: "March 2026"
   },
   {
     id: 5,
-    title: "Motion Graphics",
-    url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    title: "Video Marca Personal 2",
+    url: "/videos/marca-personal-2-hq.mp4",
+    sources: {
+      hq: "/videos/marca-personal-2-hq.mp4",
+      lq: "/videos/marca-personal-2-lq.mp4"
+    },
+    type: "mp4",
+    thumbnail: "/videos/marca-personal-2-poster.jpg",
     featured: false,
-    category: "Animación",
-    badge: "🎯 Conversiones",
-    cliente: "Juan Pérez",
-    empresa: "Digital Agency",
-    description: "Animaciones personalizadas y motion graphics para explicar conceptos complejos.",
-    date: "January 16, 2026"
+    category: "Social Media",
+    badge: "Marca Personal",
+    cliente: "Bryan",
+    empresa: "Marca Personal",
+    description: "Contenido vertical optimizado para retención y autoridad en redes.",
+    date: "March 2026"
+  },
+  {
+    id: 6,
+    title: "Video de Federico",
+    url: "/videos/federico-ecolab-hq.mp4",
+    sources: {
+      hq: "/videos/federico-ecolab-hq.mp4",
+      lq: "/videos/federico-ecolab-lq.mp4"
+    },
+    type: "mp4",
+    thumbnail: "/videos/federico-ecolab-poster.jpg",
+    featured: false,
+    category: "Negocios",
+    badge: "Cliente Real",
+    cliente: "Federico",
+    empresa: "ECOLAB",
+    description: "Video de marca y contenido comercial para negocio local.",
+    date: "March 2026"
   }
 ]
 
 // Proyectos adicionales para el modal
-const ADDITIONAL_VIDEOS = [
-  {
-    id: 6,
-    title: "Tutorial Educativo",
-    url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-    category: "Educación",
-    badge: "📚 Top Educativo",
-    cliente: "Laura Sánchez",
-    empresa: "EduOnline",
-    description: "Video tutorial con animaciones explicativas y gráficos interactivos.",
-    date: "January 15, 2026"
-  },
-  {
-    id: 7,
-    title: "Evento Corporativo",
-    url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-    category: "Eventos",
-    badge: "🎉 Destacado",
-    cliente: "Roberto Gómez",
-    empresa: "Events Corp",
-    description: "Cobertura profesional de evento con múltiples cámaras y edición dinámica.",
-    date: "January 14, 2026"
-  },
-  {
-    id: 8,
-    title: "Campaña Publicitaria",
-    url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-    category: "Publicidad",
-    badge: "💎 Premium",
-    cliente: "Sofia Martín",
-    empresa: "Brand Studio",
-    description: "Spot publicitario con color grading profesional y efectos visuales.",
-    date: "January 13, 2026"
-  },
-  {
-    id: 9,
-    title: "Testimonial Cliente",
-    url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-    category: "Testimonios",
-    badge: "⭐ Impacto",
-    cliente: "Miguel Torres",
-    empresa: "Success Stories",
-    description: "Video testimonial con iluminación profesional y audio optimizado.",
-    date: "January 12, 2026"
-  },
-  {
-    id: 10,
-    title: "Producto Launch",
-    url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-    category: "Producto",
-    badge: "🚀 Lanzamiento",
-    cliente: "Carmen Díaz",
-    empresa: "Tech Launch",
-    description: "Video de lanzamiento de producto con animaciones 3D y renders.",
-    date: "January 11, 2026"
-  },
-  {
-    id: 11,
-    title: "Behind The Scenes",
-    url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-    category: "BTS",
-    badge: "🎬 Exclusivo",
-    cliente: "Daniel Ruiz",
-    empresa: "Film Production",
-    description: "Detrás de cámaras con edición documental y narrativa envolvente.",
-    date: "January 10, 2026"
-  }
-]
+const ADDITIONAL_VIDEOS = []
 
 function VideoCard({ video, className = "" }) {
   const [isLoaded, setIsLoaded] = useState(false)
+  const preferredSource = getPreferredVideoSource(video)
+  const isDirectVideo = video.type === 'mp4' || /(\.mp4|\.webm|\.ogg)(\?|$)/i.test(preferredSource || '')
+
+  const getYouTubeId = (url) => {
+    try {
+      const parsedUrl = new URL(url)
+
+      if (parsedUrl.hostname.includes('youtu.be')) {
+        return parsedUrl.pathname.split('/').filter(Boolean)[0] || null
+      }
+
+      if (parsedUrl.hostname.includes('youtube.com')) {
+        if (parsedUrl.pathname.startsWith('/shorts/')) {
+          return parsedUrl.pathname.split('/')[2] || null
+        }
+
+        if (parsedUrl.pathname.startsWith('/embed/')) {
+          return parsedUrl.pathname.split('/')[2] || null
+        }
+
+        return parsedUrl.searchParams.get('v')
+      }
+    } catch {
+      return null
+    }
+
+    return null
+  }
 
   const getEmbedUrl = (url) => {
     if (url.includes('youtube.com') || url.includes('youtu.be')) {
-      const videoId = url.includes('youtu.be') 
-        ? url.split('/').pop()
-        : new URL(url).searchParams.get('v')
-      return `https://www.youtube.com/embed/${videoId}`
+      const videoId = getYouTubeId(url)
+      if (!videoId) return url
+      return `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&mute=1&rel=0&modestbranding=1&playsinline=1`
     }
     if (url.includes('vimeo.com')) {
       const videoId = url.split('/').pop()
-      return `https://player.vimeo.com/video/${videoId}`
+      return `https://player.vimeo.com/video/${videoId}?autoplay=1&muted=1`
     }
     return url
   }
 
   const getThumbnail = (url) => {
+    if (video.thumbnail) {
+      return video.thumbnail
+    }
+
     if (url.includes('youtube.com') || url.includes('youtu.be')) {
-      const videoId = url.includes('youtu.be') 
-        ? url.split('/').pop()
-        : new URL(url).searchParams.get('v')
+      const videoId = getYouTubeId(url)
+      if (!videoId) return null
       return `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`
     }
     return null
@@ -174,11 +200,15 @@ function VideoCard({ video, className = "" }) {
               className="relative w-full h-full cursor-pointer group/video"
               onClick={() => setIsLoaded(true)}
             >
-              <img 
-                src={getThumbnail(video.url)}
-                alt={video.title}
-                className="w-full h-full object-cover"
-              />
+              {getThumbnail(video.url) ? (
+                <img 
+                  src={getThumbnail(video.url)}
+                  alt={video.title}
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <div className="w-full h-full bg-gradient-to-br from-slate-900 via-slate-800 to-blue-700" />
+              )}
               <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
               
               {/* Time Badge */}
@@ -204,13 +234,26 @@ function VideoCard({ video, className = "" }) {
           
           {isLoaded && (
             <div className="w-full h-full overflow-hidden">
-              <iframe
-                src={getEmbedUrl(video.url)}
-                title={video.title}
-                className="w-full h-full"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
+              {isDirectVideo ? (
+                <video
+                  src={preferredSource}
+                  className="w-full h-full object-cover"
+                  controls
+                  autoPlay
+                  muted
+                  playsInline
+                  preload="none"
+                  poster={video.thumbnail}
+                />
+              ) : (
+                <iframe
+                  src={getEmbedUrl(video.url)}
+                  title={video.title}
+                  className="w-full h-full"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              )}
             </div>
           )}
         </div>
@@ -298,20 +341,22 @@ export default function Portfolio() {
       </motion.div>
 
       {/* Ver Más Button */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        className="text-center mt-12"
-      >
-        <button 
-          onClick={() => setIsModalOpen(true)}
-          className="inline-flex items-center gap-2 px-8 py-4 border-2 border-blue-600 text-blue-600 font-semibold rounded-xl hover:bg-blue-50 transition-all"
+      {ADDITIONAL_VIDEOS.length > 0 && (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mt-12"
         >
-          Ver más proyectos
-          <Award className="size-5" />
-        </button>
-      </motion.div>
+          <button 
+            onClick={() => setIsModalOpen(true)}
+            className="inline-flex items-center gap-2 px-8 py-4 border-2 border-blue-600 text-blue-600 font-semibold rounded-xl hover:bg-blue-50 transition-all"
+          >
+            Ver más proyectos
+            <Award className="size-5" />
+          </button>
+        </motion.div>
+      )}
 
       {/* Services Grid */}
       <motion.div
@@ -349,7 +394,7 @@ export default function Portfolio() {
     </section>
 
     {/* Modal de Proyectos Adicionales */}
-    {isModalOpen && (
+    {isModalOpen && ADDITIONAL_VIDEOS.length > 0 && (
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
