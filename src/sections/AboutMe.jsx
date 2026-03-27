@@ -59,7 +59,7 @@ export default function AboutMe() {
               </div>
               
               <div className="flex-1">
-                <h3 className="text-2xl font-semibold text-slate-900 tracking-tight mb-2">Bryan</h3>
+                <h3 className="text-2xl font-semibold text-slate-900 tracking-tight mb-2">brayaneditavideos</h3>
                 <p className="text-blue-600 font-medium mb-4">Editor de Video Profesional</p>
                 <p className="text-slate-600 text-sm leading-relaxed">
                   Editor con pasión por transformar historias en experiencias visuales memorables. 

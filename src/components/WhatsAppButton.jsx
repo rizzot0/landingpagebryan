@@ -5,8 +5,7 @@ import { MessageCircle, X } from 'lucide-react'
 export default function WhatsAppButton() {
   const [isOpen, setIsOpen] = useState(false)
   
-  // TODO: Reemplazar con el número de WhatsApp real (formato: 521234567890)
-  const WHATSAPP_NUMBER = "56928683655"
+  const WHATSAPP_NUMBER = (import.meta.env.VITE_WHATSAPP_NUMBER || '56928683655').replace(/\D/g, '')
   const WHATSAPP_MESSAGE = "Hola! Quiero información sobre tus servicios de edición de video 🎬"
   
   const whatsappURL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`

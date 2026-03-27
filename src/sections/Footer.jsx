@@ -1,4 +1,4 @@
-import { Heart, Instagram, Linkedin, Github } from 'lucide-react'
+import { Instagram, Linkedin, Github } from 'lucide-react'
 
 export default function Footer() {
   return (
@@ -7,7 +7,7 @@ export default function Footer() {
         <div className="grid md:grid-cols-3 gap-8 mb-8">
           {/* Brand */}
           <div>
-            <h3 className="font-semibold text-slate-900 tracking-tight mb-2">Bryan — Editor de Video</h3>
+            <h3 className="font-semibold text-slate-900 tracking-tight mb-2">brayaneditavideos — Editor de Video</h3>
             <p className="text-sm text-slate-600 font-normal">
               Transformando ideas en contenido visual impactante.
             </p>
@@ -56,10 +56,7 @@ export default function Footer() {
         </div>
 
         <div className="pt-8 border-t border-slate-200 flex flex-col sm:flex-row justify-between items-center gap-4 text-sm text-slate-600">
-          <p>© {new Date().getFullYear()} Bryan. Todos los derechos reservados.</p>
-          <p className="flex items-center gap-1 font-normal">
-            Hecho con <Heart className="size-4 text-blue-600 fill-blue-600" /> por Bastián
-          </p>
+          <p>© {new Date().getFullYear()} brayaneditavideos. Todos los derechos reservados.</p>
         </div>
       </div>
     </footer>

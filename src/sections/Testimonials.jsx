@@ -104,7 +104,7 @@ const Testimonials = () => {
           <div className="inline-flex items-center gap-3 px-6 py-3 bg-white border border-slate-200 rounded-full shadow-sm hover:shadow-md transition-shadow">
             <svg className="w-6 h-6" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
               <circle cx="20" cy="20" r="20" fill="#14a800"/>
-              <text x="20" y="28" font-size="20" font-weight="bold" fill="white" text-anchor="middle">up</text>
+              <text x="20" y="28" fontSize="20" fontWeight="bold" fill="white" textAnchor="middle">up</text>
             </svg>
             <div className="flex gap-0.5">
               {[...Array(5)].map((_, i) => (

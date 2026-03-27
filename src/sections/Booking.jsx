@@ -3,15 +3,19 @@ import { BentoCard, GridPattern } from '../components/MagicUI'
 import { Calendar, Clock, Video, CheckCircle } from 'lucide-react'
 
 export default function Booking() {
-  // TODO: Reemplazar con tu URL real de Calendly o Cal.com
-  // Ejemplo Calendly: https://calendly.com/tu-usuario/30min
-  // Ejemplo Cal.com: https://cal.com/tu-usuario/30min
-  const CALENDAR_URL = "https://calendly.com/tu-usuario"
+  // Scheduling configuration.
+  // VITE_CALENDAR_PROVIDER: Calendly | Cal.com | otro
+  // VITE_CALENDAR_URL: link publico de agendamiento
+  // VITE_MEETING_PLATFORM: Google Meet | Zoom
+  // VITE_SESSION_DURATION: por ejemplo "30 minutos"
+  const CALENDAR_PROVIDER = import.meta.env.VITE_CALENDAR_PROVIDER || 'Calendly'
+  const CALENDAR_URL = import.meta.env.VITE_CALENDAR_URL || 'https://calendly.com/bastianalonso92'
+  const SESSION_DURATION = import.meta.env.VITE_SESSION_DURATION || '30 minutos'
 
   const benefits = [
-    { icon: <Video className="size-5" />, text: "Videollamada directa" },
-    { icon: <Clock className="size-5" />, text: "Sesiones de 30-60 min" },
-    { icon: <CheckCircle className="size-5" />, text: "Sin compromiso" }
+    { icon: <Video className="size-5" />, text: 'Google Meet' },
+    { icon: <Clock className="size-5" />, text: `Sesion de ${SESSION_DURATION}` },
+    { icon: <CheckCircle className="size-5" />, text: 'Confirmacion y recordatorios automaticos' }
   ]
 
   return (
@@ -35,7 +39,7 @@ export default function Booking() {
           Conversemos sobre tu proyecto
         </h2>
         <p className="mt-4 text-slate-600 max-w-2xl mx-auto text-lg">
-          Reserva una videollamada gratuita. Sin compromiso, sin costo. Solo tú y yo hablando de tus objetivos.
+          Agenda una reunion de {SESSION_DURATION}. El usuario elige horario disponible, queda coordinado con el cliente y ambos reciben notificacion automatica.
         </p>
       </motion.div>
 
@@ -86,7 +90,7 @@ export default function Booking() {
                 Elige tu horario
               </h3>
               <p className="text-slate-600 max-w-xs mb-8">
-                Haz clic en el botón para ver mi disponibilidad en tiempo real y reservar tu sesión.
+                Haz click en Abrir agenda, selecciona un bloque de 30 minutos para agendar una reunion por Google Meet.
               </p>
               
               <a 
@@ -96,15 +100,8 @@ export default function Booking() {
                 className="inline-flex items-center gap-2 px-8 py-4 rounded-lg bg-gradient-to-r from-blue-600 to-blue-700 text-white font-bold hover:from-blue-700 hover:to-blue-800 transition-all shadow-lg hover:shadow-xl text-lg"
               >
                 <Calendar className="size-5" />
-                Abrir Mi Calendario
+                Abrir agenda
               </a>
-
-              <p className="text-xs text-slate-500 mt-8">
-                También puedes copiar este link: <br/>
-                <code className="bg-slate-100 px-2 py-1 rounded text-blue-600 font-mono break-all">
-                  {CALENDAR_URL}
-                </code>
-              </p>
             </div>
 
             {/* 
@@ -154,7 +151,7 @@ export default function Booking() {
         <p className="text-slate-700 font-medium">
           ✓ <span className="text-blue-600 font-bold">Confirmación automática</span> por email · 
           <span className="text-green-600 font-bold"> Recordatorio 24h antes</span> · 
-          <span className="text-purple-600 font-bold"> Zoom link incluido</span>
+          <span className="text-purple-600 font-bold"> Link de Google Meet incluido</span>
         </p>
       </motion.div>
     </section>

@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 import { BentoCard } from '../components/MagicUI'
-import { Play, Award, Zap, X } from 'lucide-react'
+import { Play, Award, Zap, ExternalLink } from 'lucide-react'
 import { useState } from 'react'
 
 const getPreferredVideoSource = (video) => {
@@ -36,7 +36,7 @@ const DEMO_VIDEOS = [
     cliente: "Felipe Zarate",
     empresa: "ELQUI SUP",
     description: "Contenido para marca deportiva con enfoque en presencia y posicionamiento.",
-    date: "March 2026"
+    date: "Verano 2026"
   },
   {
     id: 2,
@@ -54,7 +54,7 @@ const DEMO_VIDEOS = [
     cliente: "Arca de Lucy",
     empresa: "Productos Vegetarianos",
     description: "Pieza de contenido para negocio gastronómico con edición dinámica.",
-    date: "March 2026"
+    date: "Verano 2026"
   },
   {
     id: 3,
@@ -69,10 +69,10 @@ const DEMO_VIDEOS = [
     featured: false,
     category: "Social Media",
     badge: "Marca Personal",
-    cliente: "Bryan",
+    cliente: "brayaneditavideos",
     empresa: "Marca Personal",
     description: "Short para posicionamiento personal y alcance orgánico en redes.",
-    date: "March 2026"
+    date: "Verano 2026"
   },
   {
     id: 4,
@@ -90,7 +90,7 @@ const DEMO_VIDEOS = [
     cliente: "Briza Tours",
     empresa: "Tours & Experiences",
     description: "Video promocional para servicios turísticos con ritmo y estética comercial.",
-    date: "March 2026"
+    date: "Verano 2026"
   },
   {
     id: 5,
@@ -105,10 +105,10 @@ const DEMO_VIDEOS = [
     featured: false,
     category: "Social Media",
     badge: "Marca Personal",
-    cliente: "Bryan",
+    cliente: "brayaneditavideos",
     empresa: "Marca Personal",
     description: "Contenido vertical optimizado para retención y autoridad en redes.",
-    date: "March 2026"
+    date: "Verano 2026"
   },
   {
     id: 6,
@@ -126,12 +126,11 @@ const DEMO_VIDEOS = [
     cliente: "Federico",
     empresa: "ECOLAB",
     description: "Video de marca y contenido comercial para negocio local.",
-    date: "March 2026"
+    date: "Verano 2026"
   }
 ]
 
-// Proyectos adicionales para el modal
-const ADDITIONAL_VIDEOS = []
+const PORTFOLIO_EXTERNAL_URL = import.meta.env.VITE_PORTFOLIO_EXTERNAL_URL || 'https://instagram.com/brayaneditavideos'
 
 function VideoCard({ video, className = "" }) {
   const [isLoaded, setIsLoaded] = useState(false)
@@ -295,8 +294,6 @@ function VideoCard({ video, className = "" }) {
 }
 
 export default function Portfolio() {
-  const [isModalOpen, setIsModalOpen] = useState(false)
-
   return (
     <>
     <section id="portfolio" className="mx-auto max-w-7xl px-4 py-20 bg-white">
@@ -340,23 +337,22 @@ export default function Portfolio() {
         ))}
       </motion.div>
 
-      {/* Ver Más Button */}
-      {ADDITIONAL_VIDEOS.length > 0 && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mt-12"
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        className="text-center mt-12"
+      >
+        <a
+          href={PORTFOLIO_EXTERNAL_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 px-8 py-4 border-2 border-blue-600 text-blue-600 font-semibold rounded-xl hover:bg-blue-50 transition-all"
         >
-          <button 
-            onClick={() => setIsModalOpen(true)}
-            className="inline-flex items-center gap-2 px-8 py-4 border-2 border-blue-600 text-blue-600 font-semibold rounded-xl hover:bg-blue-50 transition-all"
-          >
-            Ver más proyectos
-            <Award className="size-5" />
-          </button>
-        </motion.div>
-      )}
+          Ver más
+          <ExternalLink className="size-5" />
+        </a>
+      </motion.div>
 
       {/* Services Grid */}
       <motion.div
@@ -373,13 +369,13 @@ export default function Portfolio() {
           },
           {
             icon: <Award className="size-6" />,
-            title: "Calidad Premium",
-            desc: "Equipos y técnicas de nivel Hollywood"
+            title: "Estrategia de Contenido",
+            desc: "Cada video se planifica para atraer y convertir"
           },
           {
             icon: <Play className="size-6" />,
-            title: "Revisiones Ilimitadas",
-            desc: "Hasta que quedes 100% satisfecho"
+            title: "Proceso Colaborativo",
+            desc: "Ajustes claros por etapas para llegar al resultado ideal"
           }
         ].map((service, idx) => (
           <BentoCard key={idx} className="text-center">
@@ -392,48 +388,6 @@ export default function Portfolio() {
         ))}
       </motion.div>
     </section>
-
-    {/* Modal de Proyectos Adicionales */}
-    {isModalOpen && ADDITIONAL_VIDEOS.length > 0 && (
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.95 }}
-          className="relative bg-white rounded-2xl shadow-2xl max-w-7xl w-full max-h-[90vh] overflow-hidden"
-        >
-          {/* Header del Modal */}
-          <div className="sticky top-0 bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between z-10">
-            <div>
-              <h3 className="text-2xl font-semibold text-slate-900">Más Proyectos</h3>
-              <p className="text-sm text-slate-600 mt-1">Explora nuestra colección completa de trabajos</p>
-            </div>
-            <button
-              onClick={() => setIsModalOpen(false)}
-              className="p-2 rounded-lg hover:bg-slate-100 transition-colors"
-            >
-              <X className="size-6 text-slate-600" />
-            </button>
-          </div>
-
-          {/* Contenido del Modal */}
-          <div className="overflow-y-auto max-h-[calc(90vh-80px)] p-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-              {ADDITIONAL_VIDEOS.map((video, idx) => (
-                <motion.div
-                  key={video.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: idx * 0.05 }}
-                >
-                  <VideoCard video={video} />
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </motion.div>
-      </div>
-    )}
     </>
   )
 }

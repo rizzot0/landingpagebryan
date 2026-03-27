@@ -1,16 +1,29 @@
 import { motion as Motion } from 'framer-motion'
 import { AlertCircle, XCircle } from 'lucide-react'
+import { useState } from 'react'
 import { GridPattern } from '../components/MagicUI'
 import antesImage from '../assets/antes (1).png'
 import despuesImage from '../assets/antes (2).png'
 
 export default function PainSection() {
-  const bullets = [
+  const [activeImage, setActiveImage] = useState(null)
+
+  const beforeBullets = [
     'Publican, pero no reciben mensajes.',
     'Tienen likes, pero no clientes.',
     'Invierten tiempo y no ven resultados.',
     'No saben qué contenido funciona.'
   ]
+
+  const afterBullets = [
+    'Publican con estrategia y reciben mensajes.',
+    'Convierten vistas en clientes reales.',
+    'Su contenido retiene y genera confianza.',
+    'Saben exactamente qué formato sí vende.'
+  ]
+
+  const topBullets = beforeBullets.slice(0, 2)
+  const bottomBullets = afterBullets.slice(0, 2)
 
   return (
     <section className="relative py-20 bg-slate-50 overflow-hidden">
@@ -40,89 +53,166 @@ export default function PainSection() {
           </h2>
         </Motion.div>
 
-        {/* 3 Column Layout: Image Before | Content | Image After */}
-        <div className="grid md:grid-cols-3 xl:grid-cols-[1.3fr_0.9fr_1.3fr] gap-6 lg:gap-8 items-start md:items-stretch">
-          {/* Left: Gráfico/Stats ANTES */}
-          <Motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="order-1 h-full min-h-[420px] md:min-h-[620px] xl:min-h-[700px]"
-          >
-            <div className="relative h-full overflow-hidden rounded-[28px] bg-gradient-to-b from-slate-50 to-white flex items-center justify-center">
-              <img
-                src={antesImage}
-                alt="Resultado antes de aplicar estrategia de contenido"
-                className="w-full h-full object-contain object-center"
-                loading="lazy"
-              />
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-slate-50/25" />
-            </div>
-          </Motion.div>
-
-          {/* Center: Pain Points */}
+        {/* Storyboard 2x2: imagen + texto / texto + imagen */}
+        <div className="grid gap-6 lg:gap-8 lg:grid-cols-2">
+          {/* Top Left: ANTES */}
           <Motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="order-2 md:col-span-1"
+            className="order-1"
           >
-            {/* Pain Bullets */}
-            <div className="space-y-4">
-              {bullets.map((item, idx) => (
+            <div className="relative overflow-hidden rounded-[28px] border-2 border-red-200 bg-white min-h-[420px] lg:min-h-[520px] shadow-lg">
+              <div className="absolute top-4 left-4 z-10 inline-flex px-3 py-1 rounded-full bg-red-600">
+                <span className="text-xs sm:text-sm font-bold text-white tracking-wide">ANTES</span>
+              </div>
+              <button
+                type="button"
+                onClick={() => setActiveImage({ src: antesImage, alt: 'Resultado antes de aplicar estrategia de contenido' })}
+                className="group relative flex h-full w-full items-center justify-center p-4 sm:p-6"
+                aria-label="Ampliar imagen ANTES"
+              >
+                <img
+                  src={antesImage}
+                  alt="Resultado antes de aplicar estrategia de contenido"
+                  className="h-auto w-auto max-h-[540px] max-w-full object-contain object-center"
+                  style={{ imageRendering: 'auto' }}
+                  loading="lazy"
+                />
+                <span className="pointer-events-none absolute bottom-4 right-4 rounded-full bg-black/70 px-3 py-1 text-xs font-semibold text-white opacity-0 transition-opacity group-hover:opacity-100">
+                  Clic para ampliar
+                </span>
+              </button>
+            </div>
+          </Motion.div>
+
+          {/* Top Right: Pain Points (Parte 1) */}
+          <Motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.08 }}
+            className="order-2"
+          >
+            <div className="h-full rounded-[28px] border-2 border-red-100 bg-white p-6 sm:p-8 shadow-sm">
+              <div className="space-y-4">
+                {topBullets.map((item, idx) => (
+                  <Motion.div
+                    key={idx}
+                    initial={{ opacity: 0, x: -10 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: idx * 0.1 }}
+                    className="flex items-start gap-3 p-4 rounded-xl bg-red-50 border border-red-200"
+                  >
+                    <span className="mt-0.5 flex-shrink-0">
+                      <XCircle className="size-6 text-red-500" />
+                    </span>
+                    <p className="text-base sm:text-lg text-slate-800 font-semibold leading-relaxed">
+                      {item}
+                    </p>
+                  </Motion.div>
+                ))}
+              </div>
+            </div>
+          </Motion.div>
+
+          {/* Bottom Left: Pain Points (Parte 2) + solución */}
+          <Motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.16 }}
+            className="order-3"
+          >
+            <div className="h-full rounded-[28px] border-2 border-blue-100 bg-white p-6 sm:p-8 shadow-sm">
+              <div className="space-y-4">
+                {bottomBullets.map((item, idx) => (
                 <Motion.div
-                  key={idx}
+                  key={item}
                   initial={{ opacity: 0, x: -10 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: idx * 0.1 }}
-                  className="flex items-start gap-3 p-4 rounded-xl bg-white border border-red-100 shadow-sm hover:shadow-md transition-all"
+                  className="flex items-start gap-3 p-4 rounded-xl bg-green-50 border border-green-200"
                 >
                   <span className="mt-0.5 flex-shrink-0">
-                    <XCircle className="size-6 text-red-500" />
+                    <AlertCircle className="size-6 text-green-600" />
                   </span>
                   <p className="text-base sm:text-lg text-slate-800 font-semibold leading-relaxed">
                     {item}
                   </p>
                 </Motion.div>
               ))}
-            </div>
+              </div>
 
-            {/* Solution Text */}
-            <Motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="mt-8 p-6 bg-blue-50 border-2 border-blue-200 rounded-xl"
-            >
-              <p className="text-slate-700 font-semibold leading-relaxed">
-                <span className="text-blue-600 font-bold">El problema no es publicar.</span> Es publicar <span className="font-bold">sin estrategia.</span> Corregimos eso con videos que retienen y convierten.
-              </p>
-            </Motion.div>
+              <div className="mt-6 p-5 sm:p-6 bg-green-50 border-2 border-green-200 rounded-xl">
+                <p className="text-slate-700 text-base sm:text-lg font-semibold leading-relaxed">
+                  <span className="text-green-700 font-bold">La diferencia está en la estrategia.</span> Cuando el video se edita con intención, <span className="font-bold">la audiencia se queda, confía y compra.</span>
+                </p>
+              </div>
+            </div>
           </Motion.div>
 
-          {/* Right: Foto derecha */}
+          {/* Bottom Right: DESPUES */}
           <Motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="order-3 h-full min-h-[420px] md:min-h-[620px] xl:min-h-[700px]"
+            transition={{ duration: 0.6, delay: 0.24 }}
+            className="order-4"
           >
-            <div className="relative h-full overflow-hidden rounded-[28px] bg-gradient-to-b from-slate-50 to-white flex items-center justify-center">
-              <img
-                src={despuesImage}
-                alt="Resultado después de aplicar estrategia de contenido"
-                className="w-full h-full object-contain object-center"
-                loading="lazy"
-              />
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-slate-50/25" />
+            <div className="relative overflow-hidden rounded-[28px] border-2 border-green-200 bg-white min-h-[420px] lg:min-h-[520px] shadow-lg">
+              <div className="absolute top-4 left-4 z-10 inline-flex px-3 py-1 rounded-full bg-green-600">
+                <span className="text-xs sm:text-sm font-bold text-white tracking-wide">DESPUES</span>
+              </div>
+              <button
+                type="button"
+                onClick={() => setActiveImage({ src: despuesImage, alt: 'Resultado después de aplicar estrategia de contenido' })}
+                className="group relative flex h-full w-full items-center justify-center p-4 sm:p-6"
+                aria-label="Ampliar imagen DESPUES"
+              >
+                <img
+                  src={despuesImage}
+                  alt="Resultado después de aplicar estrategia de contenido"
+                  className="h-auto w-auto max-h-[540px] max-w-full object-contain object-center"
+                  style={{ imageRendering: 'auto' }}
+                  loading="lazy"
+                />
+                <span className="pointer-events-none absolute bottom-4 right-4 rounded-full bg-black/70 px-3 py-1 text-xs font-semibold text-white opacity-0 transition-opacity group-hover:opacity-100">
+                  Clic para ampliar
+                </span>
+              </button>
             </div>
           </Motion.div>
         </div>
+
+        {activeImage ? (
+          <div
+            className="fixed inset-0 z-[120] bg-black/85 p-4 sm:p-8"
+            role="dialog"
+            aria-modal="true"
+            onClick={() => setActiveImage(null)}
+          >
+            <button
+              type="button"
+              className="absolute right-4 top-4 rounded-full border border-white/40 bg-black/40 px-3 py-2 text-sm font-semibold text-white"
+              onClick={() => setActiveImage(null)}
+              aria-label="Cerrar imagen ampliada"
+            >
+              Cerrar
+            </button>
+            <div className="flex h-full w-full items-center justify-center">
+              <img
+                src={activeImage.src}
+                alt={activeImage.alt}
+                className="max-h-full max-w-full rounded-xl border border-white/20 bg-white object-contain"
+                onClick={(event) => event.stopPropagation()}
+              />
+            </div>
+          </div>
+        ) : null}
       </div>
     </section>
   )
