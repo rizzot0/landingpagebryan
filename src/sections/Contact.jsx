@@ -15,21 +15,7 @@ export default function Contact() {
   const [hasProfileImageError, setHasProfileImageError] = useState(false)
   const PROFILE_IMAGE_URL = import.meta.env.VITE_PROFILE_IMAGE_URL || '/profile-brayhan.png'
   const FORMSPREE_ENDPOINT = import.meta.env.VITE_FORMSPREE_ENDPOINT || ''
-  const WHATSAPP_NUMBER = (import.meta.env.VITE_WHATSAPP_NUMBER || '56928683655').replace(/\D/g, '')
-
-  const buildWhatsAppUrl = (payload) => {
-    const text = [
-      'Hola Brayhan, quiero mas informacion sobre tus servicios.',
-      '',
-      `Nombre: ${payload.name}`,
-      `Email: ${payload.email}`,
-      `Instagram/Sitio: ${payload.instagram || '-'}`,
-      '',
-      `Mensaje: ${payload.message}`
-    ].join('\n')
-
-    return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`
-  }
+  const CONTACT_EMAIL = import.meta.env.VITE_CONTACT_EMAIL || 'brayhanguerratrabajo@gmail.com'
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -37,31 +23,30 @@ export default function Contact() {
     setErrorMessage('')
 
     try {
-      if (FORMSPREE_ENDPOINT) {
-        const response = await fetch(FORMSPREE_ENDPOINT, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json'
-          },
-          body: JSON.stringify({
-            name: formData.name,
-            email: formData.email,
-            instagram: formData.instagram,
-            message: formData.message,
-            source: 'landing-contact-form'
-          })
-        })
-
-        if (!response.ok) {
-          throw new Error('No se pudo enviar el formulario.')
-        }
-
-        setStatus('success')
-      } else {
-        window.open(buildWhatsAppUrl(formData), '_blank', 'noopener,noreferrer')
-        setStatus('redirected')
+      if (!FORMSPREE_ENDPOINT) {
+        throw new Error('Falta configurar VITE_FORMSPREE_ENDPOINT para envio automatico.')
       }
+
+      const response = await fetch(FORMSPREE_ENDPOINT, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json'
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          instagram: formData.instagram,
+          message: formData.message,
+          source: 'landing-contact-form'
+        })
+      })
+
+      if (!response.ok) {
+        throw new Error('No se pudo enviar el formulario.')
+      }
+
+      setStatus('success')
 
       setFormData({ name: '', email: '', instagram: '', message: '' })
       setTimeout(() => setStatus(''), 3500)
@@ -181,13 +166,11 @@ export default function Contact() {
                 disabled={status === 'sending'}
                 className="w-full px-5 py-2.5 rounded-md bg-blue-600 text-white font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
               >
-                {status === 'sending' ? 'Enviando...' : status === 'success' ? 'Enviado con exito' : status === 'redirected' ? 'Abriendo WhatsApp...' : status === 'error' ? 'Reintentar envio' : 'Enviar Mensaje'}
+                {status === 'sending' ? 'Enviando...' : status === 'success' ? 'Enviado con exito' : status === 'error' ? 'Reintentar envio' : 'Enviar Mensaje'}
               </button>
 
               <p className="text-xs text-slate-500">
-                {FORMSPREE_ENDPOINT
-                  ? 'Este formulario envia el mensaje directo al correo configurado.'
-                  : 'Modo rapido activo: al enviar se abrira WhatsApp con tus datos completos.'}
+                Este formulario envia el mensaje de forma automatica al correo configurado.
               </p>
 
               {status === 'error' && errorMessage ? (
@@ -256,7 +239,7 @@ export default function Contact() {
               </div>
               <div>
                 <h4 className="font-medium text-slate-900 tracking-tight">Email</h4>
-                <p className="mt-1 text-slate-600 font-normal">brayhanguerratrabajo@gmail.com</p>
+                <p className="mt-1 text-slate-600 font-normal">{CONTACT_EMAIL}</p>
               </div>
             </div>
           </BentoCard>
