@@ -130,7 +130,7 @@ const DEMO_VIDEOS = [
   }
 ]
 
-const PORTFOLIO_EXTERNAL_URL = import.meta.env.VITE_PORTFOLIO_EXTERNAL_URL || 'https://instagram.com/brayaneditavideos'
+const PORTFOLIO_EXTERNAL_URL = import.meta.env.VITE_PORTFOLIO_EXTERNAL_URL || 'https://www.instagram.com/brayaneditavideos/'
 
 function VideoCard({ video, className = "" }) {
   const [isLoaded, setIsLoaded] = useState(false)

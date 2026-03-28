@@ -1,4 +1,12 @@
-import { Instagram, Linkedin, Github } from 'lucide-react'
+import { Instagram, Youtube } from 'lucide-react'
+
+function TikTokIcon({ className }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className={className}>
+      <path d="M15.5 3c.63 1.8 2.09 3.26 3.89 3.89V10a7.43 7.43 0 0 1-3.89-1.1v6.23a5.13 5.13 0 1 1-5.13-5.13c.31 0 .61.03.9.08v3.15a2.02 2.02 0 1 0 1.12 1.8V3h3.11Z" />
+    </svg>
+  )
+}
 
 export default function Footer() {
   return (
@@ -28,28 +36,31 @@ export default function Footer() {
             <h4 className="font-semibold text-slate-900 tracking-tight mb-3">Sígueme</h4>
             <div className="flex gap-3">
               <a 
-                href="https://instagram.com"
+                href="https://www.instagram.com/brayaneditavideos/"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Instagram"
                 className="rounded-lg bg-slate-50 border border-slate-200 p-2.5 hover:bg-blue-50 hover:border-blue-200 transition-colors"
               >
                 <Instagram className="size-5 text-slate-600" />
               </a>
               <a 
-                href="https://linkedin.com"
+                href="https://www.tiktok.com/@brayaneditavideos"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="TikTok"
                 className="rounded-lg bg-slate-50 border border-slate-200 p-2.5 hover:bg-blue-50 hover:border-blue-200 transition-colors"
               >
-                <Linkedin className="size-5 text-slate-600" />
+                <TikTokIcon className="size-5 text-slate-600" />
               </a>
               <a 
-                href="https://github.com"
+                href="https://www.youtube.com/@BrayhanGuerra/videos"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="YouTube"
                 className="rounded-lg bg-slate-50 border border-slate-200 p-2.5 hover:bg-blue-50 hover:border-blue-200 transition-colors"
               >
-                <Github className="size-5 text-slate-600" />
+                <Youtube className="size-5 text-slate-600" />
               </a>
             </div>
           </div>
