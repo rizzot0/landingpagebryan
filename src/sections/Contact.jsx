@@ -227,7 +227,7 @@ export default function Contact() {
 
               {/* Bio */}
               <p className="text-slate-600 text-sm leading-relaxed mb-6">
-                Mi objetivo es claro: transformar la atencion de tu audiencia en ventas reales. Con 2 anos de experiencia en el mundo audiovisual, me especializo en crear contenido de formato corto (TikTok, Reels, Ads) disenado estrategicamente para convertir.
+                Mi objetivo es claro: transformar la atencion de tu audiencia en ventas reales. Con 2 años de experiencia en el mundo audiovisual, me especializo en crear contenido de formato corto (TikTok, Reels, Ads) disenado estrategicamente para convertir.
               </p>
 
               <div className="text-left space-y-2 mb-6 p-4 bg-slate-50 rounded-xl border border-slate-200">
