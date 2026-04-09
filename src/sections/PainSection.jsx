@@ -63,7 +63,7 @@ export default function PainSection() {
                 <img
                   src={antesImage}
                   alt="Resultado antes de aplicar estrategia de contenido"
-                  className="h-auto w-full max-w-full object-contain object-center"
+                  className="h-auto max-h-[440px] w-auto max-w-full object-contain object-center"
                   loading="lazy"
                 />
                 <span className="pointer-events-none absolute bottom-4 right-4 rounded-full bg-black/70 px-3 py-1 text-xs font-semibold text-white opacity-0 transition-opacity group-hover:opacity-100">
@@ -131,7 +131,7 @@ export default function PainSection() {
                 <img
                   src={despuesImage}
                   alt="Resultado después de aplicar estrategia de contenido"
-                  className="h-auto w-full max-w-full object-contain object-center"
+                  className="h-auto max-h-[440px] w-auto max-w-full object-contain object-center"
                   loading="lazy"
                 />
                 <span className="pointer-events-none absolute bottom-4 right-4 rounded-full bg-black/70 px-3 py-1 text-xs font-semibold text-white opacity-0 transition-opacity group-hover:opacity-100">
