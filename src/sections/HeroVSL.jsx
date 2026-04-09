@@ -1,10 +1,10 @@
 import { motion } from 'framer-motion'
 import { Link } from 'react-scroll'
-import { Play, Sparkles } from 'lucide-react'
 import { Meteors, GridPattern } from '../components/MagicUI'
 
 export default function HeroVSL() {
-  const POSTER_URL = 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1600&q=80'
+  const HERO_VIDEO_URL = '/videos/videopresentacion.mp4'
+  const HERO_POSTER_URL = '/videos/videopresentacion-poster.jpg'
 
   return (
     <section id="hero" className="relative pt-32 pb-20 overflow-hidden bg-white">
@@ -43,30 +43,17 @@ export default function HeroVSL() {
             className="max-w-4xl mx-auto mb-12"
           >
             <div className="relative aspect-video rounded-2xl overflow-hidden shadow-2xl shadow-blue-200 bg-slate-100 flex items-center justify-center border border-blue-200">
-              {/* Placeholder Poster */}
-              <img
-                src={POSTER_URL}
-                alt="Video de presentación"
+              <video
                 className="absolute inset-0 w-full h-full object-cover"
-                loading="lazy"
-              />
-              <div className="absolute inset-0 bg-gradient-to-br from-slate-900/60 via-slate-900/30 to-slate-900/70" />
-              
-              {/* Play Button */}
-              <button className="relative z-10 group">
-                <div className="absolute inset-0 bg-blue-600 rounded-full blur-lg opacity-0 group-hover:opacity-100 transition-opacity" />
-                <div className="relative inline-flex items-center justify-center w-24 h-24 rounded-full bg-blue-600 hover:bg-blue-700 transition-colors">
-                  <Play className="size-10 text-white ml-1" fill="white" />
-                </div>
-              </button>
-
-              {/* Placeholder Text */}
-              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                <div className="text-center">
-                  <p className="text-slate-400 text-sm mb-4">VIDEO PRINCIPAL AQUÍ</p>
-                  <p className="text-slate-500 text-xs">[Reemplazar con URL real]</p>
-                </div>
-              </div>
+                controls
+                preload="metadata"
+                poster={HERO_POSTER_URL}
+                playsInline
+              >
+                <source src={HERO_VIDEO_URL} type="video/mp4" />
+                Tu navegador no soporta la reproducción de video.
+              </video>
+              <div className="absolute inset-0 bg-gradient-to-br from-slate-900/15 via-transparent to-slate-900/25 pointer-events-none" />
             </div>
           </motion.div>
 

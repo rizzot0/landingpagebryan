@@ -2,6 +2,14 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { MessageCircle, X } from 'lucide-react'
 
+function WhatsAppIcon({ className }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className={className}>
+      <path d="M20.5 3.5A11.8 11.8 0 0 0 12.1 0C5.5 0 .1 5.4.1 12a11.8 11.8 0 0 0 1.7 6.1L0 24l6.1-1.8a11.9 11.9 0 0 0 5.9 1.5h.1c6.6 0 12-5.4 12-12 0-3.2-1.2-6.1-3.6-8.2ZM12 21.7h-.1c-1.8 0-3.6-.5-5.1-1.4l-.4-.2-3.6 1 1-3.5-.2-.4a9.7 9.7 0 0 1-1.5-5.2C2.1 6.8 6.3 2.6 11.9 2.6c2.7 0 5.3 1.1 7.1 3a9.4 9.4 0 0 1 2.8 6.7c0 5.6-4.2 9.4-9.8 9.4Zm5.6-7.3c-.3-.1-1.8-.9-2.1-1s-.5-.1-.7.1-.8 1-.9 1.1-.3.2-.6.1a7.7 7.7 0 0 1-2.3-1.4 8.7 8.7 0 0 1-1.7-2.2c-.2-.3 0-.5.1-.7l.4-.5c.1-.2.2-.4.3-.6.1-.2 0-.4 0-.6s-.7-1.8-1-2.4c-.3-.6-.6-.5-.7-.5h-.6c-.2 0-.6.1-.9.4s-1.2 1.2-1.2 2.9 1.3 3.4 1.4 3.6c.2.2 2.5 3.8 6 5.3.8.4 1.4.6 1.9.8.8.3 1.4.2 1.9.1.6-.1 1.8-.7 2-1.4.2-.7.2-1.2.1-1.4-.1-.2-.3-.3-.6-.4Z" />
+    </svg>
+  )
+}
+
 export default function WhatsAppButton() {
   const [isOpen, setIsOpen] = useState(false)
   
@@ -52,7 +60,7 @@ export default function WhatsAppButton() {
                   exit={{ rotate: -90, opacity: 0 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <MessageCircle className="size-7" fill="currentColor" />
+                  <WhatsAppIcon className="size-7" />
                 </motion.div>
               )}
             </AnimatePresence>
@@ -119,7 +127,7 @@ export default function WhatsAppButton() {
                     whileTap={{ scale: 0.98 }}
                     className="w-full bg-gradient-to-r from-green-500 to-green-600 text-white font-semibold py-3.5 px-4 rounded-xl shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2"
                   >
-                    <MessageCircle className="size-5" fill="currentColor" />
+                    <WhatsAppIcon className="size-5" />
                     Abrir Chat en WhatsApp
                   </motion.button>
                 </a>

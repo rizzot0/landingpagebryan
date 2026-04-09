@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+﻿import { motion } from 'framer-motion'
 import { TrendingUp, Play } from 'lucide-react'
 import { useState } from 'react'
 import { GridPattern } from '../components/MagicUI'
@@ -79,7 +79,6 @@ function ComparisonVideoCard({ videoConfig, labelClassName, borderClassName, tit
 export default function BeforeAfter() {
   return (
     <section className="relative py-20 bg-white overflow-hidden">
-      {/* Background Grid Pattern */}
       <div className="absolute inset-0 pointer-events-none">
         <GridPattern className="opacity-15" />
       </div>
@@ -95,7 +94,7 @@ export default function BeforeAfter() {
             <TrendingUp className="size-4 text-green-600" />
             <span className="text-sm text-green-700 font-medium">Resultados</span>
           </div>
-          
+
           <h2 className="text-4xl sm:text-5xl font-bold tracking-tight text-slate-900 mb-4">
             De Amateurista a Profesional
           </h2>
@@ -104,14 +103,11 @@ export default function BeforeAfter() {
           </p>
         </motion.div>
 
-        {/* Before/After Grid */}
         <div className="relative grid md:grid-cols-2 gap-8 items-center">
-          {/* VS Badge in the middle */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 hidden md:flex items-center justify-center w-20 h-20 bg-white border-4 border-blue-600 rounded-full shadow-2xl">
             <span className="text-2xl font-black text-blue-600">VS</span>
           </div>
 
-          {/* ANTES */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -131,7 +127,7 @@ export default function BeforeAfter() {
                 titleClassName="text-white"
               />
             </div>
-            
+
             <div className="mt-8 p-6 bg-red-50 border-2 border-red-300 rounded-lg shadow-md">
               <p className="text-red-700 font-bold text-base flex items-center gap-3">
                 <span className="text-2xl">❌</span>
@@ -140,7 +136,6 @@ export default function BeforeAfter() {
             </div>
           </motion.div>
 
-          {/* DESPUÉS */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -160,7 +155,7 @@ export default function BeforeAfter() {
                 titleClassName="text-white"
               />
             </div>
-            
+
             <div className="mt-8 p-6 bg-green-50 border-2 border-green-300 rounded-lg shadow-md">
               <p className="text-green-700 font-bold text-base flex items-center gap-3">
                 <span className="text-2xl">✓</span>
@@ -170,7 +165,6 @@ export default function BeforeAfter() {
           </motion.div>
         </div>
 
-        {/* Stats Comparison */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -189,7 +183,7 @@ export default function BeforeAfter() {
             <p className="text-4xl font-black text-slate-900 mb-2">32%</p>
             <p className="text-sm text-slate-500">Sin edición profesional</p>
           </motion.div>
-          
+
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
@@ -201,7 +195,7 @@ export default function BeforeAfter() {
             <p className="text-5xl font-black text-green-600 mb-2">89%</p>
             <p className="text-sm font-bold text-green-700">+175% de mejora</p>
           </motion.div>
-          
+
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}

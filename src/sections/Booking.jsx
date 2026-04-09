@@ -3,13 +3,12 @@ import { BentoCard, GridPattern } from '../components/MagicUI'
 import { Calendar, Clock, Video, CheckCircle } from 'lucide-react'
 
 export default function Booking() {
-  // Scheduling configuration.
-  // VITE_CALENDAR_PROVIDER: Calendly | Cal.com | otro
-  // VITE_CALENDAR_URL: link publico de agendamiento
-  // VITE_MEETING_PLATFORM: Google Meet | Zoom
+  // Scheduling configuration (Google Calendar)
+  // VITE_GOOGLE_CALENDAR_URL: enlace publico de Google Appointment Schedule
+  // VITE_BOOKING_OWNER_EMAIL: correo que recibira las reservas
   // VITE_SESSION_DURATION: por ejemplo "30 minutos"
-  const CALENDAR_PROVIDER = import.meta.env.VITE_CALENDAR_PROVIDER || 'Calendly'
-  const CALENDAR_URL = import.meta.env.VITE_CALENDAR_URL || 'https://calendly.com/bastianalonso92'
+  const CALENDAR_URL = import.meta.env.VITE_GOOGLE_CALENDAR_URL || 'https://calendar.google.com/'
+  const BOOKING_OWNER_EMAIL = import.meta.env.VITE_BOOKING_OWNER_EMAIL || import.meta.env.VITE_CONTACT_EMAIL || 'brayhanguerratrabajo@gmail.com'
   const SESSION_DURATION = import.meta.env.VITE_SESSION_DURATION || '30 minutos'
 
   const benefits = [
@@ -39,7 +38,7 @@ export default function Booking() {
           Conversemos sobre tu proyecto
         </h2>
         <p className="mt-4 text-slate-600 max-w-2xl mx-auto text-lg">
-          Agenda una reunion de {SESSION_DURATION}. El usuario elige horario disponible, queda coordinado con el cliente y ambos reciben notificacion automatica.
+          Agenda una reunion de {SESSION_DURATION} en Google Calendar. El cliente elige horario disponible y ambos reciben confirmacion automatica.
         </p>
       </motion.div>
 
@@ -90,7 +89,7 @@ export default function Booking() {
                 Elige tu horario
               </h3>
               <p className="text-slate-600 max-w-xs mb-8">
-                Haz click en Abrir agenda, selecciona un bloque de 30 minutos para agendar una reunion por Google Meet.
+                Haz click en Abrir Google Calendar y agenda una reunion de {SESSION_DURATION} con {BOOKING_OWNER_EMAIL}.
               </p>
               
               <a 
@@ -100,41 +99,18 @@ export default function Booking() {
                 className="inline-flex items-center gap-2 px-8 py-4 rounded-lg bg-gradient-to-r from-blue-600 to-blue-700 text-white font-bold hover:from-blue-700 hover:to-blue-800 transition-all shadow-lg hover:shadow-xl text-lg"
               >
                 <Calendar className="size-5" />
-                Abrir agenda
+                Abrir Google Calendar
               </a>
             </div>
 
             {/* 
-              INSTRUCCIONES DE INTEGRACIÓN:
-              
-              Para Calendly:
-              1. Ve a calendly.com y crea tu cuenta
-              2. Configura tu calendario y disponibilidad
-              3. En "Share", copia tu link personal (ej: calendly.com/tu-usuario)
-              4. Reemplaza el CALENDAR_URL de arriba
-              5. Para embed en iframe, usa:
-              
-              <iframe 
-                src="https://calendly.com/tu-usuario?embed_source=Embed%20Admin&embed_type=Inline" 
-                width="100%" 
-                height="600"
-                frameBorder="0"
-                title="Agendar Reunión"
-              />
-              
-              Para Cal.com:
-              1. Ve a cal.com y regístrate
-              2. Configura tu disponibilidad
-              3. Copia tu link (ej: cal.com/tu-usuario/30min)
-              4. Para embed:
-              
-              <iframe 
-                src="https://cal.com/tu-usuario/30min" 
-                width="100%"
-                height="600"
-                frameBorder="0"
-                title="Agendar Reunión"
-              />
+              INSTRUCCIONES DE INTEGRACION (GOOGLE CALENDAR):
+
+              1. En Google Calendar crea un "Appointment schedule".
+              2. Configura disponibilidad, duracion y Google Meet.
+              3. Copia el enlace publico de reserva.
+              4. Pegalo en VITE_GOOGLE_CALENDAR_URL.
+              5. Define el correo que recibira reservas en VITE_BOOKING_OWNER_EMAIL.
             */}
           </BentoCard>
         </motion.div>

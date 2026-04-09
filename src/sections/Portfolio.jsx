@@ -130,7 +130,7 @@ const DEMO_VIDEOS = [
   }
 ]
 
-const PORTFOLIO_EXTERNAL_URL = import.meta.env.VITE_PORTFOLIO_EXTERNAL_URL || 'https://www.instagram.com/brayaneditavideos/'
+const PORTFOLIO_EXTERNAL_URL = import.meta.env.VITE_PORTFOLIO_EXTERNAL_URL || 'https://www.behance.net/gallery/235166779/Video-editing-Cap-cut-Edicion-de-video'
 
 function VideoCard({ video, className = "" }) {
   const [isLoaded, setIsLoaded] = useState(false)
