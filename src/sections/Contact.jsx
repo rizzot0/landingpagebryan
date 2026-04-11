@@ -22,7 +22,10 @@ export default function Contact() {
   const [errorMessage, setErrorMessage] = useState('')
   const [hasProfileImageError, setHasProfileImageError] = useState(false)
   const PROFILE_IMAGE_URL = import.meta.env.VITE_PROFILE_IMAGE_URL || '/profile-brayhan.png'
-  const FORMSPREE_ENDPOINT = import.meta.env.VITE_FORMSPREE_ENDPOINT || ''
+  const FORMSPREE_ENDPOINT =
+    import.meta.env.VITE_FORMSPREE_CONTACT_ENDPOINT ||
+    import.meta.env.VITE_FORMSPREE_ENDPOINT ||
+    'https://formspree.io/f/mnjojvpe'
   const CONTACT_EMAIL = import.meta.env.VITE_CONTACT_EMAIL || 'brayhanguerratrabajo@gmail.com'
 
   const handleSubmit = async (e) => {
@@ -32,7 +35,7 @@ export default function Contact() {
 
     try {
       if (!FORMSPREE_ENDPOINT) {
-        throw new Error('Falta configurar VITE_FORMSPREE_ENDPOINT para envio automatico.')
+        throw new Error('Falta configurar VITE_FORMSPREE_CONTACT_ENDPOINT (o VITE_FORMSPREE_ENDPOINT).')
       }
 
       const response = await fetch(FORMSPREE_ENDPOINT, {

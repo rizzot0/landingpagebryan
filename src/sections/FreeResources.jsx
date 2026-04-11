@@ -1,21 +1,70 @@
-import { motion } from 'framer-motion'
-import { Gift, Mail, Check } from 'lucide-react'
+import { motion as Motion } from 'framer-motion'
+import { Gift, Check } from 'lucide-react'
 import { useState } from 'react'
 import { Meteors, GridPattern } from '../components/MagicUI'
 
 export default function FreeResources() {
   const [email, setEmail] = useState('')
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [errorMessage, setErrorMessage] = useState('')
 
-  const handleSubmit = (e) => {
+  const FORMSPREE_ENDPOINT =
+    import.meta.env.VITE_FORMSPREE_RESOURCES_ENDPOINT ||
+    import.meta.env.VITE_FORMSPREE_ENDPOINT ||
+    'https://formspree.io/f/xzdkllyw'
+  const FREE_RESOURCE_PDF_URL = import.meta.env.VITE_FREE_RESOURCE_PDF_URL || '/resources/pdfrecursos.pdf'
+
+  const triggerLocalDownload = () => {
+    const link = document.createElement('a')
+    link.href = FREE_RESOURCE_PDF_URL
+    link.download = ''
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+  }
+
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    // TODO: Conectar con EmailJS o API de backend
-    console.log('Email submitted:', email)
-    setIsSubmitted(true)
-    setTimeout(() => {
-      setEmail('')
-      setIsSubmitted(false)
-    }, 3000)
+
+    if (!FORMSPREE_ENDPOINT) {
+      setErrorMessage('Falta configurar VITE_FORMSPREE_RESOURCES_ENDPOINT (o VITE_FORMSPREE_ENDPOINT).')
+      return
+    }
+
+    try {
+      setIsSubmitting(true)
+      setErrorMessage('')
+
+      const response = await fetch(FORMSPREE_ENDPOINT, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json'
+        },
+        body: JSON.stringify({
+          email,
+          source: 'landing-free-resources',
+          formType: 'free-resources-download'
+        })
+      })
+
+      if (!response.ok) {
+        throw new Error('No se pudo enviar el correo. Intenta nuevamente.')
+      }
+
+      setIsSubmitted(true)
+      triggerLocalDownload()
+
+      setTimeout(() => {
+        setEmail('')
+        setIsSubmitted(false)
+      }, 3000)
+    } catch (error) {
+      setErrorMessage(error.message || 'Ocurrio un error al enviar el formulario.')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const resources = [
@@ -48,7 +97,7 @@ export default function FreeResources() {
 
       <div className="relative mx-auto max-w-4xl px-4 z-20">
         {/* Main Content */}
-        <motion.div
+        <Motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -66,10 +115,10 @@ export default function FreeResources() {
           <p className="text-slate-600 text-lg">
             Descarga nuestros recursos gratis y empieza a mejorar tus videos desde hoy
           </p>
-        </motion.div>
+        </Motion.div>
 
         {/* Form Container */}
-        <motion.div
+        <Motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
@@ -88,9 +137,12 @@ export default function FreeResources() {
               />
               <button
                 type="submit"
+                disabled={isSubmitting}
                 className="px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-semibold rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all shadow-md hover:shadow-lg whitespace-nowrap"
               >
-                {isSubmitted ? (
+                {isSubmitting ? (
+                  'Enviando...'
+                ) : isSubmitted ? (
                   <span className="flex items-center gap-2">
                     <Check className="size-4" /> Enviado
                   </span>
@@ -102,11 +154,14 @@ export default function FreeResources() {
             <p className="text-slate-500 text-xs">
               ✓ Sin spam. Desuscribirse en cualquier momento.
             </p>
+            {errorMessage ? (
+              <p className="text-red-600 text-xs font-medium">{errorMessage}</p>
+            ) : null}
           </form>
-        </motion.div>
+        </Motion.div>
 
         {/* Resources Preview */}
-        <motion.div
+        <Motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -131,7 +186,7 @@ export default function FreeResources() {
               </div>
             ))}
           </div>
-        </motion.div>
+        </Motion.div>
       </div>
     </section>
   )

@@ -8,6 +8,8 @@ import michaelValdezImg from '../assets/testimonials/michael-valdez.png';
 import lucasAlvaradoImg from '../assets/testimonials/lucas-alvarado.png';
 
 const Testimonials = () => {
+  const CALENDAR_URL = import.meta.env.VITE_GOOGLE_CALENDAR_URL || 'https://calendar.app.google/waBp78cxKbWBGf7e8';
+
   const testimonials = [
     {
       name: 'Felipe Zarate',
@@ -166,7 +168,9 @@ const Testimonials = () => {
             Únete a la lista de clientes satisfechos
           </p>
           <a
-            href="#contact"
+            href={CALENDAR_URL}
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-8 py-4 bg-blue-600 text-white font-medium rounded-xl hover:bg-blue-700 transition-all duration-300"
           >
             Comienza Tu Proyecto Ahora

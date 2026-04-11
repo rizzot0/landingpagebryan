@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+import { motion as Motion } from 'framer-motion'
 import { BentoCard, GridPattern } from '../components/MagicUI'
 import { Calendar, Clock, Video, CheckCircle } from 'lucide-react'
 
@@ -7,7 +7,7 @@ export default function Booking() {
   // VITE_GOOGLE_CALENDAR_URL: enlace publico de Google Appointment Schedule
   // VITE_BOOKING_OWNER_EMAIL: correo que recibira las reservas
   // VITE_SESSION_DURATION: por ejemplo "30 minutos"
-  const CALENDAR_URL = import.meta.env.VITE_GOOGLE_CALENDAR_URL || 'https://calendar.google.com/'
+  const CALENDAR_URL = import.meta.env.VITE_GOOGLE_CALENDAR_URL || 'https://calendar.app.google/waBp78cxKbWBGf7e8'
   const BOOKING_OWNER_EMAIL = import.meta.env.VITE_BOOKING_OWNER_EMAIL || import.meta.env.VITE_CONTACT_EMAIL || 'brayhanguerratrabajo@gmail.com'
   const SESSION_DURATION = import.meta.env.VITE_SESSION_DURATION || '30 minutos'
 
@@ -23,7 +23,7 @@ export default function Booking() {
         <GridPattern width={40} height={40} className="stroke-blue-200" />
       </div>
 
-      <motion.div
+      <Motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
@@ -40,18 +40,18 @@ export default function Booking() {
         <p className="mt-4 text-slate-600 max-w-2xl mx-auto text-lg">
           Agenda una reunion de {SESSION_DURATION} en Google Calendar. El cliente elige horario disponible y ambos reciben confirmacion automatica.
         </p>
-      </motion.div>
+      </Motion.div>
 
       <div className="grid lg:grid-cols-3 gap-8 relative z-10">
         {/* Benefits Sidebar */}
-        <motion.div
+        <Motion.div
           initial={{ opacity: 0, x: -20 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
           className="space-y-4"
         >
           {benefits.map((benefit, idx) => (
-            <motion.div
+            <Motion.div
               key={idx}
               initial={{ opacity: 0, x: -10 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -66,12 +66,12 @@ export default function Booking() {
                   <span className="text-slate-700 font-medium">{benefit.text}</span>
                 </div>
               </BentoCard>
-            </motion.div>
+            </Motion.div>
           ))}
-        </motion.div>
+        </Motion.div>
 
         {/* Calendar Embed */}
-        <motion.div
+        <Motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -113,11 +113,11 @@ export default function Booking() {
               5. Define el correo que recibira reservas en VITE_BOOKING_OWNER_EMAIL.
             */}
           </BentoCard>
-        </motion.div>
+        </Motion.div>
       </div>
 
       {/* Extra info */}
-      <motion.div
+      <Motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
@@ -129,7 +129,7 @@ export default function Booking() {
           <span className="text-green-600 font-bold"> Recordatorio 24h antes</span> · 
           <span className="text-purple-600 font-bold"> Link de Google Meet incluido</span>
         </p>
-      </motion.div>
+      </Motion.div>
     </section>
   )
 }

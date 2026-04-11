@@ -1,10 +1,10 @@
-import { motion } from 'framer-motion'
-import { Link } from 'react-scroll'
+import { motion as Motion } from 'framer-motion'
 import { Meteors, GridPattern } from '../components/MagicUI'
 
 export default function HeroVSL() {
   const HERO_VIDEO_URL = '/videos/videopresentacion.mp4'
   const HERO_POSTER_URL = '/videos/videopresentacion-poster.jpg'
+  const CALENDAR_URL = import.meta.env.VITE_GOOGLE_CALENDAR_URL || 'https://calendar.app.google/waBp78cxKbWBGf7e8'
 
   return (
     <section id="hero" className="relative pt-32 pb-20 overflow-hidden bg-white">
@@ -16,27 +16,27 @@ export default function HeroVSL() {
       <div className="relative mx-auto max-w-7xl px-4 z-20">
         <div className="text-center">
           {/* Main Heading */}
-          <motion.h1
+          <Motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
             className="text-5xl sm:text-6xl lg:text-7xl font-semibold tracking-tighter mb-6 text-slate-900"
           >
             Haz crecer tu empresa con videos que venden
-          </motion.h1>
+          </Motion.h1>
 
           {/* Subtitle */}
-          <motion.p
+          <Motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-lg sm:text-xl text-slate-600 max-w-3xl mx-auto mb-12 font-normal leading-relaxed"
           >
             Descubre cómo convertir tu contenido en una máquina de conversiones
-          </motion.p>
+          </Motion.p>
 
           {/* Video Container */}
-          <motion.div
+          <Motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.3 }}
@@ -55,24 +55,24 @@ export default function HeroVSL() {
               </video>
               <div className="absolute inset-0 bg-gradient-to-br from-slate-900/15 via-transparent to-slate-900/25 pointer-events-none" />
             </div>
-          </motion.div>
+          </Motion.div>
 
 
           {/* CTA Button */}
-          <motion.div
+          <Motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            <Link
-              to="contact"
-              smooth={true}
-              duration={500}
+            <a
+              href={CALENDAR_URL}
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-8 py-4 rounded-lg bg-blue-600 text-white font-semibold hover:bg-blue-700 transition-all shadow-lg shadow-blue-600/30 cursor-pointer"
             >
               Quiero mejorar mi contenido
-            </Link>
-          </motion.div>
+            </a>
+          </Motion.div>
         </div>
       </div>
     </section>
