@@ -45,11 +45,12 @@ export default function Contact() {
           Accept: 'application/json'
         },
         body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          instagram: formData.instagram,
-          message: formData.message,
-          source: 'landing-contact-form'
+          _subject: 'Nuevo mensaje desde seccion Contacto',
+          nombre: formData.name,
+          correo: formData.email,
+          instagram_o_sitio_web: formData.instagram,
+          mensaje: formData.message,
+          origen_formulario: 'seccion-contacto'
         })
       })
 

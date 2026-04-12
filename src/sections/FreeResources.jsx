@@ -43,9 +43,10 @@ export default function FreeResources() {
           Accept: 'application/json'
         },
         body: JSON.stringify({
-          email,
-          source: 'landing-free-resources',
-          formType: 'free-resources-download'
+          _subject: 'Nueva solicitud desde Recursos Gratis',
+          correo: email,
+          origen_formulario: 'seccion-recursos-gratis',
+          tipo_solicitud: 'descarga-pdf-recursos'
         })
       })
 
