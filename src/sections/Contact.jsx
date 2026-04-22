@@ -214,7 +214,7 @@ export default function Contact() {
                   {!hasProfileImageError ? (
                     <img
                       src={PROFILE_IMAGE_URL}
-                      alt="Brayhan Guerra"
+                      alt="Brayhan Guerra, editor-reels-hotelessantiago"
                       className="w-32 h-32 rounded-full object-cover border border-blue-100"
                       loading="lazy"
                       onError={() => setHasProfileImageError(true)}
