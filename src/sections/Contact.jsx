@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 import { BentoCard, GridPattern } from '../components/MagicUI'
 import { Mail, Instagram, Youtube, Send } from 'lucide-react'
 import { useState } from 'react'
+import { trackEvent } from '../lib/analytics'
 
 function TikTokIcon({ className }) {
   return (
@@ -57,6 +58,11 @@ export default function Contact() {
       if (!response.ok) {
         throw new Error('No se pudo enviar el formulario.')
       }
+
+      trackEvent('contact_form_submit', {
+        location: 'contact_section',
+        method: 'formspree',
+      })
 
       setStatus('success')
 
@@ -265,6 +271,12 @@ export default function Contact() {
                 rel="noopener noreferrer"
                 aria-label="Instagram"
                 className="rounded-lg bg-slate-50 border border-slate-200 p-3 hover:bg-blue-50 hover:border-blue-200 transition-colors"
+                onClick={() =>
+                  trackEvent('social_click', {
+                    platform: 'instagram',
+                    location: 'contact_section',
+                  })
+                }
               >
                 <Instagram className="size-5 text-slate-600" />
               </a>
@@ -274,6 +286,12 @@ export default function Contact() {
                 rel="noopener noreferrer"
                 aria-label="TikTok"
                 className="rounded-lg bg-slate-50 border border-slate-200 p-3 hover:bg-blue-50 hover:border-blue-200 transition-colors"
+                onClick={() =>
+                  trackEvent('social_click', {
+                    platform: 'tiktok',
+                    location: 'contact_section',
+                  })
+                }
               >
                 <TikTokIcon className="size-5 text-slate-600" />
               </a>
@@ -283,6 +301,12 @@ export default function Contact() {
                 rel="noopener noreferrer"
                 aria-label="YouTube"
                 className="rounded-lg bg-slate-50 border border-slate-200 p-3 hover:bg-blue-50 hover:border-blue-200 transition-colors"
+                onClick={() =>
+                  trackEvent('social_click', {
+                    platform: 'youtube',
+                    location: 'contact_section',
+                  })
+                }
               >
                 <Youtube className="size-5 text-slate-600" />
               </a>

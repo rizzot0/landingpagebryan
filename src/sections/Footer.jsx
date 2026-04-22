@@ -1,4 +1,5 @@
 import { Instagram, Youtube } from 'lucide-react'
+import { trackEvent } from '../lib/analytics'
 
 function TikTokIcon({ className }) {
   return (
@@ -25,9 +26,9 @@ export default function Footer() {
           <div>
             <h4 className="font-semibold text-slate-900 tracking-tight mb-3">Enlaces</h4>
             <div className="space-y-2 text-sm">
-              <a href="#hero" className="block text-slate-600 hover:text-blue-600 transition-colors font-normal">Inicio</a>
-              <a href="#portfolio" className="block text-slate-600 hover:text-blue-600 transition-colors font-normal">Portafolio</a>
-              <a href="#contact" className="block text-slate-600 hover:text-blue-600 transition-colors font-normal">Contacto</a>
+              <a href="#hero" className="block text-slate-600 hover:text-blue-600 transition-colors font-normal" onClick={() => trackEvent('footer_nav_click', { target: 'hero' })}>Inicio</a>
+              <a href="#portfolio" className="block text-slate-600 hover:text-blue-600 transition-colors font-normal" onClick={() => trackEvent('footer_nav_click', { target: 'portfolio' })}>Portafolio</a>
+              <a href="#contact" className="block text-slate-600 hover:text-blue-600 transition-colors font-normal" onClick={() => trackEvent('footer_nav_click', { target: 'contact' })}>Contacto</a>
             </div>
           </div>
 
@@ -41,6 +42,7 @@ export default function Footer() {
                 rel="noopener noreferrer"
                 aria-label="Instagram"
                 className="rounded-lg bg-slate-50 border border-slate-200 p-2.5 hover:bg-blue-50 hover:border-blue-200 transition-colors"
+                onClick={() => trackEvent('social_click', { platform: 'instagram', location: 'footer' })}
               >
                 <Instagram className="size-5 text-slate-600" />
               </a>
@@ -50,6 +52,7 @@ export default function Footer() {
                 rel="noopener noreferrer"
                 aria-label="TikTok"
                 className="rounded-lg bg-slate-50 border border-slate-200 p-2.5 hover:bg-blue-50 hover:border-blue-200 transition-colors"
+                onClick={() => trackEvent('social_click', { platform: 'tiktok', location: 'footer' })}
               >
                 <TikTokIcon className="size-5 text-slate-600" />
               </a>
@@ -59,6 +62,7 @@ export default function Footer() {
                 rel="noopener noreferrer"
                 aria-label="YouTube"
                 className="rounded-lg bg-slate-50 border border-slate-200 p-2.5 hover:bg-blue-50 hover:border-blue-200 transition-colors"
+                onClick={() => trackEvent('social_click', { platform: 'youtube', location: 'footer' })}
               >
                 <Youtube className="size-5 text-slate-600" />
               </a>

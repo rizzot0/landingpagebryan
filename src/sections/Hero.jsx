@@ -3,6 +3,7 @@ import { Link } from 'react-scroll'
 import { GridPattern } from '../components/MagicUI'
 import { Video, Sparkles, Play, X } from 'lucide-react'
 import { useState } from 'react'
+import { trackEvent } from '../lib/analytics'
 
 export default function Hero() {
   const [showVideoModal, setShowVideoModal] = useState(false)
@@ -89,7 +90,12 @@ export default function Hero() {
             className="flex flex-wrap justify-center gap-4 mb-16"
           >
             <button
-              onClick={() => setShowVideoModal(true)}
+              onClick={() => {
+                trackEvent('hero_video_open', {
+                  location: 'hero',
+                })
+                setShowVideoModal(true)
+              }}
               className="group cursor-pointer relative inline-flex items-center gap-2 px-7 py-3.5 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 transition-all shadow-lg shadow-blue-600/30"
             >
               <Play className="size-4" />
@@ -101,6 +107,11 @@ export default function Hero() {
               smooth
               duration={600}
               offset={-80}
+              onClick={() =>
+                trackEvent('hero_portfolio_click', {
+                  location: 'hero',
+                })
+              }
               className="cursor-pointer inline-flex items-center gap-2 px-7 py-3.5 rounded-lg border-2 border-white/30 backdrop-blur-sm text-white font-medium hover:bg-white/10 transition-all"
             >
               <Video className="size-4" />

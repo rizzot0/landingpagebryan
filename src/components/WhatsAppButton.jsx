@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { MessageCircle, X } from 'lucide-react'
+import { trackEvent } from '../lib/analytics'
 
 function WhatsAppIcon({ className }) {
   return (
@@ -36,7 +37,13 @@ export default function WhatsAppButton() {
           />
           
           <motion.button
-            onClick={() => setIsOpen(!isOpen)}
+            onClick={() => {
+              setIsOpen(!isOpen)
+              trackEvent('whatsapp_widget_toggle', {
+                action: isOpen ? 'close' : 'open',
+                location: 'floating_button',
+              })
+            }}
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             className="size-16 rounded-full bg-gradient-to-br from-green-500 to-green-600 shadow-2xl flex items-center justify-center text-white hover:shadow-green-500/50 transition-all"
@@ -121,6 +128,11 @@ export default function WhatsAppButton() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="block"
+                  onClick={() =>
+                    trackEvent('whatsapp_click', {
+                      location: 'floating_widget',
+                    })
+                  }
                 >
                   <motion.button
                     whileHover={{ scale: 1.02 }}

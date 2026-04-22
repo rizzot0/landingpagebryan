@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 import { BentoCard } from '../components/MagicUI'
 import { Play, Award, Zap, ExternalLink } from 'lucide-react'
 import { useState } from 'react'
+import { trackEvent } from '../lib/analytics'
 
 const getPreferredVideoSource = (video) => {
   if (!video?.sources) return video?.url
@@ -189,6 +190,17 @@ function VideoCard({ video, className = "" }) {
     return null
   }
 
+  const openVideo = () => {
+    if (!isLoaded) {
+      trackEvent('portfolio_video_open', {
+        video_title: video.title,
+        location: 'portfolio_grid',
+      })
+    }
+
+    setIsLoaded(true)
+  }
+
   return (
     <BentoCard className={className}>
       <div className="flex flex-col h-full bg-white overflow-hidden">
@@ -197,7 +209,7 @@ function VideoCard({ video, className = "" }) {
           {!isLoaded && (
             <div 
               className="relative w-full h-full cursor-pointer group/video"
-              onClick={() => setIsLoaded(true)}
+              onClick={openVideo}
             >
               {getThumbnail(video.url) ? (
                 <img 
@@ -284,7 +296,10 @@ function VideoCard({ video, className = "" }) {
           )}
 
           {/* CTA Button */}
-          <button className="mt-auto w-full py-2 px-4 bg-gradient-to-r from-amber-400 to-yellow-400 text-slate-800 font-bold text-sm rounded-lg hover:shadow-lg transition-all hover:scale-[1.02]">
+          <button
+            className="mt-auto w-full py-2 px-4 bg-gradient-to-r from-amber-400 to-yellow-400 text-slate-800 font-bold text-sm rounded-lg hover:shadow-lg transition-all hover:scale-[1.02]"
+            onClick={openVideo}
+          >
             Ver Video
           </button>
         </div>
@@ -348,6 +363,11 @@ export default function Portfolio() {
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center gap-2 px-8 py-4 border-2 border-blue-600 text-blue-600 font-semibold rounded-xl hover:bg-blue-50 transition-all"
+          onClick={() =>
+            trackEvent('portfolio_external_click', {
+              location: 'portfolio_section',
+            })
+          }
         >
           Ver más
           <ExternalLink className="size-5" />

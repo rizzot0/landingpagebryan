@@ -1,6 +1,7 @@
 import { motion as Motion } from 'framer-motion'
 import { BentoCard, GridPattern } from '../components/MagicUI'
 import { Calendar, Clock, Video, CheckCircle } from 'lucide-react'
+import { trackEvent } from '../lib/analytics'
 
 export default function Booking() {
   // Scheduling configuration (Google Calendar)
@@ -97,6 +98,12 @@ export default function Booking() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-8 py-4 rounded-lg bg-gradient-to-r from-blue-600 to-blue-700 text-white font-bold hover:from-blue-700 hover:to-blue-800 transition-all shadow-lg hover:shadow-xl text-lg"
+                onClick={() =>
+                  trackEvent('booking_calendar_click', {
+                    location: 'booking_section',
+                    session_duration: SESSION_DURATION,
+                  })
+                }
               >
                 <Calendar className="size-5" />
                 Abrir Google Calendar
