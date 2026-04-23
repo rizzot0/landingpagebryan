@@ -35,7 +35,7 @@ export default function AboutMe() {
           <span className="text-sm text-blue-700 font-medium">Conóceme</span>
         </div>
         <h2 className="text-4xl sm:text-5xl font-semibold text-slate-900 tracking-tight">
-          Sobre Mí
+          Experto en Creación de Contenido y Edición para Turismo
         </h2>
       </motion.div>
 

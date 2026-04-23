@@ -324,7 +324,7 @@ export default function Portfolio() {
           <span className="text-sm text-blue-700 font-medium">Trabajos Destacados</span>
         </div>
         <h2 className="text-4xl sm:text-5xl font-semibold text-slate-900 tracking-tight">
-          Portafolio
+          Proyectos de Video Turístico en la IV Región y RM
         </h2>
         <p className="mt-4 text-slate-600 max-w-2xl mx-auto font-normal">
           Creación de contenido y edición estratégica para redes sociales

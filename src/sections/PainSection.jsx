@@ -36,7 +36,7 @@ export default function PainSection() {
           </div>
 
           <h2 className="mb-8 text-4xl font-bold leading-tight tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">
-            Esto es lo que está frenando tus ventas
+            ¿Tu Hotel o Cabaña no está llenando sus reservas? El problema es el contenido.
           </h2>
         </Motion.div>
 
@@ -56,13 +56,13 @@ export default function PainSection() {
 
               <button
                 type="button"
-                onClick={() => setActiveImage({ src: antesImage, alt: 'Resultado antes de aplicar estrategia de contenido' })}
+                onClick={() => setActiveImage({ src: antesImage, alt: 'Resultado antes de aplicar estrategia de contenido para video-turismo-chile' })}
                 className="group relative flex h-[calc(100%-6rem)] w-full items-center justify-center p-4 sm:p-6"
                 aria-label="Ampliar imagen ANTES"
               >
                 <img
                   src={antesImage}
-                  alt="Resultado antes de aplicar estrategia de contenido"
+                  alt="Resultado antes de aplicar estrategia de contenido para video-turismo-chile"
                   className="h-auto max-h-[440px] w-auto max-w-full object-contain object-center"
                   loading="lazy"
                 />
@@ -124,13 +124,13 @@ export default function PainSection() {
 
               <button
                 type="button"
-                onClick={() => setActiveImage({ src: despuesImage, alt: 'Resultado después de aplicar estrategia de contenido' })}
+                onClick={() => setActiveImage({ src: despuesImage, alt: 'Resultado después de aplicar estrategia de produccion-audiovisual-valle-del-elqui' })}
                 className="group relative flex h-[calc(100%-6rem)] w-full items-center justify-center p-4 sm:p-6"
                 aria-label="Ampliar imagen DESPUES"
               >
                 <img
                   src={despuesImage}
-                  alt="Resultado después de aplicar estrategia de contenido"
+                  alt="Resultado después de aplicar estrategia de produccion-audiovisual-valle-del-elqui"
                   className="h-auto max-h-[440px] w-auto max-w-full object-contain object-center"
                   loading="lazy"
                 />

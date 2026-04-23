@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { useEffect, useState } from 'react'
+import { motion as Motion, AnimatePresence } from 'framer-motion'
 import { MessageCircle, X } from 'lucide-react'
 import { trackEvent } from '../lib/analytics'
 
@@ -13,6 +13,17 @@ function WhatsAppIcon({ className }) {
 
 export default function WhatsAppButton() {
   const [isOpen, setIsOpen] = useState(false)
+
+  useEffect(() => {
+    const autoOpenTimer = window.setTimeout(() => {
+      setIsOpen(true)
+      trackEvent('whatsapp_widget_auto_open', {
+        location: 'floating_widget',
+      })
+    }, 900)
+
+    return () => window.clearTimeout(autoOpenTimer)
+  }, [])
   
   const WHATSAPP_NUMBER = (import.meta.env.VITE_WHATSAPP_NUMBER || '56928683655').replace(/\D/g, '')
   const WHATSAPP_MESSAGE = "Hola! Quiero información sobre tus servicios de edición de video 🎬"
@@ -22,7 +33,7 @@ export default function WhatsAppButton() {
   return (
     <>
       {/* Botón Principal */}
-      <motion.div
+      <Motion.div
         className="fixed bottom-6 right-6 z-50"
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
@@ -30,13 +41,13 @@ export default function WhatsAppButton() {
       >
         <div className="relative">
           {/* Badge de notificación */}
-          <motion.div
+          <Motion.div
             animate={{ scale: [1, 1.2, 1] }}
             transition={{ repeat: Infinity, duration: 2 }}
             className="absolute -top-1 -right-1 size-3 bg-red-500 rounded-full border-2 border-white"
           />
           
-          <motion.button
+          <Motion.button
             onClick={() => {
               setIsOpen(!isOpen)
               trackEvent('whatsapp_widget_toggle', {
@@ -50,7 +61,7 @@ export default function WhatsAppButton() {
           >
             <AnimatePresence mode="wait">
               {isOpen ? (
-                <motion.div
+                <Motion.div
                   key="close"
                   initial={{ rotate: -90, opacity: 0 }}
                   animate={{ rotate: 0, opacity: 1 }}
@@ -58,9 +69,9 @@ export default function WhatsAppButton() {
                   transition={{ duration: 0.2 }}
                 >
                   <X className="size-7" />
-                </motion.div>
+                </Motion.div>
               ) : (
-                <motion.div
+                <Motion.div
                   key="whatsapp"
                   initial={{ rotate: 90, opacity: 0 }}
                   animate={{ rotate: 0, opacity: 1 }}
@@ -68,17 +79,17 @@ export default function WhatsAppButton() {
                   transition={{ duration: 0.2 }}
                 >
                   <WhatsAppIcon className="size-7" />
-                </motion.div>
+                </Motion.div>
               )}
             </AnimatePresence>
-          </motion.button>
+          </Motion.button>
         </div>
-      </motion.div>
+      </Motion.div>
 
       {/* Mensaje emergente */}
       <AnimatePresence>
         {isOpen && (
-          <motion.div
+          <Motion.div
             initial={{ opacity: 0, y: 20, scale: 0.8 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.8 }}
@@ -134,14 +145,14 @@ export default function WhatsAppButton() {
                     })
                   }
                 >
-                  <motion.button
+                  <Motion.button
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     className="w-full bg-gradient-to-r from-green-500 to-green-600 text-white font-semibold py-3.5 px-4 rounded-xl shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2"
                   >
                     <WhatsAppIcon className="size-5" />
                     Abrir Chat en WhatsApp
-                  </motion.button>
+                  </Motion.button>
                 </a>
 
                 <p className="text-center text-xs text-slate-500">
@@ -153,17 +164,17 @@ export default function WhatsAppButton() {
               <div className="px-5 pb-4">
                 <div className="flex items-center gap-2 text-slate-400 text-xs">
                   <div className="flex gap-1">
-                    <motion.div
+                    <Motion.div
                       animate={{ opacity: [0.3, 1, 0.3] }}
                       transition={{ repeat: Infinity, duration: 1.2, delay: 0 }}
                       className="size-1.5 bg-slate-400 rounded-full"
                     />
-                    <motion.div
+                    <Motion.div
                       animate={{ opacity: [0.3, 1, 0.3] }}
                       transition={{ repeat: Infinity, duration: 1.2, delay: 0.2 }}
                       className="size-1.5 bg-slate-400 rounded-full"
                     />
-                    <motion.div
+                    <Motion.div
                       animate={{ opacity: [0.3, 1, 0.3] }}
                       transition={{ repeat: Infinity, duration: 1.2, delay: 0.4 }}
                       className="size-1.5 bg-slate-400 rounded-full"
@@ -176,7 +187,7 @@ export default function WhatsAppButton() {
               {/* Flecha del bocadillo */}
               <div className="absolute -bottom-2 right-8 w-0 h-0 border-l-8 border-l-transparent border-r-8 border-r-transparent border-t-8 border-t-white" />
             </div>
-          </motion.div>
+          </Motion.div>
         )}
       </AnimatePresence>
     </>
