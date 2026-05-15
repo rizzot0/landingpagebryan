@@ -36,7 +36,7 @@ export default function PainSection() {
           </div>
 
           <h2 className="mb-8 text-4xl font-bold leading-tight tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">
-            ¿Tu Hotel o Cabaña no está llenando sus reservas? El problema es el contenido.
+            Mejora tu contenido con la mejor edición del mercado.
           </h2>
         </Motion.div>
 
@@ -49,7 +49,6 @@ export default function PainSection() {
             className="order-1"
           >
             <div className="relative h-full min-h-[360px] overflow-hidden rounded-[28px] border border-red-200 bg-white shadow-[0_10px_30px_rgba(2,6,23,0.08)] lg:min-h-[520px]">
-              <div className="h-24 border-b border-slate-100 bg-slate-50" />
               <div className="absolute left-4 top-4 z-10 inline-flex rounded-full bg-red-600 px-3 py-1">
                 <span className="text-xs font-bold tracking-wide text-white sm:text-sm">ANTES</span>
               </div>
@@ -57,13 +56,13 @@ export default function PainSection() {
               <button
                 type="button"
                 onClick={() => setActiveImage({ src: antesImage, alt: 'Resultado antes de aplicar estrategia de contenido para video-turismo-chile' })}
-                className="group relative flex h-[calc(100%-6rem)] w-full items-center justify-center p-4 sm:p-6"
+                className="group relative flex h-full w-full items-center justify-center p-4 sm:p-6"
                 aria-label="Ampliar imagen ANTES"
               >
                 <img
                   src={antesImage}
                   alt="Resultado antes de aplicar estrategia de contenido para video-turismo-chile"
-                  className="h-auto max-h-[440px] w-auto max-w-full object-contain object-center"
+                  className="h-auto max-h-full w-auto max-w-full object-contain object-center"
                   loading="lazy"
                 />
                 <span className="pointer-events-none absolute bottom-4 right-4 rounded-full bg-black/70 px-3 py-1 text-xs font-semibold text-white opacity-0 transition-opacity group-hover:opacity-100">
@@ -117,7 +116,6 @@ export default function PainSection() {
             className="order-2 xl:order-3"
           >
             <div className="relative h-full min-h-[360px] overflow-hidden rounded-[28px] border border-green-200 bg-white shadow-[0_10px_30px_rgba(2,6,23,0.08)] lg:min-h-[520px]">
-              <div className="h-24 border-b border-slate-100 bg-slate-50" />
               <div className="absolute left-4 top-4 z-10 inline-flex rounded-full bg-green-600 px-3 py-1">
                 <span className="text-xs font-bold tracking-wide text-white sm:text-sm">DESPUÉS</span>
               </div>
@@ -125,13 +123,13 @@ export default function PainSection() {
               <button
                 type="button"
                 onClick={() => setActiveImage({ src: despuesImage, alt: 'Resultado después de aplicar estrategia de produccion-audiovisual-valle-del-elqui' })}
-                className="group relative flex h-[calc(100%-6rem)] w-full items-center justify-center p-4 sm:p-6"
+                className="group relative flex h-full w-full items-center justify-center p-4 sm:p-6"
                 aria-label="Ampliar imagen DESPUES"
               >
                 <img
                   src={despuesImage}
                   alt="Resultado después de aplicar estrategia de produccion-audiovisual-valle-del-elqui"
-                  className="h-auto max-h-[440px] w-auto max-w-full object-contain object-center"
+                  className="h-auto max-h-full w-auto max-w-full object-contain object-center"
                   loading="lazy"
                 />
                 <span className="pointer-events-none absolute bottom-4 right-4 rounded-full bg-black/70 px-3 py-1 text-xs font-semibold text-white opacity-0 transition-opacity group-hover:opacity-100">
