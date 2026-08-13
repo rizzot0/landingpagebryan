@@ -9,10 +9,9 @@ export default function PainSection() {
   const [activeImage, setActiveImage] = useState(null)
 
   const beforeBullets = [
-    'Publican, pero no reciben mensajes.',
-    'Tienen likes, pero no clientes.',
-    'Invierten tiempo y no ven resultados.',
-    'No saben qué contenido funciona.'
+    'Publicas, pero nadie compra.',
+    'Falta de tiempo para cumplir metas.',
+    'Inviertes mucho dinero y no hay resultados.',
   ]
 
   return (
@@ -56,16 +55,16 @@ export default function PainSection() {
               <button
                 type="button"
                 onClick={() => setActiveImage({ src: antesImage, alt: 'Resultado antes de aplicar estrategia de contenido para video-turismo-chile' })}
-                className="group relative flex h-full w-full items-center justify-center p-4 sm:p-6"
+                className="group relative flex h-full w-full items-center justify-center p-1.5 sm:p-2"
                 aria-label="Ampliar imagen ANTES"
               >
                 <img
                   src={antesImage}
                   alt="Resultado antes de aplicar estrategia de contenido para video-turismo-chile"
-                  className="h-auto max-h-full w-auto max-w-full object-contain object-center"
+                  className="h-full w-full object-contain object-center"
                   loading="lazy"
                 />
-                <span className="pointer-events-none absolute bottom-4 right-4 rounded-full bg-black/70 px-3 py-1 text-xs font-semibold text-white opacity-0 transition-opacity group-hover:opacity-100">
+                <span className="pointer-events-none absolute bottom-3 right-3 rounded-full bg-black/70 px-3 py-1 text-xs font-semibold text-white opacity-80 transition-opacity group-hover:opacity-100">
                   Clic para ampliar
                 </span>
               </button>
@@ -123,16 +122,16 @@ export default function PainSection() {
               <button
                 type="button"
                 onClick={() => setActiveImage({ src: despuesImage, alt: 'Resultado después de aplicar estrategia de produccion-audiovisual-valle-del-elqui' })}
-                className="group relative flex h-full w-full items-center justify-center p-4 sm:p-6"
+                className="group relative flex h-full w-full items-center justify-center p-1.5 sm:p-2"
                 aria-label="Ampliar imagen DESPUES"
               >
                 <img
                   src={despuesImage}
                   alt="Resultado después de aplicar estrategia de produccion-audiovisual-valle-del-elqui"
-                  className="h-auto max-h-full w-auto max-w-full object-contain object-center"
+                  className="h-full w-full object-contain object-center"
                   loading="lazy"
                 />
-                <span className="pointer-events-none absolute bottom-4 right-4 rounded-full bg-black/70 px-3 py-1 text-xs font-semibold text-white opacity-0 transition-opacity group-hover:opacity-100">
+                <span className="pointer-events-none absolute bottom-3 right-3 rounded-full bg-black/70 px-3 py-1 text-xs font-semibold text-white opacity-80 transition-opacity group-hover:opacity-100">
                   Clic para ampliar
                 </span>
               </button>

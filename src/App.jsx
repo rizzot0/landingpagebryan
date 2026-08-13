@@ -15,6 +15,7 @@ import WhatsAppButton from './components/WhatsAppButton.jsx'
 import ServiciosPage from './pages/ServiciosPage.jsx'
 import BlogPage from './pages/BlogPage.jsx'
 import CasosDeExitoPage from './pages/CasosDeExitoPage.jsx'
+import PlanDetailPage from './pages/PlanDetailPage.jsx'
 
 function MainPage() {
   return (
@@ -43,6 +44,7 @@ export default function App() {
       <Route path="/servicios" element={<ServiciosPage />} />
       <Route path="/blog" element={<BlogPage />} />
       <Route path="/casos-de-exito" element={<CasosDeExitoPage />} />
+      <Route path="/planes/:slug" element={<PlanDetailPage />} />
     </Routes>
   )
 }
