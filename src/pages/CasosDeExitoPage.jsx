@@ -19,10 +19,12 @@ export default function CasosDeExitoPage() {
 
         <div className="mx-auto max-w-7xl px-4 py-16">
           <div className="flex flex-col items-center justify-center py-20 text-center">
-            <span className="text-6xl mb-4">🚀</span>
-            <h2 className="text-2xl font-bold text-slate-900 mb-2">Próximamente</h2>
-            <p className="text-slate-600 max-w-md">
-              Estamos preparando los casos de éxito de nuestros clientes con todos sus resultados y métricas.
+            <h2 className="mb-3 text-2xl font-bold text-slate-900 sm:text-3xl">
+              Pronto disponible
+            </h2>
+            <p className="max-w-lg text-base leading-relaxed text-slate-600 sm:text-lg">
+              Estamos documentando los resultados de nuestros clientes: métricas, campañas y aprendizajes
+              reales. En cuanto esté listo, los verás publicados aquí.
             </p>
           </div>
         </div>

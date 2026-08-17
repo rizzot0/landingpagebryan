@@ -1,88 +1,63 @@
 import { motion as Motion } from 'framer-motion'
-import { Link as RouterLink } from 'react-router-dom'
-import { Film, Megaphone, BarChart3 } from 'lucide-react'
-
-const services = [
-  {
-    num: '01',
-    Icon: Film,
-    title: 'Edición de video',
-    description: 'TikTok, Reels y YouTube Shorts con gancho, subtítulos y música estratégica que retiene y convierte.',
-    cta: 'Ver planes de edición →',
-  },
-  {
-    num: '02',
-    Icon: Megaphone,
-    title: 'Meta Ads — creativos',
-    description: 'Videos e imágenes diseñados específicamente para convertir en Facebook, Instagram y WhatsApp.',
-    cta: 'Ver planes de Ads →',
-    popular: true,
-  },
-  {
-    num: '03',
-    Icon: BarChart3,
-    title: 'Meta Ads — gestión completa',
-    description: 'Me encargo de todo: setup, audiencias, campañas, optimización semanal y reporte mensual.',
-    cta: 'Ver planes de gestión →',
-  },
-]
+import { useState } from 'react'
+import estrategiaImage from '../assets/estrategia.png'
 
 export default function Servicios() {
+  const [expanded, setExpanded] = useState(false)
+
   return (
-    <section id="servicios" className="bg-white py-20">
-      <div className="mx-auto max-w-7xl px-4">
+    <section id="servicios" className="bg-white py-16 sm:py-20">
+      <div className="mx-auto w-full max-w-[90rem] px-4 sm:px-6">
         <Motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="mb-12"
         >
-          <p className="text-sm font-semibold uppercase tracking-widest text-blue-600 mb-2">Lo que hago</p>
-          <h2 className="text-3xl font-bold text-slate-900 sm:text-4xl">
-            Tres formas de hacer crecer tu negocio
-          </h2>
+          <button
+            type="button"
+            onClick={() => setExpanded(true)}
+            className="group relative block w-full overflow-hidden bg-white"
+            aria-label="Ampliar imagen de estrategia"
+          >
+            <img
+              src={estrategiaImage}
+              alt="Proceso de trabajo: estrategia, grabación, edición y gestión para lograr resultados en Meta Ads"
+              className="h-auto w-full object-contain"
+              loading="lazy"
+            />
+            <span className="pointer-events-none absolute bottom-3 right-3 rounded-full bg-black/70 px-3 py-1 text-xs font-semibold text-white opacity-80 transition-opacity group-hover:opacity-100 sm:bottom-4 sm:right-4">
+              Clic para ampliar
+            </span>
+          </button>
         </Motion.div>
-
-        <div className="grid gap-6 md:grid-cols-3">
-          {services.map(({ num, Icon, title, description, cta, popular }, i) => (
-            <Motion.div
-              key={num}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
-              className={`relative flex flex-col rounded-2xl border p-6 ${
-                popular
-                  ? 'border-blue-500 shadow-lg shadow-blue-100'
-                  : 'border-slate-200'
-              } bg-white`}
-            >
-              {popular && (
-                <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-blue-600 px-3 py-1 text-xs font-bold text-white">
-                  Popular
-                </span>
-              )}
-
-              <span className="text-4xl font-bold text-blue-200 select-none mb-4">{num}</span>
-
-              <div className="mb-4 flex size-10 items-center justify-center rounded-xl bg-blue-50">
-                <Icon className="size-5 text-blue-600" />
-              </div>
-
-              <h3 className="mb-2 text-lg font-bold text-slate-900">{title}</h3>
-              <p className="mb-6 flex-1 text-sm leading-relaxed text-slate-600">{description}</p>
-
-              <RouterLink
-                to="/servicios"
-                className="text-sm font-semibold text-blue-600 hover:text-blue-700 transition-colors"
-              >
-                {cta}
-              </RouterLink>
-            </Motion.div>
-          ))}
-        </div>
       </div>
+
+      {expanded ? (
+        <div
+          className="fixed inset-0 z-[120] bg-black/85 p-4 sm:p-8"
+          role="dialog"
+          aria-modal="true"
+          onClick={() => setExpanded(false)}
+        >
+          <button
+            type="button"
+            className="absolute right-4 top-4 rounded-full border border-white/40 bg-black/40 px-3 py-2 text-sm font-semibold text-white"
+            onClick={() => setExpanded(false)}
+            aria-label="Cerrar imagen ampliada"
+          >
+            Cerrar
+          </button>
+          <div className="flex h-full w-full items-center justify-center">
+            <img
+              src={estrategiaImage}
+              alt="Proceso de trabajo: estrategia, grabación, edición y gestión para lograr resultados en Meta Ads"
+              className="max-h-full max-w-full rounded-xl border border-white/20 bg-white object-contain"
+              onClick={(event) => event.stopPropagation()}
+            />
+          </div>
+        </div>
+      ) : null}
     </section>
   )
 }

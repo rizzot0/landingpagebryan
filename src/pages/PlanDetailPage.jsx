@@ -100,7 +100,7 @@ export default function PlanDetailPage() {
             rel="noopener noreferrer"
             className="block w-full rounded-2xl bg-green-500 py-4 text-center text-base font-bold text-white shadow-lg shadow-green-200 hover:bg-green-600 transition-all"
           >
-            Quiero este plan → Contactar por WhatsApp
+            Quiero empezar
           </a>
         </div>
       </main>
