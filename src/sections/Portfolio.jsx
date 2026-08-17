@@ -1,7 +1,9 @@
 import { motion } from 'framer-motion'
 import { Play, Instagram } from 'lucide-react'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { trackEvent } from '../lib/analytics'
+
+const VIDEOS_PER_PAGE = 6
 
 const FILTERS = [
   { id: 'todos', label: 'TODOS' },
@@ -33,8 +35,8 @@ const LEGACY_VIDEOS = [
   {
     id: 'legacy-1',
     title: 'ELQUI SUP',
-    label: 'SERVICIOS DEPORTIVOS',
-    section: null,
+    label: 'TURISMO',
+    section: 'turismo',
     url: '/videos/elqui-sup-hq.mp4',
     sources: {
       hq: '/videos/elqui-sup-hq.mp4',
@@ -48,7 +50,7 @@ const LEGACY_VIDEOS = [
     id: 'legacy-2',
     title: 'Arca de Lucy',
     label: 'VENTAS AL POR MENOR',
-    section: null,
+    section: 'ventas-al-por-menor',
     url: '/videos/arca-de-lucy-hq.mp4',
     sources: {
       hq: '/videos/arca-de-lucy-hq.mp4',
@@ -62,7 +64,7 @@ const LEGACY_VIDEOS = [
     id: 'legacy-3',
     title: 'Marca personal',
     label: 'VENTAS AL POR MENOR',
-    section: null,
+    section: 'ventas-al-por-menor',
     url: '/videos/marca-personal-1-hq.mp4',
     sources: {
       hq: '/videos/marca-personal-1-hq.mp4',
@@ -76,7 +78,7 @@ const LEGACY_VIDEOS = [
     id: 'legacy-4',
     title: 'Briza Tours',
     label: 'TURISMO',
-    section: null,
+    section: 'turismo',
     url: '/videos/briza-tours-hq.mp4',
     sources: {
       hq: '/videos/briza-tours-hq.mp4',
@@ -90,7 +92,7 @@ const LEGACY_VIDEOS = [
     id: 'legacy-5',
     title: 'Marca personal 2',
     label: 'VENTAS AL POR MENOR',
-    section: null,
+    section: 'ventas-al-por-menor',
     url: '/videos/marca-personal-2-hq.mp4',
     sources: {
       hq: '/videos/marca-personal-2-hq.mp4',
@@ -104,7 +106,7 @@ const LEGACY_VIDEOS = [
     id: 'legacy-6',
     title: 'ECOLAB',
     label: 'VENTAS AL POR MENOR',
-    section: null,
+    section: 'ventas-al-por-menor',
     url: '/videos/federico-ecolab-hq.mp4',
     sources: {
       hq: '/videos/federico-ecolab-hq.mp4',
@@ -376,11 +378,27 @@ function VideoCard({ video }) {
 
 export default function Portfolio() {
   const [activeFilter, setActiveFilter] = useState('todos')
+  const [page, setPage] = useState(1)
 
   const filteredVideos = useMemo(() => {
     if (activeFilter === 'todos') return ALL_VIDEOS
-    return SECTION_VIDEOS.filter((video) => video.section === activeFilter)
+    return ALL_VIDEOS.filter((video) => video.section === activeFilter)
   }, [activeFilter])
+
+  const totalPages = Math.max(1, Math.ceil(filteredVideos.length / VIDEOS_PER_PAGE))
+
+  useEffect(() => {
+    setPage(1)
+  }, [activeFilter])
+
+  useEffect(() => {
+    if (page > totalPages) setPage(totalPages)
+  }, [page, totalPages])
+
+  const paginatedVideos = useMemo(() => {
+    const start = (page - 1) * VIDEOS_PER_PAGE
+    return filteredVideos.slice(start, start + VIDEOS_PER_PAGE)
+  }, [filteredVideos, page])
 
   return (
     <section id="portfolio" className="bg-white py-20">
@@ -430,17 +448,43 @@ export default function Portfolio() {
         </motion.div>
 
         {filteredVideos.length > 0 ? (
-          <motion.div
-            key={activeFilter}
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.35 }}
-            className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8"
-          >
-            {filteredVideos.map((video) => (
-              <VideoCard key={video.id} video={video} />
-            ))}
-          </motion.div>
+          <>
+            <motion.div
+              key={`${activeFilter}-${page}`}
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.35 }}
+              className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8"
+            >
+              {paginatedVideos.map((video) => (
+                <VideoCard key={video.id} video={video} />
+              ))}
+            </motion.div>
+
+            {totalPages > 1 ? (
+              <div className="mt-10 flex flex-wrap items-center justify-center gap-2">
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNumber) => {
+                  const isActive = page === pageNumber
+                  return (
+                    <button
+                      key={pageNumber}
+                      type="button"
+                      onClick={() => setPage(pageNumber)}
+                      aria-label={`Ir a la página ${pageNumber}`}
+                      aria-current={isActive ? 'page' : undefined}
+                      className={`min-w-10 rounded-lg border px-3 py-2 text-sm font-semibold transition-all ${
+                        isActive
+                          ? 'border-blue-600 bg-blue-600 text-white'
+                          : 'border-slate-200 bg-white text-slate-600 hover:border-blue-200 hover:text-blue-600'
+                      }`}
+                    >
+                      {pageNumber}
+                    </button>
+                  )
+                })}
+              </div>
+            ) : null}
+          </>
         ) : (
           <div className="rounded-2xl border border-dashed border-slate-200 bg-slate-50 px-6 py-16 text-center">
             <p className="text-slate-600">
