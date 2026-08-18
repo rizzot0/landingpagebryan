@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { Link as ScrollLink } from 'react-scroll'
 import { NavLink, useNavigate, useLocation } from 'react-router-dom'
-import { Menu, X, Video } from 'lucide-react'
+import { Menu, X } from 'lucide-react'
+import logoBrayan from '../assets/logo-brayan.png'
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -30,12 +31,14 @@ export default function Navbar() {
       <div className="mx-auto max-w-7xl px-4 py-4 flex items-center justify-between">
         {/* Logo */}
         <NavLink to="/" className="flex items-center gap-3">
-          <div className="p-2 rounded-lg bg-blue-600">
-            <Video className="size-5 text-white" />
-          </div>
+          <img
+            src={logoBrayan}
+            alt="brayaneditavideos"
+            className="h-12 w-auto object-contain sm:h-14"
+          />
           <div>
             <span className="font-semibold text-slate-900 tracking-tight">brayaneditavideos</span>
-            <span className="text-xs text-slate-500 block font-normal">Editor de Video</span>
+            <span className="text-xs text-slate-500 block font-normal">Editor de Video - MEDIA BUYER</span>
           </div>
         </NavLink>
 
