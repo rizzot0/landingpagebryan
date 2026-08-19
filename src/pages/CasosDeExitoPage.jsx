@@ -20,7 +20,7 @@ export default function CasosDeExitoPage() {
         <div className="mx-auto max-w-7xl px-4 py-16">
           <div className="flex flex-col items-center justify-center py-20 text-center">
             <h2 className="mb-3 text-2xl font-bold text-slate-900 sm:text-3xl">
-              Pronto disponible
+              Próximamente
             </h2>
             <p className="max-w-lg text-base leading-relaxed text-slate-600 sm:text-lg">
               Estamos documentando los resultados de nuestros clientes: métricas, campañas y aprendizajes
