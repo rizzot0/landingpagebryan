@@ -1,73 +1,82 @@
 import { motion as Motion } from 'framer-motion'
-import { Meteors, GridPattern } from '../components/MagicUI'
+
+const WHATSAPP_URL = 'https://wa.me/56928683655'
+const HERO_VIDEO_URL = '/videos/videopresentacion.mp4'
+const HERO_POSTER_URL = '/videos/videopresentacion-poster.jpg'
+
+const stats = [
+  { value: '+197K', label: 'vistas en 1 video' },
+  { value: '+6', label: 'marcas trabajadas' },
+  { value: '+15%', label: 'seguidores promedio' },
+]
 
 export default function HeroVSL() {
-  const HERO_VIDEO_URL = '/videos/videopresentacion.mp4'
-  const HERO_POSTER_URL = '/videos/videopresentacion-poster.jpg'
-  const CALENDAR_URL = import.meta.env.VITE_GOOGLE_CALENDAR_URL || 'https://calendar.app.google/waBp78cxKbWBGf7e8'
-
   return (
-    <section id="hero" className="relative pt-28 pb-16 overflow-hidden bg-white">
-      {/* Background Effects */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <GridPattern className="opacity-30" />
-        <Meteors number={30} />
-      </div>
-      <div className="relative z-20 mx-auto max-w-7xl px-4">
-        <div className="rounded-3xl border border-slate-200 bg-slate-50/90 p-6 shadow-xl shadow-slate-200/50 backdrop-blur-sm sm:p-10">
-          <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-10">
-            <Motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="space-y-6"
-            >
-              <h1 className="text-4xl font-light leading-tight tracking-tight text-slate-800 sm:text-5xl lg:text-6xl">
-                Creador de contenido y edición de video para tu negocio turístico:{' '}
-                <span className="font-semibold text-slate-900">más reservas y ventas</span>{' '}
-                <span className="font-semibold text-slate-900">desde el primer día</span>
-              </h1>
+    <section id="hero" className="relative min-h-screen bg-white flex items-center pt-20 pb-16 overflow-hidden">
+      <div className="relative z-10 mx-auto max-w-7xl px-4 w-full">
+        <div className="grid items-center gap-10 lg:grid-cols-2">
+          {/* Left — copy */}
+          <Motion.div
+            initial={{ opacity: 0, x: -24 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="space-y-7"
+          >
+            {/* Badge */}
+            <span className="inline-block rounded-full border border-blue-200 bg-blue-50 px-4 py-1.5 text-sm text-blue-700 font-medium tracking-wide">
+              Creador de contenido para redes sociales para potenciar tus ventas · META ADS
+            </span>
 
-              <p className="text-2xl font-semibold leading-snug text-slate-700">
-                Solución estratégica para hoteles, cabañas, hostales y experiencias turísticas en Chile.
-              </p>
+            {/* Headline */}
+            <h1 className="text-4xl font-bold leading-tight tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">
+              Más que editar, logro que las{' '}
+              <span className="text-blue-600">METAS</span> no puedan parar.
+            </h1>
 
-              <p className="max-w-xl text-xl leading-relaxed text-slate-600">
-                Creamos videos orientados a conversión para Instagram y TikTok, con enfoque en atracción local
-                para la IV Región y la RM. No es solo contenido bonito: es contenido que llena agendas.
-              </p>
+            {/* Subtitle */}
+            <p className="max-w-lg text-lg leading-relaxed text-slate-600">
+              Estrategia, grabación, edición y Meta Ads. Todo en un solo lugar. Yo me encargo de producir y convertir tu contenido en ventas.
+            </p>
 
+            {/* CTAs */}
+            <div className="flex flex-wrap gap-4">
               <a
-                href={CALENDAR_URL}
+                href={WHATSAPP_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center rounded-2xl bg-red-600 px-10 py-4 text-lg font-bold text-white shadow-lg shadow-red-300 transition-all hover:bg-red-700 hover:shadow-xl"
               >
                 Comenzar
               </a>
-            </Motion.div>
+              <a
+                href="#portfolio"
+                className="inline-flex items-center rounded-xl border border-slate-300 px-6 py-3.5 text-base font-semibold text-slate-700 transition-all hover:bg-slate-50"
+              >
+                Ver resultados reales
+              </a>
+            </div>
 
-            <Motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.7, delay: 0.2 }}
-              className="relative"
-            >
-              <div className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-2xl shadow-slate-300/40">
-                <video
-                  className="h-full w-full object-cover"
-                  controls
-                  preload="metadata"
-                  poster={HERO_POSTER_URL}
-                  playsInline
-                >
-                  <source src={HERO_VIDEO_URL} type="video/mp4" />
-                  Tu navegador no soporta la reproducción de video.
-                </video>
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-900/10 via-transparent to-transparent" />
-              </div>
-            </Motion.div>
-          </div>
+          </Motion.div>
+
+          {/* Right — horizontal video */}
+          <Motion.div
+            initial={{ opacity: 0, x: 24 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.7, delay: 0.2 }}
+            className="flex justify-center lg:justify-end"
+          >
+            <div className="relative w-full aspect-video rounded-2xl overflow-hidden border border-slate-200 bg-slate-100 shadow-2xl shadow-slate-200/60">
+              <video
+                className="h-full w-full object-cover"
+                controls
+                preload="metadata"
+                poster={HERO_POSTER_URL}
+                playsInline
+              >
+                <source src={HERO_VIDEO_URL} type="video/mp4" />
+              </video>
+            </div>
+          </Motion.div>
         </div>
       </div>
     </section>

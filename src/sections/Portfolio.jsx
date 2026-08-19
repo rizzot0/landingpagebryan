@@ -1,8 +1,19 @@
 import { motion } from 'framer-motion'
-import { BentoCard } from '../components/MagicUI'
-import { Play, Award, Zap, ExternalLink } from 'lucide-react'
-import { useState } from 'react'
+import { Play, Instagram } from 'lucide-react'
+import { useEffect, useMemo, useState } from 'react'
 import { trackEvent } from '../lib/analytics'
+
+const VIDEOS_PER_PAGE = 6
+
+const FILTERS = [
+  { id: 'todos', label: 'TODOS' },
+  { id: 'salud', label: 'SALUD' },
+  { id: 'turismo', label: 'TURISMO' },
+  { id: 'ventas-al-por-menor', label: 'VENTAS AL POR MENOR' },
+  { id: 'inmobiliaria', label: 'INMOBILIARIA' },
+]
+
+const INSTAGRAM_URL = 'https://www.instagram.com/brayaneditavideos/'
 
 const getPreferredVideoSource = (video) => {
   if (!video?.sources) return video?.url
@@ -20,394 +31,491 @@ const getPreferredVideoSource = (video) => {
     : (video.sources.hq || video.sources.lq || video.url)
 }
 
-const DEMO_VIDEOS = [
+const LEGACY_VIDEOS = [
   {
-    id: 1,
-    title: "Video ELQUI SUP",
-    url: "/videos/elqui-sup-hq.mp4",
+    id: 'legacy-1',
+    title: 'ELQUI SUP',
+    label: 'TURISMO',
+    section: 'turismo',
+    url: '/videos/elqui-sup-hq.mp4',
     sources: {
-      hq: "/videos/elqui-sup-hq.mp4",
-      lq: "/videos/elqui-sup-lq.mp4"
+      hq: '/videos/elqui-sup-hq.mp4',
+      lq: '/videos/elqui-sup-lq.mp4',
     },
-    type: "mp4",
-    thumbnail: "/videos/elqui-sup-poster.jpg",
-    featured: true,
-    category: "Comercial",
-    badge: "Cliente Real",
-    cliente: "Felipe Zarate",
-    empresa: "ELQUI SUP",
-    description: "Contenido para marca deportiva con enfoque en presencia y posicionamiento.",
-    date: "Verano 2026"
+    type: 'mp4',
+    thumbnail: '/videos/elqui-sup-poster.jpg',
+    duration: '00:32',
   },
   {
-    id: 2,
-    title: "Video ARCA DE LUCY",
-    url: "/videos/arca-de-lucy-hq.mp4",
+    id: 'legacy-2',
+    title: 'Arca de Lucy',
+    label: 'VENTAS AL POR MENOR',
+    section: 'ventas-al-por-menor',
+    url: '/videos/arca-de-lucy-hq.mp4',
     sources: {
-      hq: "/videos/arca-de-lucy-hq.mp4",
-      lq: "/videos/arca-de-lucy-lq.mp4"
+      hq: '/videos/arca-de-lucy-hq.mp4',
+      lq: '/videos/arca-de-lucy-lq.mp4',
     },
-    type: "mp4",
-    thumbnail: "/videos/arca-de-lucy-poster.jpg",
-    featured: false,
-    category: "Marca",
-    badge: "Cliente Real",
-    cliente: "Arca de Lucy",
-    empresa: "Productos Vegetarianos",
-    description: "Pieza de contenido para negocio gastronómico con edición dinámica.",
-    date: "Verano 2026"
+    type: 'mp4',
+    thumbnail: '/videos/arca-de-lucy-poster.jpg',
+    duration: '00:28',
   },
   {
-    id: 3,
-    title: "Video Marca Personal",
-    url: "/videos/marca-personal-1-hq.mp4",
+    id: 'legacy-3',
+    title: 'Marca personal',
+    label: 'VENTAS AL POR MENOR',
+    section: 'ventas-al-por-menor',
+    url: '/videos/marca-personal-1-hq.mp4',
     sources: {
-      hq: "/videos/marca-personal-1-hq.mp4",
-      lq: "/videos/marca-personal-1-lq.mp4"
+      hq: '/videos/marca-personal-1-hq.mp4',
+      lq: '/videos/marca-personal-1-lq.mp4',
     },
-    type: "mp4",
-    thumbnail: "/videos/marca-personal-1-poster.jpg",
-    featured: false,
-    category: "Social Media",
-    badge: "Marca Personal",
-    cliente: "brayaneditavideos",
-    empresa: "Marca Personal",
-    description: "Short para posicionamiento personal y alcance orgánico en redes.",
-    date: "Verano 2026"
+    type: 'mp4',
+    thumbnail: '/videos/marca-personal-1-poster.jpg',
+    duration: '00:24',
   },
   {
-    id: 4,
-    title: "Video Briza Tours",
-    url: "/videos/briza-tours-hq.mp4",
+    id: 'legacy-4',
+    title: 'Briza Tours',
+    label: 'TURISMO',
+    section: 'turismo',
+    url: '/videos/briza-tours-hq.mp4',
     sources: {
-      hq: "/videos/briza-tours-hq.mp4",
-      lq: "/videos/briza-tours-lq.mp4"
+      hq: '/videos/briza-tours-hq.mp4',
+      lq: '/videos/briza-tours-lq.mp4',
     },
-    type: "mp4",
-    thumbnail: "/videos/briza-tours-poster.jpg",
-    featured: false,
-    category: "Turismo",
-    badge: "Cliente Real",
-    cliente: "Briza Tours",
-    empresa: "Tours & Experiences",
-    description: "Video promocional para servicios turísticos con ritmo y estética comercial.",
-    date: "Verano 2026"
+    type: 'mp4',
+    thumbnail: '/videos/briza-tours-poster.jpg',
+    duration: '00:30',
   },
   {
-    id: 5,
-    title: "Video Marca Personal 2",
-    url: "/videos/marca-personal-2-hq.mp4",
+    id: 'legacy-5',
+    title: 'Marca personal 2',
+    label: 'VENTAS AL POR MENOR',
+    section: 'ventas-al-por-menor',
+    url: '/videos/marca-personal-2-hq.mp4',
     sources: {
-      hq: "/videos/marca-personal-2-hq.mp4",
-      lq: "/videos/marca-personal-2-lq.mp4"
+      hq: '/videos/marca-personal-2-hq.mp4',
+      lq: '/videos/marca-personal-2-lq.mp4',
     },
-    type: "mp4",
-    thumbnail: "/videos/marca-personal-2-poster.jpg",
-    featured: false,
-    category: "Social Media",
-    badge: "Marca Personal",
-    cliente: "brayaneditavideos",
-    empresa: "Marca Personal",
-    description: "Contenido vertical optimizado para retención y autoridad en redes.",
-    date: "Verano 2026"
+    type: 'mp4',
+    thumbnail: '/videos/marca-personal-2-poster.jpg',
+    duration: '00:22',
   },
   {
-    id: 6,
-    title: "Video de Federico",
-    url: "/videos/federico-ecolab-hq.mp4",
+    id: 'legacy-6',
+    title: 'ECOLAB',
+    label: 'VENTAS AL POR MENOR',
+    section: 'ventas-al-por-menor',
+    url: '/videos/federico-ecolab-hq.mp4',
     sources: {
-      hq: "/videos/federico-ecolab-hq.mp4",
-      lq: "/videos/federico-ecolab-lq.mp4"
+      hq: '/videos/federico-ecolab-hq.mp4',
+      lq: '/videos/federico-ecolab-lq.mp4',
     },
-    type: "mp4",
-    thumbnail: "/videos/federico-ecolab-poster.jpg",
-    featured: false,
-    category: "Negocios",
-    badge: "Cliente Real",
-    cliente: "Federico",
-    empresa: "ECOLAB",
-    description: "Video de marca y contenido comercial para negocio local.",
-    date: "Verano 2026"
-  }
+    type: 'mp4',
+    thumbnail: '/videos/federico-ecolab-poster.jpg',
+    duration: '00:26',
+  },
 ]
 
-const PORTFOLIO_EXTERNAL_URL = import.meta.env.VITE_PORTFOLIO_EXTERNAL_URL || 'https://www.behance.net/gallery/235166779/Video-editing-Cap-cut-Edicion-de-video'
+const SECTION_VIDEOS = [
+  {
+    id: 'salud-1',
+    title: 'Macademy Podología Clínica',
+    label: 'SALUD',
+    section: 'salud',
+    url: '/videos/salud-novpz0wvqdo-hq.mp4',
+    sources: {
+      hq: '/videos/salud-novpz0wvqdo-hq.mp4',
+      lq: '/videos/salud-novpz0wvqdo-lq.mp4',
+    },
+    type: 'mp4',
+    thumbnail: '/videos/salud-novpz0wvqdo-poster.webp',
+    duration: '00:34',
+  },
+  {
+    id: 'salud-2',
+    title: 'Macademy — Uñas enterradas',
+    label: 'SALUD',
+    section: 'salud',
+    url: '/videos/salud-r2oro4ijp5g-hq.mp4',
+    sources: {
+      hq: '/videos/salud-r2oro4ijp5g-hq.mp4',
+      lq: '/videos/salud-r2oro4ijp5g-lq.mp4',
+    },
+    type: 'mp4',
+    thumbnail: '/videos/salud-r2oro4ijp5g-poster.webp',
+    duration: '00:32',
+  },
+  {
+    id: 'salud-3',
+    title: 'Macademy — Antes y después',
+    label: 'SALUD',
+    section: 'salud',
+    url: '/videos/salud-nawst61dhzc-hq.mp4',
+    sources: {
+      hq: '/videos/salud-nawst61dhzc-hq.mp4',
+      lq: '/videos/salud-nawst61dhzc-lq.mp4',
+    },
+    type: 'mp4',
+    thumbnail: '/videos/salud-nawst61dhzc-poster.webp',
+    duration: '00:45',
+  },
+  {
+    id: 'turismo-1',
+    title: 'Elqui Sup — Experiencia Molokai',
+    label: 'TURISMO',
+    section: 'turismo',
+    url: '/videos/turismo-f4ollbhk2hk-hq.mp4',
+    sources: {
+      hq: '/videos/turismo-f4ollbhk2hk-hq.mp4',
+      lq: '/videos/turismo-f4ollbhk2hk-lq.mp4',
+    },
+    type: 'mp4',
+    thumbnail: '/videos/turismo-f4ollbhk2hk-poster.webp',
+    duration: '00:38',
+  },
+  {
+    id: 'turismo-2',
+    title: 'Gaviota Aventura',
+    label: 'TURISMO',
+    section: 'turismo',
+    url: '/videos/turismo-uyugd6p9pe4-hq.mp4',
+    sources: {
+      hq: '/videos/turismo-uyugd6p9pe4-hq.mp4',
+      lq: '/videos/turismo-uyugd6p9pe4-lq.mp4',
+    },
+    type: 'mp4',
+    thumbnail: '/videos/turismo-uyugd6p9pe4-poster.webp',
+    duration: '00:50',
+  },
+  {
+    id: 'turismo-3',
+    title: 'Liga de la Herradura',
+    label: 'TURISMO',
+    section: 'turismo',
+    url: '/videos/turismo-cgnst325jqg-hq.mp4',
+    sources: {
+      hq: '/videos/turismo-cgnst325jqg-hq.mp4',
+      lq: '/videos/turismo-cgnst325jqg-lq.mp4',
+    },
+    type: 'mp4',
+    thumbnail: '/videos/turismo-cgnst325jqg-poster.webp',
+    duration: '00:25',
+  },
+  {
+    id: 'inmobiliaria-1',
+    title: 'Asesorías Vivi — Crédito hipotecario',
+    label: 'INMOBILIARIA',
+    section: 'inmobiliaria',
+    url: '/videos/inmobiliaria-qmjam-nixcq-hq.mp4',
+    sources: {
+      hq: '/videos/inmobiliaria-qmjam-nixcq-hq.mp4',
+      lq: '/videos/inmobiliaria-qmjam-nixcq-lq.mp4',
+    },
+    type: 'mp4',
+    thumbnail: '/videos/inmobiliaria-qmjam-nixcq-poster.webp',
+    duration: '00:28',
+  },
+  {
+    id: 'inmobiliaria-2',
+    title: 'Asesorías Vivi — Inversión Coquimbo',
+    label: 'INMOBILIARIA',
+    section: 'inmobiliaria',
+    url: '/videos/inmobiliaria-susislniyc-hq.mp4',
+    sources: {
+      hq: '/videos/inmobiliaria-susislniyc-hq.mp4',
+      lq: '/videos/inmobiliaria-susislniyc-lq.mp4',
+    },
+    type: 'mp4',
+    thumbnail: '/videos/inmobiliaria-susislniyc-poster.webp',
+    duration: '00:38',
+  },
+  {
+    id: 'inmobiliaria-3',
+    title: 'Asesorías Vivi — Evaluación hipotecaria',
+    label: 'INMOBILIARIA',
+    section: 'inmobiliaria',
+    url: '/videos/inmobiliaria-zi7cdga9gts-hq.mp4',
+    sources: {
+      hq: '/videos/inmobiliaria-zi7cdga9gts-hq.mp4',
+      lq: '/videos/inmobiliaria-zi7cdga9gts-lq.mp4',
+    },
+    type: 'mp4',
+    thumbnail: '/videos/inmobiliaria-zi7cdga9gts-poster.webp',
+    duration: '00:19',
+  },
+  {
+    id: 'ventas-1',
+    title: 'Tecnollaves',
+    label: 'VENTAS AL POR MENOR',
+    section: 'ventas-al-por-menor',
+    url: '/videos/ventas-0judkwtzu78-hq.mp4',
+    sources: {
+      hq: '/videos/ventas-0judkwtzu78-hq.mp4',
+      lq: '/videos/ventas-0judkwtzu78-lq.mp4',
+    },
+    type: 'mp4',
+    thumbnail: '/videos/ventas-0judkwtzu78-poster.webp',
+    duration: '00:39',
+  },
+  {
+    id: 'ventas-2',
+    title: 'Arca de Lucy',
+    label: 'VENTAS AL POR MENOR',
+    section: 'ventas-al-por-menor',
+    url: '/videos/ventas-cumfdv-h-cg-hq.mp4',
+    sources: {
+      hq: '/videos/ventas-cumfdv-h-cg-hq.mp4',
+      lq: '/videos/ventas-cumfdv-h-cg-lq.mp4',
+    },
+    type: 'mp4',
+    thumbnail: '/videos/ventas-cumfdv-h-cg-poster.webp',
+    duration: '00:20',
+  },
+  {
+    id: 'ventas-3',
+    title: 'Pisco Trashumante',
+    label: 'VENTAS AL POR MENOR',
+    section: 'ventas-al-por-menor',
+    url: '/videos/ventas-ueksls2njdy-hq.mp4',
+    sources: {
+      hq: '/videos/ventas-ueksls2njdy-hq.mp4',
+      lq: '/videos/ventas-ueksls2njdy-lq.mp4',
+    },
+    type: 'mp4',
+    thumbnail: '/videos/ventas-ueksls2njdy-poster.webp',
+    duration: '00:55',
+  },
+]
 
-function VideoCard({ video, className = "" }) {
+const ALL_VIDEOS = [...SECTION_VIDEOS, ...LEGACY_VIDEOS]
+
+function VideoCard({ video }) {
   const [isLoaded, setIsLoaded] = useState(false)
   const preferredSource = getPreferredVideoSource(video)
-  const isDirectVideo = video.type === 'mp4' || /(\.mp4|\.webm|\.ogg)(\?|$)/i.test(preferredSource || '')
-
-  const getYouTubeId = (url) => {
-    try {
-      const parsedUrl = new URL(url)
-
-      if (parsedUrl.hostname.includes('youtu.be')) {
-        return parsedUrl.pathname.split('/').filter(Boolean)[0] || null
-      }
-
-      if (parsedUrl.hostname.includes('youtube.com')) {
-        if (parsedUrl.pathname.startsWith('/shorts/')) {
-          return parsedUrl.pathname.split('/')[2] || null
-        }
-
-        if (parsedUrl.pathname.startsWith('/embed/')) {
-          return parsedUrl.pathname.split('/')[2] || null
-        }
-
-        return parsedUrl.searchParams.get('v')
-      }
-    } catch {
-      return null
-    }
-
-    return null
-  }
-
-  const getEmbedUrl = (url) => {
-    if (url.includes('youtube.com') || url.includes('youtu.be')) {
-      const videoId = getYouTubeId(url)
-      if (!videoId) return url
-      return `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&mute=1&rel=0&modestbranding=1&playsinline=1`
-    }
-    if (url.includes('vimeo.com')) {
-      const videoId = url.split('/').pop()
-      return `https://player.vimeo.com/video/${videoId}?autoplay=1&muted=1`
-    }
-    return url
-  }
-
-  const getThumbnail = (url) => {
-    if (video.thumbnail) {
-      return video.thumbnail
-    }
-
-    if (url.includes('youtube.com') || url.includes('youtu.be')) {
-      const videoId = getYouTubeId(url)
-      if (!videoId) return null
-      return `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`
-    }
-    return null
-  }
+  const isDirectVideo =
+    video.type === 'mp4' || /(\.mp4|\.webm|\.ogg)(\?|$)/i.test(preferredSource || '')
 
   const openVideo = () => {
     if (!isLoaded) {
       trackEvent('portfolio_video_open', {
         video_title: video.title,
         location: 'portfolio_grid',
+        section: video.section || 'todos',
       })
     }
-
     setIsLoaded(true)
   }
 
   return (
-    <BentoCard className={className}>
-      <div className="flex flex-col h-full bg-white overflow-hidden">
-        {/* Video Section */}
-        <div className="relative flex-1 min-h-[280px]">
-          {!isLoaded && (
-            <div 
-              className="relative w-full h-full cursor-pointer group/video"
-              onClick={openVideo}
-            >
-              {getThumbnail(video.url) ? (
-                <img 
-                  src={getThumbnail(video.url)}
-                  alt={video.title}
-                  className="w-full h-full object-cover"
-                />
-              ) : (
-                <div className="w-full h-full bg-gradient-to-br from-slate-900 via-slate-800 to-blue-700" />
-              )}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
-              
-              {/* Time Badge */}
-              <div className="absolute top-3 left-3 px-2.5 py-1 rounded-md bg-white/90 text-xs font-bold text-slate-700">
-                1.00
-              </div>
-              
-              {/* Badge Badge */}
-              {video.badge && (
-                <div className="absolute top-3 right-3 inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-white/90 text-xs font-semibold text-slate-700">
-                  {video.badge}
-                </div>
-              )}
-              
-              {/* Play Button */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="rounded-full bg-blue-600 p-4 group-hover/video:bg-blue-700 group-hover/video:scale-110 transition-all">
-                  <Play className="size-6 text-white" fill="white" />
-                </div>
-              </div>
-            </div>
-          )}
-          
-          {isLoaded && (
-            <div className="w-full h-full overflow-hidden">
-              {isDirectVideo ? (
-                <video
-                  src={preferredSource}
-                  className="w-full h-full object-cover"
-                  controls
-                  autoPlay
-                  muted
-                  playsInline
-                  preload="none"
-                  poster={video.thumbnail}
-                />
-              ) : (
-                <iframe
-                  src={getEmbedUrl(video.url)}
-                  title={video.title}
-                  className="w-full h-full"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                />
-              )}
-            </div>
-          )}
-        </div>
-
-        {/* Info Section */}
-        <div className="p-4 sm:p-5 flex flex-col gap-3 bg-white border-t border-slate-100">
-          {/* Cliente y Empresa */}
-          <div>
-            {video.cliente && (
-              <p className="text-xs text-slate-600 font-medium">{video.cliente}</p>
+    <article className="group flex flex-col">
+      <div className="relative aspect-[9/16] overflow-hidden rounded-2xl border border-slate-200 bg-slate-100 shadow-sm">
+        {!isLoaded ? (
+          <button
+            type="button"
+            onClick={openVideo}
+            className="relative h-full w-full"
+            aria-label={`Reproducir ${video.title}`}
+          >
+            {video.thumbnail ? (
+              <img
+                src={video.thumbnail}
+                alt={video.title}
+                className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+                loading="lazy"
+              />
+            ) : (
+              <div className="h-full w-full bg-gradient-to-br from-slate-200 to-blue-100" />
             )}
-            {video.empresa && (
-              <p className="text-xs text-slate-500 font-medium">{video.empresa}</p>
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/50 via-transparent to-transparent" />
+
+            {video.duration ? (
+              <span className="absolute right-3 top-3 rounded-md bg-white/90 px-2 py-1 text-xs font-semibold text-slate-700">
+                {video.duration}
+              </span>
+            ) : null}
+
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="rounded-full bg-blue-600 p-3.5 shadow-lg transition-transform group-hover:scale-110">
+                <Play className="size-5 text-white" fill="white" />
+              </div>
+            </div>
+          </button>
+        ) : (
+          <div className="h-full w-full overflow-hidden">
+            {isDirectVideo ? (
+              <video
+                src={preferredSource}
+                className="h-full w-full object-cover"
+                controls
+                autoPlay
+                muted
+                playsInline
+                preload="none"
+                poster={video.thumbnail}
+              />
+            ) : (
+              <iframe
+                src={video.url}
+                title={video.title}
+                className="h-full w-full"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
             )}
           </div>
-
-          {/* Descripción */}
-          {video.description && (
-            <p className="text-sm text-slate-700 line-clamp-2 leading-snug">
-              {video.description}
-            </p>
-          )}
-
-          {/* Fecha */}
-          {video.date && (
-            <p className="text-xs text-slate-500 font-medium">
-              {video.date}
-            </p>
-          )}
-
-          {/* CTA Button */}
-          <button
-            className="mt-auto w-full py-2 px-4 bg-gradient-to-r from-amber-400 to-yellow-400 text-slate-800 font-bold text-sm rounded-lg hover:shadow-lg transition-all hover:scale-[1.02]"
-            onClick={openVideo}
-          >
-            Ver Video
-          </button>
-        </div>
+        )}
       </div>
-    </BentoCard>
+
+      <div className="mt-3 px-0.5">
+        <p className="text-xs font-semibold uppercase tracking-wide text-blue-600">{video.label}</p>
+        <h3 className="mt-1 text-base font-bold text-slate-900 sm:text-lg">{video.title}</h3>
+      </div>
+    </article>
   )
 }
 
 export default function Portfolio() {
+  const [activeFilter, setActiveFilter] = useState('todos')
+  const [page, setPage] = useState(1)
+
+  const filteredVideos = useMemo(() => {
+    if (activeFilter === 'todos') return ALL_VIDEOS
+    return ALL_VIDEOS.filter((video) => video.section === activeFilter)
+  }, [activeFilter])
+
+  const totalPages = Math.max(1, Math.ceil(filteredVideos.length / VIDEOS_PER_PAGE))
+
+  useEffect(() => {
+    setPage(1)
+  }, [activeFilter])
+
+  useEffect(() => {
+    if (page > totalPages) setPage(totalPages)
+  }, [page, totalPages])
+
+  const paginatedVideos = useMemo(() => {
+    const start = (page - 1) * VIDEOS_PER_PAGE
+    return filteredVideos.slice(start, start + VIDEOS_PER_PAGE)
+  }, [filteredVideos, page])
+
   return (
-    <>
-    <section id="portfolio" className="mx-auto max-w-7xl px-4 py-20 bg-white">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
-        className="text-center mb-16"
-      >
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 border border-blue-100 mb-4">
-          <Award className="size-4 text-blue-600" />
-          <span className="text-sm text-blue-700 font-medium">Trabajos Destacados</span>
-        </div>
-        <h2 className="text-4xl sm:text-5xl font-semibold text-slate-900 tracking-tight">
-          Proyectos de Video Turístico en la IV Región y RM
-        </h2>
-        <p className="mt-4 text-slate-600 max-w-2xl mx-auto font-normal">
-          Creación de contenido y edición estratégica para redes sociales
-        </p>
-      </motion.div>
-
-      {/* Grid Layout - Videos con Info a la Izquierda */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8, staggerChildren: 0.1 }}
-        className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6"
-      >
-        {DEMO_VIDEOS.map((video, idx) => (
-          <motion.div
-            key={video.id}
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: idx * 0.1 }}
-          >
-            <VideoCard video={video} />
-          </motion.div>
-        ))}
-      </motion.div>
-
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        className="text-center mt-12"
-      >
-        <a
-          href={PORTFOLIO_EXTERNAL_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 px-8 py-4 border-2 border-blue-600 text-blue-600 font-semibold rounded-xl hover:bg-blue-50 transition-all"
-          onClick={() =>
-            trackEvent('portfolio_external_click', {
-              location: 'portfolio_section',
-            })
-          }
+    <section id="portfolio" className="bg-white py-20">
+      <div className="mx-auto max-w-7xl px-4">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="mb-10"
         >
-          Ver más
-          <ExternalLink className="size-5" />
-        </a>
-      </motion.div>
+          <p className="mb-2 text-sm font-semibold uppercase tracking-widest text-blue-600">
+            Portafolio
+          </p>
+          <h2 className="max-w-4xl text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl lg:text-5xl">
+            Empresas que han aumentado un 15 a{' '}
+            <span className="whitespace-nowrap">20%</span>{' '}
+            sus ventas mediante anuncios para{' '}
+            <span className="text-blue-600">META ADS</span>.
+          </h2>
+        </motion.div>
 
-      {/* Services Grid */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        className="grid md:grid-cols-3 gap-6 mt-16"
-      >
-        {[
-          {
-            icon: <Zap className="size-6" />,
-            title: "Edición Rápida",
-            desc: "Entrega profesional en tiempo récord"
-          },
-          {
-            icon: <Award className="size-6" />,
-            title: "Estrategia de Contenido",
-            desc: "Cada video se planifica para atraer y convertir"
-          },
-          {
-            icon: <Play className="size-6" />,
-            title: "Proceso Colaborativo",
-            desc: "Ajustes claros por etapas para llegar al resultado ideal"
-          }
-        ].map((service, idx) => (
-          <BentoCard key={idx} className="text-center">
-            <div className="inline-flex p-3 rounded-lg bg-blue-50 border border-blue-100 text-blue-600 mb-4">
-              {service.icon}
-            </div>
-            <h3 className="font-semibold text-slate-900 tracking-tight mb-2">{service.title}</h3>
-            <p className="text-sm text-slate-600 font-normal">{service.desc}</p>
-          </BentoCard>
-        ))}
-      </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.05 }}
+          className="mb-10 flex gap-2 overflow-x-auto pb-2"
+        >
+          {FILTERS.map((filter) => {
+            const isActive = activeFilter === filter.id
+            return (
+              <button
+                key={filter.id}
+                type="button"
+                onClick={() => setActiveFilter(filter.id)}
+                className={`shrink-0 rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-wide transition-all sm:text-sm ${
+                  isActive
+                    ? 'border-blue-600 bg-blue-50 text-blue-700'
+                    : 'border-slate-200 bg-white text-slate-600 hover:border-blue-200 hover:text-blue-600'
+                }`}
+              >
+                {filter.label}
+              </button>
+            )
+          })}
+        </motion.div>
+
+        {filteredVideos.length > 0 ? (
+          <>
+            <motion.div
+              key={`${activeFilter}-${page}`}
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.35 }}
+              className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8"
+            >
+              {paginatedVideos.map((video) => (
+                <VideoCard key={video.id} video={video} />
+              ))}
+            </motion.div>
+
+            {totalPages > 1 ? (
+              <div className="mt-10 flex flex-wrap items-center justify-center gap-2">
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNumber) => {
+                  const isActive = page === pageNumber
+                  return (
+                    <button
+                      key={pageNumber}
+                      type="button"
+                      onClick={() => setPage(pageNumber)}
+                      aria-label={`Ir a la página ${pageNumber}`}
+                      aria-current={isActive ? 'page' : undefined}
+                      className={`min-w-10 rounded-lg border px-3 py-2 text-sm font-semibold transition-all ${
+                        isActive
+                          ? 'border-blue-600 bg-blue-600 text-white'
+                          : 'border-slate-200 bg-white text-slate-600 hover:border-blue-200 hover:text-blue-600'
+                      }`}
+                    >
+                      {pageNumber}
+                    </button>
+                  )
+                })}
+              </div>
+            ) : null}
+          </>
+        ) : (
+          <div className="rounded-2xl border border-dashed border-slate-200 bg-slate-50 px-6 py-16 text-center">
+            <p className="text-slate-600">
+              Pronto agregaremos videos de esta categoría.
+            </p>
+          </div>
+        )}
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mt-12 text-center"
+        >
+          <a
+            href={INSTAGRAM_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 rounded-xl border-2 border-blue-600 px-8 py-4 font-semibold text-blue-600 transition-all hover:bg-blue-50"
+            onClick={() =>
+              trackEvent('social_click', {
+                platform: 'instagram',
+                location: 'portfolio_section',
+              })
+            }
+          >
+            Ver más
+            <Instagram className="size-5" />
+          </a>
+        </motion.div>
+      </div>
     </section>
-    </>
   )
 }

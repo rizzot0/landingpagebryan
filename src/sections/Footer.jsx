@@ -16,7 +16,7 @@ export default function Footer() {
         <div className="grid md:grid-cols-3 gap-8 mb-8">
           {/* Brand */}
           <div>
-            <h3 className="font-semibold text-slate-900 tracking-tight mb-2">brayaneditavideos — Editor de Video</h3>
+            <h3 className="font-semibold text-slate-900 tracking-tight mb-2">brayaneditavideos — Editor de Video - MEDIA BUYER</h3>
             <p className="text-sm text-slate-600 font-normal">
               Transformando ideas en contenido visual impactante.
             </p>
