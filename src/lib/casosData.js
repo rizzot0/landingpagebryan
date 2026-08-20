@@ -17,7 +17,7 @@ export const casosDeExito = [
         'De cero estrategia a 60 conversaciones reales de clientes, en 3 sucursales de la Región de Coquimbo.',
       video: {
         src: `${BASE}/gancho-compilacion.mp4`,
-        poster: null,
+        poster: `${BASE}/gancho-compilacion-poster.jpg`,
       },
     },
     context: {
@@ -76,10 +76,10 @@ export const casosDeExito = [
       title: 'Detrás de cámara',
       subtitle: 'El proceso real en sucursales: cómo se construyó la campaña paso a paso.',
       items: [
-        { type: 'video', src: `${BASE}/bts/bts-1.mp4` },
-        { type: 'video', src: `${BASE}/bts/bts-2.mp4` },
-        { type: 'video', src: `${BASE}/bts/bts-3.mp4` },
-        { type: 'video', src: `${BASE}/bts/bts-4.mp4` },
+        { type: 'video', src: `${BASE}/bts/bts-1.mp4`, poster: `${BASE}/bts/bts-1-poster.jpg` },
+        { type: 'video', src: `${BASE}/bts/bts-2.mp4`, poster: `${BASE}/bts/bts-2-poster.jpg` },
+        { type: 'video', src: `${BASE}/bts/bts-3.mp4`, poster: `${BASE}/bts/bts-3-poster.jpg` },
+        { type: 'video', src: `${BASE}/bts/bts-4.mp4`, poster: `${BASE}/bts/bts-4-poster.jpg` },
       ],
     },
     results: {

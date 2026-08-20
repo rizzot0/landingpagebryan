@@ -40,38 +40,83 @@ function CaseVideo({
   tall = false,
   autoPlayOnView = false,
 }) {
+  const containerRef = useRef(null)
   const videoRef = useRef(null)
+  const [nearView, setNearView] = useState(false)
+  const [activated, setActivated] = useState(false)
   const [playing, setPlaying] = useState(false)
 
+  // Cargar el archivo solo cuando el bloque se acerca al viewport.
   useEffect(() => {
-    if (!autoPlayOnView || !src) return undefined
-    const el = videoRef.current
-    if (!el) return undefined
+    const node = containerRef.current
+    if (!node || !src) return undefined
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting && entry.intersectionRatio >= 0.45) {
-          el.play()
-            .then(() => setPlaying(true))
-            .catch(() => {})
-        } else {
-          el.pause()
+        if (entry.isIntersecting) {
+          setNearView(true)
+          return
+        }
+
+        if (autoPlayOnView) {
+          const el = videoRef.current
+          if (el) {
+            el.pause()
+            el.removeAttribute('src')
+            el.load()
+          }
           setPlaying(false)
+          setActivated(false)
+          setNearView(false)
         }
       },
-      { threshold: [0, 0.45, 0.75] },
+      { rootMargin: autoPlayOnView ? '200px 0px' : '80px 0px', threshold: 0.15 },
     )
 
-    observer.observe(el)
+    observer.observe(node)
     return () => observer.disconnect()
-  }, [autoPlayOnView, src])
+  }, [src, autoPlayOnView])
+
+  // Autoplay cuando ya está cerca y el src está montado.
+  useEffect(() => {
+    if (!autoPlayOnView || !nearView || !src) return undefined
+    setActivated(true)
+
+    const id = window.setTimeout(() => {
+      const el = videoRef.current
+      if (!el) return
+      el.play()
+        .then(() => setPlaying(true))
+        .catch(() => setPlaying(false))
+    }, 50)
+
+    return () => window.clearTimeout(id)
+  }, [autoPlayOnView, nearView, src])
+
+  const shouldMountSrc = autoPlayOnView ? nearView || activated : activated
+
+  const startPlayback = () => {
+    setActivated(true)
+    window.setTimeout(() => {
+      const el = videoRef.current
+      if (!el) return
+      el.play()
+        .then(() => setPlaying(true))
+        .catch(() => {})
+    }, 50)
+  }
 
   const toggle = () => {
+    if (!activated) {
+      startPlayback()
+      return
+    }
     const el = videoRef.current
     if (!el) return
     if (el.paused) {
       el.play()
-      setPlaying(true)
+        .then(() => setPlaying(true))
+        .catch(() => {})
     } else {
       el.pause()
       setPlaying(false)
@@ -82,28 +127,44 @@ function CaseVideo({
     return <MediaPlaceholder icon={Play} label={label || 'Video destacado'} tone="blue" />
   }
 
+  const showPosterOverlay = !autoPlayOnView && !playing
+
   return (
     <div
+      ref={containerRef}
       className={`overflow-hidden rounded-2xl border border-slate-200 bg-black ${className}`}
     >
-      <div className="relative bg-black">
-        <video
-          ref={videoRef}
-          src={src}
-          poster={poster || undefined}
-          className={`w-full ${tall ? 'aspect-[9/16] max-h-[420px] object-contain' : 'aspect-video object-cover'}`}
-          playsInline
-          muted={autoPlayOnView}
-          loop={autoPlayOnView}
-          preload={autoPlayOnView ? 'auto' : 'metadata'}
-          onEnded={() => {
-            if (!autoPlayOnView) setPlaying(false)
-          }}
-          onPlay={() => setPlaying(true)}
-          onPause={() => setPlaying(false)}
-          onClick={autoPlayOnView ? undefined : toggle}
-        />
-        {!autoPlayOnView && !playing ? (
+      <div className={`relative bg-black ${tall ? 'aspect-[9/16] max-h-[420px]' : 'aspect-video'}`}>
+        {shouldMountSrc ? (
+          <video
+            ref={videoRef}
+            src={src}
+            poster={poster || undefined}
+            className="h-full w-full object-cover"
+            playsInline
+            muted={autoPlayOnView}
+            loop={autoPlayOnView}
+            preload="none"
+            controls={!autoPlayOnView && playing}
+            onEnded={() => {
+              if (!autoPlayOnView) setPlaying(false)
+            }}
+            onPlay={() => setPlaying(true)}
+            onPause={() => setPlaying(false)}
+          />
+        ) : poster ? (
+          <img
+            src={poster}
+            alt=""
+            className="h-full w-full object-cover"
+            loading="lazy"
+            decoding="async"
+          />
+        ) : (
+          <div className="h-full w-full bg-slate-900" />
+        )}
+
+        {showPosterOverlay ? (
           <button
             type="button"
             onClick={toggle}
