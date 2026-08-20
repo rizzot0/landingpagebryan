@@ -132,15 +132,21 @@ function CaseVideo({
   return (
     <div
       ref={containerRef}
-      className={`overflow-hidden rounded-2xl border border-slate-200 bg-black ${className}`}
+      className={`overflow-hidden rounded-2xl border border-slate-200 ${tall ? 'bg-slate-50' : 'bg-black'} ${className}`}
     >
-      <div className={`relative bg-black ${tall ? 'aspect-[9/16] max-h-[420px]' : 'aspect-video'}`}>
+      <div
+        className={`relative mx-auto overflow-hidden bg-black ${
+          tall
+            ? 'aspect-[9/16] w-full max-w-[300px] sm:max-w-none'
+            : 'aspect-video w-full'
+        }`}
+      >
         {shouldMountSrc ? (
           <video
             ref={videoRef}
             src={src}
             poster={poster || undefined}
-            className="h-full w-full object-cover"
+            className="absolute inset-0 h-full w-full object-cover object-center"
             playsInline
             muted={autoPlayOnView}
             loop={autoPlayOnView}
@@ -156,19 +162,19 @@ function CaseVideo({
           <img
             src={poster}
             alt=""
-            className="h-full w-full object-cover"
+            className="absolute inset-0 h-full w-full object-cover object-center"
             loading="lazy"
             decoding="async"
           />
         ) : (
-          <div className="h-full w-full bg-slate-900" />
+          <div className="absolute inset-0 bg-slate-900" />
         )}
 
         {showPosterOverlay ? (
           <button
             type="button"
             onClick={toggle}
-            className="absolute inset-0 flex items-center justify-center bg-slate-950/35 transition hover:bg-slate-950/45"
+            className="absolute inset-0 z-10 flex items-center justify-center bg-slate-950/35 transition hover:bg-slate-950/45"
             aria-label="Reproducir video"
           >
             <span className="flex size-14 items-center justify-center rounded-full bg-white text-blue-600 shadow-lg sm:size-16">
@@ -325,7 +331,7 @@ function CasoStudy({ caso, index }) {
           </h3>
           <p className="mt-2 max-w-2xl text-base text-slate-600 sm:text-lg">{caso.process.subtitle}</p>
 
-          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-8 grid justify-items-center gap-5 sm:grid-cols-2 sm:justify-items-stretch sm:gap-4 lg:grid-cols-4">
             {caso.process.items.map((item, i) => (
               <Motion.div
                 key={`${item.src || item.label}-${i}`}
@@ -333,7 +339,7 @@ function CasoStudy({ caso, index }) {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: i * 0.08 }}
-                className="overflow-hidden rounded-2xl border border-slate-200 bg-slate-50"
+                className="w-full max-w-[300px] overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 sm:max-w-none"
               >
                 {item.type === 'video' && item.src ? (
                   <CaseVideo
