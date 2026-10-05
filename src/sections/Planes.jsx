@@ -45,14 +45,35 @@ function PlanCard({ plan, isMetaAds }) {
           {plan.badge}
         </span>
       ) : null}
-      {!plan.popular && plan.badge ? (
-        <span className="mb-3 inline-block rounded-full border border-slate-300 px-3 py-0.5 text-xs font-semibold text-slate-500">
-          {plan.badge}
-        </span>
-      ) : null}
+      {/* Top badges row */}
+      <div className="flex items-center justify-between gap-2 mb-3">
+        {!plan.popular && plan.badge ? (
+          <span className="inline-block rounded-full border border-slate-300 px-3 py-0.5 text-xs font-semibold text-slate-500">
+            {plan.badge}
+          </span>
+        ) : <div />}
+
+        {plan.hasDiscount && (
+          <span className="inline-flex items-center gap-1 rounded-full bg-red-50 border border-red-200 px-2.5 py-0.5 text-[11px] font-black uppercase tracking-wider text-red-600 shadow-sm">
+            <span className="size-1.5 rounded-full bg-red-500 animate-pulse" />
+            {plan.discountBadge || 'CYBER · 25% OFF'}
+          </span>
+        )}
+      </div>
 
       <h3 className="mb-1 text-lg font-bold text-slate-900">{plan.name}</h3>
-      <p className="mb-1 text-3xl font-extrabold text-blue-600">{plan.price}</p>
+
+      {/* Prices with strikethrough original price */}
+      <div className="mb-1 flex items-baseline gap-2.5 flex-wrap">
+        {plan.originalPrice && (
+          <span className="text-base sm:text-lg font-bold text-slate-400 line-through">
+            {plan.originalPrice}
+          </span>
+        )}
+        <span className="text-3xl font-extrabold text-blue-600 sm:text-4xl">
+          {plan.price}
+        </span>
+      </div>
       <p className="mb-5 text-xs text-slate-500">{plan.period}</p>
 
       <ul className="mb-6 flex-1 space-y-2">
@@ -122,6 +143,13 @@ export default function Planes() {
         >
           <h2 className="text-3xl font-bold text-slate-900 sm:text-4xl">Planes y precios</h2>
           <p className="mt-2 text-slate-600">Selecciona la categoría que mejor se adapta a tu negocio</p>
+          <div className="mt-4 inline-flex items-center gap-2 rounded-full bg-red-50 border border-red-200 px-4 py-1.5 text-xs sm:text-sm font-black text-red-600 shadow-sm">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500" />
+            </span>
+            <span>¡25% DE DESCUENTO CYBER APLICADO EN TODOS LOS PLANES!</span>
+          </div>
         </Motion.div>
 
         <div className="mb-10 flex gap-2 overflow-x-auto pb-2">

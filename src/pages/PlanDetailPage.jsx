@@ -64,8 +64,23 @@ export default function PlanDetailPage() {
             )}
           </div>
 
-          {/* Price */}
-          <p className="text-4xl font-extrabold text-blue-600 mb-1">{plan.price}</p>
+          {/* Price with strikethrough */}
+          <div className="flex items-baseline gap-3 flex-wrap mb-1">
+            {plan.originalPrice && (
+              <span className="text-xl sm:text-2xl font-bold text-slate-400 line-through">
+                {plan.originalPrice}
+              </span>
+            )}
+            <span className="text-4xl sm:text-5xl font-extrabold text-blue-600">
+              {plan.price}
+            </span>
+            {plan.hasDiscount && (
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-red-50 border border-red-200 px-3 py-1 text-xs font-black uppercase tracking-wider text-red-600 shadow-sm">
+                <span className="size-1.5 rounded-full bg-red-500 animate-pulse" />
+                {plan.discountBadge || 'CYBER · 25% OFF'}
+              </span>
+            )}
+          </div>
           <p className="text-sm text-slate-500 mb-8">{plan.period}</p>
 
           {/* Description */}

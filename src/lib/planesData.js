@@ -2,7 +2,10 @@ export const WHATSAPP_NUMBER = '56928683655'
 export const wsp = (msg) =>
   `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`
 
-export const categories = [
+// Activa o desactiva la promoción CyberDay (25% de descuento)
+export const CYBER_ACTIVE = true
+
+const rawCategories = [
   {
     id: 'creacion-contenido',
     num: 'CATEGORÍA 01',
@@ -15,7 +18,8 @@ export const categories = [
         slug: 'impulso-expres',
         badge: 'ENTRADA',
         name: 'Impulso Exprés',
-        price: '$95.000',
+        originalPrice: '$95.000',
+        cyberPrice: '$71.250',
         period: 'CLP / mes',
         description:
           'Para negocios que quieren empezar a publicar videos estratégicos con grabación o material propio, y propuestas basadas en tendencias.',
@@ -27,13 +31,15 @@ export const categories = [
           '4 propuestas de contenido basadas en tendencias',
           'Edición en cada video',
         ],
-        msg: 'Hola! Me interesa el plan Impulso Exprés de $95.000 CLP/mes 🎬',
+        msg: 'Hola! Me interesa el plan Impulso Exprés con el 25% OFF de Cyber ($71.250 CLP/mes) 🎬',
+        normalMsg: 'Hola! Me interesa el plan Impulso Exprés de $95.000 CLP/mes 🎬',
       },
       {
         slug: 'impulso-inicial',
         badge: 'BÁSICO',
         name: 'Impulso Inicial',
-        price: '$170.000',
+        originalPrice: '$170.000',
+        cyberPrice: '$127.500',
         period: 'CLP / mes',
         description:
           'Ideal para marcas que necesitan más volumen de contenido con propuestas claras y edición profesional en cada pieza.',
@@ -45,13 +51,15 @@ export const categories = [
           '8 propuestas de contenido basadas en tendencias',
           'Edición en cada video',
         ],
-        msg: 'Hola! Me interesa el plan Impulso Inicial de $170.000 CLP/mes 🎬',
+        msg: 'Hola! Me interesa el plan Impulso Inicial con el 25% OFF de Cyber ($127.500 CLP/mes) 🎬',
+        normalMsg: 'Hola! Me interesa el plan Impulso Inicial de $170.000 CLP/mes 🎬',
       },
       {
         slug: 'crecimiento-constante',
         badge: 'MÁS ELEGIDO',
         name: 'Crecimiento Constante',
-        price: '$250.000',
+        originalPrice: '$250.000',
+        cyberPrice: '$187.500',
         period: 'CLP / mes',
         popular: true,
         description:
@@ -65,7 +73,8 @@ export const categories = [
           '1 asesoría estratégica para Meta Ads',
           'Análisis de estadísticas a fin de mes',
         ],
-        msg: 'Hola! Quiero el plan Crecimiento Constante de $250.000 CLP/mes 🎬',
+        msg: 'Hola! Quiero el plan Crecimiento Constante con el 25% OFF de Cyber ($187.500 CLP/mes) 🎬',
+        normalMsg: 'Hola! Quiero el plan Crecimiento Constante de $250.000 CLP/mes 🎬',
       },
     ],
   },
@@ -81,7 +90,8 @@ export const categories = [
         slug: 'inicio',
         badge: 'ENTRADA',
         name: 'Inicio',
-        price: '$35.000',
+        originalPrice: '$35.000',
+        cyberPrice: '$26.250',
         period: 'CLP',
         description:
           'Pack de entrada para crear tu primer creativo evergreen optimizado para website y conversión por mensaje.',
@@ -93,13 +103,15 @@ export const categories = [
           'Optimizado para website y conversión por mensaje',
         ],
         bonuses: ['+2 Anuncios Meta Ads GRATIS', 'Revisión de tu Ads Manager'],
-        msg: 'Hola! Me interesa el plan Inicio de Meta Ads ($35.000 CLP) 🚀',
+        msg: 'Hola! Me interesa el plan Inicio de Meta Ads con 25% OFF Cyber ($26.250 CLP) 🚀',
+        normalMsg: 'Hola! Me interesa el plan Inicio de Meta Ads ($35.000 CLP) 🚀',
       },
       {
         slug: 'promo-ads',
         badge: null,
         name: 'Promo Ads',
-        price: '$110.000',
+        originalPrice: '$110.000',
+        cyberPrice: '$82.500',
         period: 'CLP',
         description:
           'Pack de creativos evergreen para promocionar con más volumen y mejor capacidad de testeo.',
@@ -111,13 +123,15 @@ export const categories = [
           'Optimizado para website y conversión por mensaje',
         ],
         bonuses: ['+2 Anuncios Meta Ads GRATIS', 'Revisión de tu Ads Manager'],
-        msg: 'Hola! Me interesa el plan Promo Ads ($110.000 CLP) 🚀',
+        msg: 'Hola! Me interesa el plan Promo Ads con 25% OFF Cyber ($82.500 CLP) 🚀',
+        normalMsg: 'Hola! Me interesa el plan Promo Ads ($110.000 CLP) 🚀',
       },
       {
         slug: 'ads-continuo',
         badge: 'MÁS ELEGIDO',
         name: 'Ads Continuo',
-        price: '$160.000',
+        originalPrice: '$160.000',
+        cyberPrice: '$120.000',
         period: 'CLP',
         popular: true,
         description:
@@ -131,13 +145,15 @@ export const categories = [
           'Optimizado para website y conversión por mensaje',
         ],
         bonuses: ['+2 Anuncios Meta Ads GRATIS', 'Revisión de tu Ads Manager'],
-        msg: 'Hola! Quiero el plan Ads Continuo ($160.000 CLP) 🚀',
+        msg: 'Hola! Quiero el plan Ads Continuo con 25% OFF Cyber ($120.000 CLP) 🚀',
+        normalMsg: 'Hola! Quiero el plan Ads Continuo ($160.000 CLP) 🚀',
       },
       {
         slug: 'ads-continuo-12',
         badge: 'PREMIUM',
         name: 'Ads Continuo',
-        price: '$240.000',
+        originalPrice: '$240.000',
+        cyberPrice: '$180.000',
         period: 'CLP',
         description:
           'Versión premium de Ads Continuo con más creativos evergreen y test A/B incluido.',
@@ -150,7 +166,8 @@ export const categories = [
           'Optimizado para website y conversión por mensaje',
         ],
         bonuses: ['+2 Anuncios Meta Ads GRATIS', 'Revisión de tu Ads Manager'],
-        msg: 'Hola! Quiero el plan Ads Continuo Premium ($240.000 CLP) 🚀',
+        msg: 'Hola! Quiero el plan Ads Continuo Premium con 25% OFF Cyber ($180.000 CLP) 🚀',
+        normalMsg: 'Hola! Quiero el plan Ads Continuo Premium ($240.000 CLP) 🚀',
       },
     ],
   },
@@ -166,52 +183,84 @@ export const categories = [
         slug: 'edicion-1-video',
         badge: null,
         name: 'Edición 1 video',
-        price: '$18.000',
+        originalPrice: '$18.000',
+        cyberPrice: '$13.500',
         period: 'CLP · pago único',
         description:
           'Un video editado con estilo profesional, listo para publicar.',
         forWho:
           'Quienes necesitan una pieza puntual con calidad profesional sin contratar un plan mensual.',
         features: ['1 video editado', 'Estilo profesional predeterminado'],
-        msg: 'Hola! Me interesa la edición de 1 video por $18.000 CLP 🎬',
+        msg: 'Hola! Me interesa la edición de 1 video con 25% OFF Cyber ($13.500 CLP) 🎬',
+        normalMsg: 'Hola! Me interesa la edición de 1 video por $18.000 CLP 🎬',
       },
       {
         slug: 'pack-basico',
         badge: 'BÁSICO',
         name: 'Pack Básico',
-        price: '$60.000',
+        originalPrice: '$60.000',
+        cyberPrice: '$45.000',
         period: 'CLP · pago único',
         description: '4 videos editados a un valor conveniente por unidad.',
         forWho: 'Marcas o creadores que necesitan un pack corto de videos listos para subir.',
-        features: ['4 videos editados', '$15.000 c/u'],
-        msg: 'Hola! Me interesa el Pack Básico de edición ($60.000 CLP) 🎬',
+        features: ['4 videos editados', '$11.250 c/u (con Cyber)'],
+        msg: 'Hola! Me interesa el Pack Básico de edición con 25% OFF Cyber ($45.000 CLP) 🎬',
+        normalMsg: 'Hola! Me interesa el Pack Básico de edición ($60.000 CLP) 🎬',
       },
       {
         slug: 'pack-conveniente',
         badge: 'MÁS ELEGIDO',
         name: 'Pack Conveniente',
-        price: '$95.000',
+        originalPrice: '$95.000',
+        cyberPrice: '$71.250',
         period: 'CLP · pago único',
         popular: true,
         description: 'Más volumen de edición con mejor precio por video.',
         forWho: 'Quienes publican seguido y quieren optimizar el costo por video.',
-        features: ['8 videos editados', '$12.000 c/u'],
-        msg: 'Hola! Quiero el Pack Conveniente de edición ($95.000 CLP) 🎬',
+        features: ['8 videos editados', '$8.900 c/u (con Cyber)'],
+        msg: 'Hola! Quiero el Pack Conveniente de edición con 25% OFF Cyber ($71.250 CLP) 🎬',
+        normalMsg: 'Hola! Quiero el Pack Conveniente de edición ($95.000 CLP) 🎬',
       },
       {
         slug: 'pack-premium',
         badge: 'PREMIUM',
         name: 'Pack Premium',
-        price: '$150.000',
+        originalPrice: '$150.000',
+        cyberPrice: '$112.500',
         period: 'CLP · pago único',
         description: 'El pack con mayor volumen y el mejor valor por video.',
         forWho: 'Marcas con alta demanda de contenido editado profesional.',
-        features: ['15 videos editados', '$10.000 c/u'],
-        msg: 'Hola! Me interesa el Pack Premium de edición ($150.000 CLP) 🎬',
+        features: ['15 videos editados', '$7.500 c/u (con Cyber)'],
+        msg: 'Hola! Me interesa el Pack Premium de edición con 25% OFF Cyber ($112.500 CLP) 🎬',
+        normalMsg: 'Hola! Me interesa el Pack Premium de edición ($150.000 CLP) 🎬',
       },
     ],
   },
 ]
+
+export const categories = rawCategories.map((cat) => ({
+  ...cat,
+  plans: cat.plans.map((p) => {
+    if (CYBER_ACTIVE) {
+      return {
+        ...p,
+        price: p.cyberPrice,
+        originalPrice: p.originalPrice,
+        hasDiscount: true,
+        discountBadge: 'CYBER · 25% OFF',
+        msg: p.msg,
+      }
+    }
+    return {
+      ...p,
+      price: p.originalPrice,
+      originalPrice: null,
+      hasDiscount: false,
+      discountBadge: null,
+      msg: p.normalMsg,
+    }
+  }),
+}))
 
 export const plansBySlug = categories.reduce((acc, cat) => {
   cat.plans.forEach((plan) => {
