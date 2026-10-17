@@ -1,4 +1,4 @@
-﻿import { Link as RouterLink, useParams } from 'react-router-dom'
+import { Link as RouterLink, useParams } from 'react-router-dom'
 import { ArrowLeft } from 'lucide-react'
 import Navbar from '../sections/Navbar.jsx'
 import Footer from '../sections/Footer.jsx'
@@ -73,6 +73,59 @@ function BlogBlock({ block }) {
         </div>
         {block.title ? (
           <p className="bg-white px-4 py-3 text-sm text-slate-600">{block.title}</p>
+        ) : null}
+      </div>
+    )
+  }
+
+  if (block.type === 'table') {
+    return (
+      <div className="my-6 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+        <div className="overflow-x-auto">
+          <table className="w-full border-collapse text-left text-sm sm:text-base">
+            <thead>
+              <tr className="border-b border-slate-200 bg-slate-900 text-white">
+                {block.headers.map((header, i) => (
+                  <th
+                    key={i}
+                    className={`px-4 py-3.5 font-bold tracking-tight sm:px-6 ${
+                      i === 0 ? 'text-slate-200' : i === 2 ? 'text-blue-400' : 'text-white'
+                    }`}
+                  >
+                    {header}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-100">
+              {block.rows.map((row, rIdx) => (
+                <tr
+                  key={rIdx}
+                  className="transition-colors hover:bg-blue-50/40 odd:bg-white even:bg-slate-50/60"
+                >
+                  {row.map((cell, cIdx) => (
+                    <td
+                      key={cIdx}
+                      className={`px-4 py-3.5 sm:px-6 ${
+                        cIdx === 0
+                          ? 'font-bold text-slate-900'
+                          : cIdx === 2
+                            ? 'font-medium text-blue-700'
+                            : 'text-slate-600'
+                      }`}
+                    >
+                      {cell}
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        {block.caption ? (
+          <p className="border-t border-slate-100 bg-slate-50 px-4 py-2.5 text-xs text-slate-500">
+            {block.caption}
+          </p>
         ) : null}
       </div>
     )

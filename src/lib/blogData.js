@@ -7,8 +7,206 @@
 
 import coverFreelancerVsAgencia from '../assets/blog/freelancer-vs-agencia.jpg'
 import coverComoHacerAnuncios from '../assets/blog/como-hacer-anuncios-meta-ads.png'
+import coverValeLaPenaFreelancer from '../assets/blog/vale-la-pena-ser-freelancer-chile.png'
 
 export const blogPosts = [
+  {
+    slug: 'vale-la-pena-trabajar-como-freelancer-chile-2026',
+    category: 'FREELANCE',
+    title: '¿Vale la pena trabajar como freelancer en Chile en 2026?',
+    excerpt:
+      'Mi experiencia pasando de cobrar 3 dólares en Fiverr a vivir de hacer estrategias de Meta Ads para empresas en Chile.',
+    readTime: '6 min de lectura',
+    date: 'Octubre 2026',
+    coverImage: coverValeLaPenaFreelancer,
+    coverAlt: '¿Vale la pena trabajar como freelancer en Chile en 2026? - Guía Completa',
+    blocks: [
+      {
+        type: 'paragraph',
+        text: 'Por Brayhan Guerra, freelancer, editor de video y estratega de Meta Ads en Chile. Actualizado: octubre 2026.',
+      },
+      {
+        type: 'youtube',
+        videoId: 'Wy6Aoc4SHi0',
+        title: '¿Vale la pena ser freelancer en Chile? Mi experiencia y consejos',
+      },
+      {
+        type: 'heading',
+        text: 'Mi opinión: ¿vale la pena ser freelancer en Chile?',
+      },
+      {
+        type: 'paragraph',
+        text: 'Sí, vale la pena ser freelancer en Chile, siempre que lo veas como un negocio y no como un trabajo suelto. Yo empecé editando videos por 3 dólares en Fiverr y hoy vivo de hacer estrategias de Meta Ads para empresas.',
+      },
+      {
+        type: 'paragraph',
+        text: 'No fue inmediato ni fácil. Pero el camino freelance me dio tres cosas que un empleo no me habría dado tan rápido: aprender habilidades reales, construir un portafolio propio y aprender a vender mi trabajo por redes sociales. Esta guía resume lo que hice, lo que haría distinto y lo que tienes que saber antes de empezar.',
+      },
+      {
+        type: 'heading',
+        text: '¿Cómo empecé como freelancer?',
+      },
+      {
+        type: 'paragraph',
+        text: 'Empecé como freelancer de edición de video en Fiverr, cobrando 3 dólares por video, sin experiencia previa y sin una cartera de clientes. Esa fue mi puerta de entrada al trabajo online.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Fiverr es una plataforma donde ofreces servicios y los clientes te contratan desde cualquier parte del mundo. Para alguien que está partiendo, tiene una ventaja clara: no necesitas tener clientes propios, porque la plataforma ya tiene tráfico.',
+      },
+      {
+        type: 'heading',
+        text: '¿Qué pasos seguí para crecer como freelancer?',
+      },
+      {
+        type: 'paragraph',
+        text: 'Crecí siguiendo siete pasos: abrir un perfil, cumplir bien los primeros trabajos, crear un portafolio, estudiar edición, pasar a clientes mejor pagados, formalizarme en Chile y sumar nuevos servicios hasta llegar a Meta Ads.',
+      },
+      {
+        type: 'list',
+        items: [
+          '1. Abrir mi perfil y hacerme conocido en la plataforma: Lo primero fue crear el perfil en Fiverr. Al comienzo nadie te conoce, así que el objetivo es simple: conseguir los primeros pedidos y reseñas.',
+          '2. Hacer bien cada trabajo: Poco a poco fui entregando trabajos de buena calidad, y los clientes empezaron a contratarme de nuevo. En freelance, las reseñas y la recomendación valen más que cualquier publicidad.',
+          '3. Especializarme en videos para e-commerce: Empecé a hacer videos para tiendas online, aun sin experiencia previa. Hoy sé que debí cobrar más por ese servicio, porque el e-commerce paga mejor cuando el video ayuda a vender.',
+          '4. Crear contenido y armar mi portafolio en Behance: Un portafolio es la prueba de lo que sabes hacer. Armé el mío en Behance y lo fui alimentando con mis mejores trabajos.',
+          '5. Estudiar edición y mejorar constantemente: Mientras trabajaba, seguí estudiando edición y todo lo relacionado. Mejorar la habilidad es lo que te permite subir los precios con el tiempo.',
+          '6. Pasar a clientes en Chile y profesionalizarme: Al comienzo la mayoría de mis clientes eran internacionales. Luego quise formalizar lo mío en mi país, porque buscaba profesionalizarme y porque, entre comisiones e impuestos, el dinero que llegaba a mi cuenta era poco.',
+          '7. Ampliar el servicio: de editar a producir, crear estrategia y hacer Meta Ads: Con el tiempo me di cuenta de que podía hacer más que editar: producir los videos y crear una estrategia con objetivos. Después estudié todo sobre Meta Ads. Ahí mejoré mi capacidad de vender por redes sociales, y mi negocio creció. Hoy vivo de hacer estrategias con publicidad pagada para empresas.',
+        ],
+      },
+      {
+        type: 'heading',
+        text: '¿Cuáles son las ventajas de ser freelancer en Chile?',
+      },
+      {
+        type: 'paragraph',
+        text: 'Las principales ventajas de ser freelancer en Chile son la libertad de horarios, la posibilidad de trabajar con clientes de cualquier país, el control sobre tus precios y un crecimiento de ingresos que depende de tus habilidades.',
+      },
+      {
+        type: 'list',
+        items: [
+          'Libertad: trabajas desde donde quieras y organizas tu tiempo.',
+          'Mercado global: puedes vender tus servicios a clientes internacionales.',
+          'Tú pones el precio: a medida que mejoras, puedes cobrar más.',
+          'Aprendizaje rápido: cada cliente te obliga a resolver problemas nuevos.',
+          'Escalabilidad: puedes pasar de un servicio simple a una estrategia completa.',
+        ],
+      },
+      {
+        type: 'heading',
+        text: '¿Cuáles son las desventajas y riesgos de ser freelancer?',
+      },
+      {
+        type: 'paragraph',
+        text: 'Las desventajas del freelance son los ingresos irregulares, el trabajo constante de conseguir clientes, la falta de beneficios laborales automáticos y la responsabilidad de ordenar tus propios impuestos y cotizaciones.',
+      },
+      {
+        type: 'list',
+        items: [
+          'Ingresos variables: hay meses buenos y meses lentos.',
+          'Tú buscas a los clientes: nadie te asigna trabajo.',
+          'Sin beneficios de un contrato: gestionas tú tu previsión y tu salud.',
+          'Subcobrar al comienzo: es un error común, yo también lo cometí.',
+        ],
+      },
+      {
+        type: 'heading',
+        text: '¿Cuánto pagan de impuestos los freelancers en Chile en 2026?',
+      },
+      {
+        type: 'paragraph',
+        text: 'En 2026, la retención sobre las boletas de honorarios en Chile es de 15,25%. El Servicio de Impuestos Internos (SII) la aplica sobre el monto bruto cada vez que se emite una boleta, y sube de forma gradual hasta llegar a 17% en 2028.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Ejemplo: si emites una boleta por $100.000, la retención es de $15.250. Esa retención no se pierde por completo: se usa como anticipo de impuestos y para tus cotizaciones previsionales y de salud al hacer la Operación Renta.',
+      },
+      {
+        type: 'paragraph',
+        text: 'Esto es lo que descubrí cuando trabajé con plataformas internacionales: entre comisiones, conversión de moneda y trámites, el dinero final era menor al esperado. Por eso formalizarme y trabajar con clientes en Chile fue un punto de quiebre para mí.',
+      },
+      {
+        type: 'quote',
+        text: 'Para temas tributarios específicos de tu caso, consulta con un contador o revisa el sitio oficial del SII (sii.cl).',
+      },
+      {
+        type: 'heading',
+        text: '¿Es mejor trabajar en plataformas como Fiverr o con clientes propios?',
+      },
+      {
+        type: 'paragraph',
+        text: 'Las plataformas como Fiverr sirven para empezar y conseguir los primeros clientes, pero los clientes propios dan más control, mejores precios y relaciones a largo plazo.',
+      },
+      {
+        type: 'table',
+        headers: ['Criterio', 'Plataformas (Fiverr)', 'Clientes propios'],
+        rows: [
+          ['Cómo llegan los clientes', 'La plataforma los trae', 'Los consigues tú (redes, web, ads)'],
+          ['Comisión', 'La plataforma cobra un porcentaje', 'Sin intermediario'],
+          ['Precios', 'Más competencia, precios bajos', 'Tú defines tu tarifa'],
+          ['Relación con el cliente', 'Limitada por la plataforma', 'Directa y de largo plazo'],
+          ['Ideal para', 'Partir y validar tu servicio', 'Crecer y escalar'],
+        ],
+      },
+      {
+        type: 'paragraph',
+        text: 'Mi recomendación: usa una plataforma para partir, pero construye en paralelo tu portafolio, tus redes y tu web para que los clientes lleguen a ti directo.',
+      },
+      {
+        type: 'heading',
+        text: '¿Qué habilidades necesito para ser freelancer de marketing digital en Chile?',
+      },
+      {
+        type: 'paragraph',
+        text: 'Las habilidades clave son dominar un servicio concreto (como edición de video), saber vender por redes sociales, entender de estrategia y aprender a medir resultados con herramientas como Meta Ads.',
+      },
+      {
+        type: 'quote',
+        text: 'Lo que más me impulsó fue aprender Meta Ads. Entender cómo funciona la publicidad paga me permitió pasar de "editar videos" a "ayudar a las empresas a conseguir clientes", que es un servicio mucho más valioso.',
+      },
+      {
+        type: 'heading',
+        text: '¿Qué haría distinto si empezara hoy?',
+      },
+      {
+        type: 'paragraph',
+        text: 'Si empezara hoy, cobraría más desde el inicio, definiría un nicho antes (por ejemplo, e-commerce), armaría mi portafolio desde el primer día y aprendería publicidad pagada mucho antes.',
+      },
+      {
+        type: 'list',
+        items: [
+          '1. Cobrar mejor desde el comienzo: Si el video ayuda a vender, vale más que 3 dólares.',
+          '2. Elegir un nicho: Es más fácil venderle a un tipo de cliente que a todos.',
+          '3. Portafolio desde el día uno: Es lo que cierra ventas.',
+          '4. Aprender Meta Ads antes: Cambió mi negocio por completo.',
+        ],
+      },
+      {
+        type: 'heading',
+        text: 'Preguntas frecuentes',
+      },
+      {
+        type: 'list',
+        items: [
+          '¿Se puede vivir de ser freelancer en Chile? Sí, es posible. Depende de tu servicio, tus precios y tu capacidad de conseguir clientes de forma constante. En mi caso, hoy vivo de hacer estrategias de Meta Ads.',
+          '¿Es necesario tener experiencia para empezar? No. Yo empecé sin experiencia previa en e-commerce. Lo importante es empezar, cumplir bien y seguir aprendiendo.',
+          '¿Conviene trabajar con clientes internacionales o chilenos? Los clientes internacionales son una buena forma de partir. Los clientes en Chile facilitan la formalización y simplifican el cobro e impuestos.',
+          '¿Cuánto debería cobrar al empezar? Evita partir demasiado bajo. Cobrar muy poco atrae clientes que no valoran el trabajo y cuesta subir los precios después.',
+          '¿Qué servicio conviene ofrecer como freelancer de marketing digital? Uno concreto y fácil de explicar, como edición de video, producción de contenido o gestión de Meta Ads, y luego ampliar según avanzas.',
+        ],
+      },
+      {
+        type: 'quote',
+        text: 'Soy Brayhan Guerra, edito video, produzco contenido y gestiono Meta Ads para empresas en Chile. Si quieres trabajar conmigo, escríbeme por WhatsApp y armamos tu estrategia.',
+      },
+      {
+        type: 'ctaWhatsApp',
+        label: 'Conversar por WhatsApp con Brayhan',
+        message:
+          'Hola Brayhan, leí tu artículo sobre trabajar como freelancer en Chile y quiero conversar sobre mi proyecto.',
+      },
+    ],
+  },
   {
     slug: 'como-hacer-anuncios-meta-ads-chile-2026',
     category: 'META ADS',
